@@ -8,7 +8,7 @@ local spGetUnitsInSphere 	= Spring.GetUnitsInSphere
 local spGiveOrderToUnit 	= Spring.GiveOrderToUnit
 local spTransferUnit 		= Spring.TransferUnit
 
-tspAction = {
+local tspAction = {
 	-- AKCE PRO REPAIR DRONE
 	["SpawnDrone"] = function(unitID, unitDefID, teamBaseID, relHeight)
 		local heroPosX, heroPosY, heroPosZ 	= spGetUnitPosition(unitID)
@@ -17,6 +17,15 @@ tspAction = {
 		local droneID = spCreateUnit(unitDefID, heroPosX, heroPosY + relHeight, heroPosZ, "s", teamBaseID)
 		-- set drone to repair hero unit
 		spGiveOrderToUnit(droneID, CMD.GUARD, {unitID}, {})
+		events[#events+1] = {
+			repeating           = true,
+			active              = true,
+			slow    			= true,
+            conditionsNames     = {"UnitIsAlive"},
+			conditionsParams    = {{unitID}},
+			actionsNames    	= {"DestroyDrone"}, -- at the end decrease NanobotsActive by 1 and if 0 deactivate event
+			actionsParams   	= {{droneID}}, 
+        }
 		return true
 	end,
 	-- AKCE PRO SPUSTENI HACKER DEVICE
@@ -47,17 +56,23 @@ tspAction = {
 		-- attack order to plane to given position
 		spGiveOrderToUnit(planeID, CMD.ATTACK, {centerX, 300, centerZ}, {"shift"})
 		-- plane flies away and destroy itself :D :D
+		-- TODO somehow destroy the plane
 		spGiveOrderToUnit(planeID, CMD.MOVE, {20, 300, 20}, {"shift"})
 		
 	end,
 	-- VYSPAWNOVANI MIN
-	["Minefield"] = function(centerX, centerZ, teamID, mineDefID, count, formationName)
+	["Minefield"] = function(centerX, centerZ, teamID, mineDefID, count, formationName, formationScale)
 		-- TODO spawn mines in area of center and radius with defined count and formation
 		-- using PlantMine for each mine
+		for i=1, count do
+			local relX, relZ = formations[formationName][i][1], formations[formationName][i][2]
+			action.PlantMine(centerX + relX*formationScale, centerZ + relZ*formationScale, teamID, mineDefID)
+		end
 	end,
 	["PlantMine"] = function(posX, posZ, teamID, mineDefID)
-	-- SPAWNS EMP MINE
-		-- TODO spawn GivenMine in given spot
+	-- SPAWNS MINE: can by used for spawning Minefield or EMPMine etc.
+		-- spawn GivenMine in given spot
+		spCreateUnit(mineDefID, posX, 0, posZ, "s", teamID)
 	end,
 	["ScoutArea"] = function(basePosX, basePosZ, teamBaseID, targetX, targetY, unitDefID)
 	-- SPAWN AIRPLANE THAT SCOUTS GIVEN AREA
