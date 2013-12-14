@@ -6,11 +6,11 @@ local spTransferUnit 	= Spring.TransferUnit
 
 action = {
 	-- AKCE PRO REPAIR DRONE
-	["SpawnDrone"] = function(unitID, unitDefID, teamBaseID)
+	["SpawnDrone"] = function(unitID, unitDefID, teamBaseID, relHeight)
 		local heroPosX, heroPosY, heroPosZ 	= Spring.GetUnitPosition(unitID)
 		
 		-- spawn of healing drone
-		local droneID = Spring.CreateUnit(unitDefID, heroPosX, heroPosY, heroPosZ, "s", teamBaseID)
+		local droneID = Spring.CreateUnit(unitDefID, heroPosX, heroPosY + relHeight, heroPosZ, "s", teamBaseID)
 		-- set drone to repair hero unit
 		Spring.GiveOrderToUnit(droneID, CMD.GUARD, {unitID}, {})
 		return true

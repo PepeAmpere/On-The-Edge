@@ -21,6 +21,6 @@ function gadget:GameFrame(frame)
 		Spring.AddUnitDamage(heroID, 400)
 	end
 	if(frame == 300) then
-		action.SpawnDrone(heroID, UnitDefNames["dronehealing"].id, 0)
+		action.SpawnDrone(heroID, UnitDefNames["dronehealing"].id, 0, 50)
 	end
 end
