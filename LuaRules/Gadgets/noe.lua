@@ -1755,7 +1755,8 @@ function gadget:Initialize()
 		include "LuaRules/Configs/noe/noe_events.lua"
 		include "LuaRules/Configs/noe/noe_actions.lua"
 		include "LuaRules/Configs/noe/noe_terraform.lua"
-		include "LuaRules/Configs/noe/noe_tasks.lua"		
+		include "LuaRules/Configs/noe/noe_tasks.lua" 
+		include "LuaRules/Configs/noe/noe_module_loader.lua"
 		
 		--- IF mission, mission files are loaded ---
 		if (playMission) then

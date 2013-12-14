@@ -4,7 +4,7 @@
 local spGetUnitsInArea 	= Spring.GetUnitsInArea
 local spTransferUnit 	= Spring.TransferUnit
 
-action = {
+tspAction = {
 	-- AKCE PRO REPAIR DRONE
 	["SpawnDrone"] = function(unitID, unitDefID, teamBaseID, relHeight)
 		local heroPosX, heroPosY, heroPosZ 	= Spring.GetUnitPosition(unitID)
@@ -135,3 +135,9 @@ action = {
 	end,
 }
 
+
+---- update actions table ----
+if (action == nil) then action = {} end
+for k,v in pairs(tspAction) do
+	action[k] = v 
+end

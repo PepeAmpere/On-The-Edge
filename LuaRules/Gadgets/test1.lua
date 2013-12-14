@@ -12,7 +12,6 @@ end
 
 include "LuaRules/Configs/tsp/tsp_actions.lua"
 
-
 local heroID
 
 function gadget:GameFrame(frame)
