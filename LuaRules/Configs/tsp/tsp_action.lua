@@ -4,11 +4,15 @@
 local spGetUnitsInArea 	= Spring.GetUnitsInArea
 local spTransferUnit 	= Spring.TransferUnit
 
-tsp = {
+action = {
 	-- AKCE PRO REPAIR DRONE
 	["SpawnDrone"] = function(unitID, unitDefID, teamBaseID)
-		-- TODO spawnovat drona pro leceni
-		-- TODO nastavit aby branil jednotku
+		local heroPosX, heroPosY, heroPosZ 	= Spring.GetUnitPosition(unitID)
+		
+		-- spawn of healing drone
+		local droneID = Spring.CreateUnit(unitDefID, heroPosX, heroPosY, heroPosZ, teamBaseID)
+		-- set drone to repair hero unit
+		Spring.GiveOrderToUnit(droneID, CMD.GUARD, {unitID}, {})
 		return true
 	end,
 	-- AKCE PRO SPUSTENI HACKER DEVICE

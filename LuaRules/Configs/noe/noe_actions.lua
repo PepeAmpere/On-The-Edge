@@ -66,3 +66,5 @@ action = {
 		-- end
 	-- end,
 }
+
+include "LuaRules/Config/tsp/tsp_action.lua"

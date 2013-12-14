@@ -331,11 +331,11 @@ groupDef = {
 	
 	--- PIRATES ---
 	--- heroes
-	["herofatboy"]                    = {size = 1, unit = "herfatboy", spirit = "lightAttacker", transfer = 1, status = {0}, preference = {0,0,0,0,0,0,1}, targetClasses = {"metal","energy","builders","factories","defWeapons","radarGround"}, source = "None", dependance = false},
+	["herofatboy"]                    	= {size = 1, unit = "herfatboy", spirit = "lightAttacker", transfer = 1, status = {0}, preference = {0,0,0,0,0,0,1}, targetClasses = {"metal","energy","builders","factories","defWeapons","radarGround"}, source = "None", dependance = false},
 
 	--- REP ---
 	--- mum ---
-	["repmum"]                         = {size = 1, unit = "cormum", spirit = "superunit", transfer = 1, status = {0}, preference = {0,0,0,0,0,0,1}, targetClasses = {"metal","energy","builders","expTowers","factories","defWeapons","radarGround"}, source = "None", dependance = false},
+	["asistdronehealing"]              = {size = 1, unit = "dronehealing", spirit = "superunit", transfer = 1, status = {0}, preference = {0,0,0,0,0,0,1}, targetClasses = {"metal","energy","builders","expTowers","factories","defWeapons","radarGround"}, source = "None", dependance = false},
 	--- drone ---
 	["repdroneBuffer"]                 = {size = 1000, unit = "repdrone", spirit = "botBuffer", transfer = 1, status = {0}, preference = {0,0,0,0,0,0,8}, targetClasses = {}, source = "None", dependance = false},
 	["droneAttacker"]                  = {size = 8, unit = "repdrone", spirit = "lightAttacker", transfer = 4, status = {0,2,4,6}, preference = {2,4,6,8,8,8,8}, targetClasses = {"metal","energy","builders","expTowers","factories","defWeapons","radarGround"}, source = "None", dependance = false},
