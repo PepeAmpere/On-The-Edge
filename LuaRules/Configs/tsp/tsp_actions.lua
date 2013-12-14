@@ -1,26 +1,30 @@
 --------------------------------------------------------------------------------
 -- TSP definition file - Temporary Strategic Powers ----------------------------
 --------------------------------------------------------------------------------
-local spGetUnitsInArea 	= Spring.GetUnitsInArea
-local spTransferUnit 	= Spring.TransferUnit
+local spCreateUnit			= Spring.CreateUnit
+local spGetUnitPosition		= Spring.GetUnitPosition
+local spGetUnitsInArea 		= Spring.GetUnitsInArea
+local spGetUnitsInSphere 	= Spring.GetUnitsInSphere
+local spGiveOrderToUnit 	= Spring.GiveOrderToUnit
+local spTransferUnit 		= Spring.TransferUnit
 
 tspAction = {
 	-- AKCE PRO REPAIR DRONE
 	["SpawnDrone"] = function(unitID, unitDefID, teamBaseID, relHeight)
-		local heroPosX, heroPosY, heroPosZ 	= Spring.GetUnitPosition(unitID)
+		local heroPosX, heroPosY, heroPosZ 	= spGetUnitPosition(unitID)
 		
 		-- spawn of healing drone
-		local droneID = Spring.CreateUnit(unitDefID, heroPosX, heroPosY + relHeight, heroPosZ, "s", teamBaseID)
+		local droneID = spCreateUnit(unitDefID, heroPosX, heroPosY + relHeight, heroPosZ, "s", teamBaseID)
 		-- set drone to repair hero unit
-		Spring.GiveOrderToUnit(droneID, CMD.GUARD, {unitID}, {})
+		spGiveOrderToUnit(droneID, CMD.GUARD, {unitID}, {})
 		return true
 	end,
 	-- AKCE PRO SPUSTENI HACKER DEVICE
 	-- TODO(pripadne dodat podminku aby se nepouzila akce bez jednotek) -> do conditions
 	["HackerDevice"] = function(centerX, centerZ, radius, teamID)
-		--rict si o jednotky v oblasti
+		-- get units in given area
 		local unitsInArea = spGetUnitsInArea(centerX, 0, centerZ, radius)
-		--u tech u kterych je to povolene zmenit tym na teamNumber
+		-- for all units change team to teamID, if possible
 		for i=1, #unitsInArea do
 			if(true) then --TODO podminka 
 				spTransferUnit(unitsInArea[i], teamID)
@@ -38,9 +42,13 @@ tspAction = {
 	end,
 	-- AIRSTRIKE AKCE
 	["Airstrike"] = function(unitDefID, centerX, centerZ, teamBaseID)
-		-- TODO spawn jednotky letadla
-		-- TODO attack order letadlu na pozici
-		-- TODO dostat letadlo pryc a zrusit ho
+		-- spawn airplane unit
+		local planeID = spCreateUnit(unitDefID, 0, 300, 0, "s", teamBaseID)
+		-- attack order to plane to given position
+		spGiveOrderToUnit(planeID, CMD.ATTACK, {centerX, 300, centerZ}, {"shift"})
+		-- plane flies away and destroy itself :D :D
+		spGiveOrderToUnit(planeID, CMD.MOVE, {20, 300, 20}, {"shift"})
+		
 	end,
 	-- VYSPAWNOVANI MIN
 	["Minefield"] = function(centerX, centerZ, teamID, mineDefID, count, formationName)
@@ -89,7 +97,7 @@ tspAction = {
 	-- ACID BOMB TO GIVEN AREA
 		-- TODO add AcidActive for all given units in global data structure, same as Nanobots
 		local startTime = realGameTime
-		local affectedUnits = Spring.GetUnitsInSphere(posX, 0, posZ, radius)
+		local affectedUnits = spGetUnitsInSphere(posX, 0, posZ, radius)
 		
 		for i=1, #affectedUnits do
 		local thisUnit = affectedUnits[i]
@@ -107,12 +115,12 @@ tspAction = {
 	["BugsWard"] = function(unitID, teamBaseID, unitsSet, formationName)
 	-- SPAWNS BUGWARD FOR HERO
 		--GET HERO POSSITION, AND SPAWN BUGS OF GIVEN TYPE IN GIVEN FORMATION
-		local heroPosX, heroPosY, heroPosZ 	= Spring.GetUnitPosition(unitID)
+		local heroPosX, heroPosY, heroPosZ 	= spGetUnitPosition(unitID)
 		local thisFormation 				= formations[formationName]
 		
 		if(#unitsSet <= #thisFormation) then
 			for i=1, #unitsSet do
-				Spring.CreateUnit(unitsSet[i], heroPosX + thisFormation[i][1], heroPosY, heroPosZ + thisFormation[i][2], "s", teamBaseID)
+				spCreateUnit(unitsSet[i], heroPosX + thisFormation[i][1], heroPosY, heroPosZ + thisFormation[i][2], "s", teamBaseID)
 			end
 			return true
 		else
