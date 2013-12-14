@@ -100,7 +100,15 @@ condition = {
 		end
 	end,	
 	
-	 --- OTHER CONDITIONS ---
+	
+	
+	--- UNITS CONDITIONS ---
+	["unitIsAlive"] = function(unitID)
+		return not(Spring.GetUnitIsDead(unitID))
+	end,
+	["unitIsDead"] = function(unitID)
+		return Spring.GetUnitIsDead(unitID)
+	end,
 	["unitCountEqualOrMore"] = function(nameOfUnit,numberOfUnits,teamID)
 		-- DESCRIPTION --
 		-- returns TRUE if more or equeal number of alive units of give "name" is in the team
@@ -122,6 +130,7 @@ condition = {
 		end
 	end,
 	["isUnitInArea"] = function(areaName)
+	
 		-- DESCRIPTION --
 		-- returns TRUE if there is one or more units in given area
 		-- returns FALSE if there is no unit in given area
@@ -133,6 +142,8 @@ condition = {
 		    return false
 		end
 	end,
+	
+	--- OTHER CONDITIONS ---
 	["checkAlerts"] = function(placesAlertList,alertListIndexes,alertLimit)
 		if ((alertListIndexes == nil) or (#alertListIndexes < 1)) then 
 			return true,0
@@ -151,6 +162,7 @@ condition = {
 		end
 		return someAlert,alertListIndexes[areaAlertID]
 	end,
+	
 	
 	--- OTHERS ---
 	-- ["realTime-0-0-10"] = function()
