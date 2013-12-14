@@ -1,8 +1,7 @@
--------------------------------------
------ NOE conditions library  -------
--------------------------------------
-
--- more about: http://code.google.com/p/nota/wiki/NOE_conditions 
+----------------------------------------------------------
+-- NOE conditions defs
+-- WIKI: http://code.google.com/p/nota/wiki/NOE_conditions 
+----------------------------------------------------------
 
 local spGetTeamUnitDefCount 		= Spring.GetTeamUnitDefCount
 local spGetTeamList					= Spring.GetTeamList

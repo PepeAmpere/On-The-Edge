@@ -1,5 +1,7 @@
------ NOE map - important places list --------
------ more about: http://code.google.com/p/nota/wiki/NOE_map
+----------------------------------------------------------
+-- NOE map - important places list
+-- WIKI: http://code.google.com/p/nota/wiki/NOE_map
+----------------------------------------------------------
 
 local mapX = Game.mapSizeX
 local mapZ = Game.mapSizeZ

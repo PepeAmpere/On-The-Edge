@@ -1,6 +1,7 @@
----------------------------------------
--------- NOE terraform library --------
----------------------------------------
+----------------------------------------------------------
+-- NOE terraform - library of terraform functions
+-- WIKI: http://code.google.com/p/nota/wiki/NOE_terraform
+----------------------------------------------------------
 
 local spSetHeightMapFunc	= Spring.SetHeightMapFunc
 local spAddHeightMap		= Spring.AddHeightMap

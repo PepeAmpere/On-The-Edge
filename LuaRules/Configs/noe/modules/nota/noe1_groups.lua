@@ -1,6 +1,9 @@
+------------------------------------------------------------------------------
 -- GROUPS of NOE 1.0
+-- more about groups on WIKI: http://code.google.com/p/nota/wiki/NOE_groups 
+------------------------------------------------------------------------------
 	
-moduleGroupDefs = {	
+local moduleGroupDef = {	
 	--- personality ---
 	["cake"]                           = {size = 1, unit = "none", spirit = "brain", transfer = 0, status = {0}, preference = {0,0,0,0,0,0,0}, targetClasses = {}, source = "None", dependance = false},
     --- commanders ---
@@ -330,8 +333,11 @@ moduleGroupDefs = {
 	["droneAttacker"]                  = {size = 8, unit = "repdrone", spirit = "lightAttacker", transfer = 4, status = {0,2,4,6}, preference = {2,4,6,8,8,8,8}, targetClasses = {"metal","energy","builders","expTowers","factories","defWeapons","radarGround"}, source = "None", dependance = false},
 }
 
----- update groups table ----
-if (groupDefs == nil) then groupDefs = {} end
-for k,v in pairs(moduleGroupDefs) do
-	groupDefs[k] = v 
+------------------------------------------------------------------------------
+----------------------- END OF MODULE DEFINITIONS ----------------------------
+
+-- update groups table
+if (groupDef == nil) then groupDef = {} end
+for k,v in pairs(moduleGroupDef) do
+	groupDef[k] = v 
 end

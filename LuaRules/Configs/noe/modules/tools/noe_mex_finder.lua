@@ -1,7 +1,8 @@
------------------------------------------
--- pepes metal extractor spots finder ---
--- for NOE ------------------------------
------------------------------------------
+------------------------------------------------------------------------------
+-- pepes NOE metal extractor spots finder
+-- for NOE
+-- more info about on WIKI: http://code.google.com/p/nota/wiki/NOE_mex_finder
+------------------------------------------------------------------------------
 
 metalMapDivision   = 10                       -- size of tiles
 local mapX         = Game.mapSizeX

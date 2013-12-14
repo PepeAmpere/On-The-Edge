@@ -1,6 +1,9 @@
---------------------------------------------------------------------------------
--- TSP definition file - Temporary Strategic Powers ----------------------------
---------------------------------------------------------------------------------
+------------------------------------------------------------------------------
+-- TSP actions definition file
+-- more about actions on WIKI: http://code.google.com/p/nota/wiki/NOE_actions
+-- more about TSP specific stuff: !TODO add
+------------------------------------------------------------------------------
+
 local spCreateUnit			= Spring.CreateUnit
 local spGetUnitPosition		= Spring.GetUnitPosition
 local spGetUnitsInArea 		= Spring.GetUnitsInArea
@@ -143,6 +146,8 @@ tspAction = {
 	end,
 }
 
+------------------------------------------------------------------------------
+----------------------- END OF MODULE DEFINITIONS ----------------------------
 
 ---- update actions table ----
 if (action == nil) then action = {} end

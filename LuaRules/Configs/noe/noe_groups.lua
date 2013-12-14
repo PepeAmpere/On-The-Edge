@@ -1,7 +1,7 @@
-------------------------------------------------------
------------------- NOE groups defs -------------------
-------------------------------------------------------
+----------------------------------------------------------
+-- NOE groups defs
 -- WIKI: http://code.google.com/p/nota/wiki/NOE_groups
+----------------------------------------------------------
 
 -- IMPORTANT HINTS:
 -- !! all groups planned to be used have to be listed in noe_side.lua side list
@@ -12,6 +12,7 @@
 -- preference says how many units in which level of AI growth should have the group have
 -- source is name class producing this type of units
 -- targetClasses list all names of classes of possible valuable targets of given group
+-- ADD WHOLE MODULE? include file in noe_module_loader.lua
 
 groupDef = {
 	["testGroup"] = {},

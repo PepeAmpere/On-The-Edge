@@ -1,6 +1,7 @@
-------------------------------
------ NOE spirits defs -------
-------------------------------
+----------------------------------------------------------
+-- NOE spirits 
+-- WIKI: http://code.google.com/p/nota/wiki/NOE_spirits
+----------------------------------------------------------
 
 local spEcho							= Spring.Echo
 local spGiveOrderToUnit					= Spring.GiveOrderToUnit

@@ -1,17 +1,17 @@
 ------------------------------------------------------------------------------
--- GROUPS of OTE
--- more about groups on WIKI: http://code.google.com/p/nota/wiki/NOE_groups
+-- TSP conditions
+-- more about conditions on WIKI: http://code.google.com/p/nota/wiki/NOE_conditions
 ------------------------------------------------------------------------------
 
-local moduleGroupDef = {
-	-- empty now
+local tspCondtion = {
+	
 }
 
 ------------------------------------------------------------------------------
 ----------------------- END OF MODULE DEFINITIONS ----------------------------
 
--- update groups table
-if (groupDef == nil) then groupDef = {} end
-for k,v in pairs(moduleGroupDef) do
-	groupDef[k] = v 
+-- update global tables 
+if (condition == nil) then condition = {} end
+for k,v in pairs(tspCondtion) do
+	condition[k] = v 
 end

@@ -1,17 +1,18 @@
 ------------------------------------------------------------------------------
--- GROUPS of OTE
--- more about groups on WIKI: http://code.google.com/p/nota/wiki/NOE_groups
+-- moduleName
+-- more about groups on WIKI: the link
 ------------------------------------------------------------------------------
 
-local moduleGroupDef = {
-	-- empty now
+local moduleTable {
+	
 }
 
 ------------------------------------------------------------------------------
 ----------------------- END OF MODULE DEFINITIONS ----------------------------
 
--- update groups table
-if (groupDef == nil) then groupDef = {} end
-for k,v in pairs(moduleGroupDef) do
-	groupDef[k] = v 
+-- update global tables 
+-- ? replace _globalTable with given table
+if (_globalTable == nil) then _globalTable = {} end
+for k,v in pairs(moduleTable) do
+	_globalTable[k] = v 
 end

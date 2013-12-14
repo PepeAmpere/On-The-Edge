@@ -1,7 +1,8 @@
--------------------------------
---- pepes buildspace finder ---
---- for NOE -------------------
--------------------------------
+------------------------------------------------------------------------------
+-- pepes NOE buildspace finder
+-- for NOE
+-- more info about on WIKI: http://code.google.com/p/nota/wiki/NOE_build_space_finder
+------------------------------------------------------------------------------
 
 --- derived from noe_mex_finder.lua and heightMap creation
 --- its used for avoiding stupid positions when building

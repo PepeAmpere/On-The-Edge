@@ -1,6 +1,7 @@
-------------------------------
------ NOE formations ---------
-------------------------------
+----------------------------------------------------------
+-- NOE formations 
+-- WIKI: http://code.google.com/p/nota/wiki/NOE_formations
+----------------------------------------------------------
 
 --- (*) ADDING NEW FORMATION - what you should do:
 --- every formation needs:
