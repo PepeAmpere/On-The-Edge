@@ -10,7 +10,7 @@ action = {
 		local heroPosX, heroPosY, heroPosZ 	= Spring.GetUnitPosition(unitID)
 		
 		-- spawn of healing drone
-		local droneID = Spring.CreateUnit(unitDefID, heroPosX, heroPosY, heroPosZ, teamBaseID)
+		local droneID = Spring.CreateUnit(unitDefID, heroPosX, heroPosY, heroPosZ, "s", teamBaseID)
 		-- set drone to repair hero unit
 		Spring.GiveOrderToUnit(droneID, CMD.GUARD, {unitID}, {})
 		return true
@@ -41,7 +41,7 @@ action = {
 		-- TODO spawn jednotky letadla
 		-- TODO attack order letadlu na pozici
 		-- TODO dostat letadlo pryc a zrusit ho
-	end
+	end,
 	-- VYSPAWNOVANI MIN
 	["Minefield"] = function(centerX, centerZ, teamID, mineDefID, count, formationName)
 		-- TODO spawn mines in area of center and radius with defined count and formation
@@ -112,7 +112,7 @@ action = {
 		
 		if(#unitsSet <= #thisFormation) then
 			for i=1, #unitsSet do
-				Spring.CreateUnit(unitsSet[i], heroPosX + thisFormation[i][1], heroPosY, heroPosZ + thisFormation[i][2], teamBaseID)
+				Spring.CreateUnit(unitsSet[i], heroPosX + thisFormation[i][1], heroPosY, heroPosZ + thisFormation[i][2], "s", teamBaseID)
 			end
 			return true
 		else
@@ -129,8 +129,9 @@ action = {
 	-- BASE SPAWNES MORE UNITS
 		--TODO change global attribut by one
 	end,
-	["Giants"]
+	["Giants"] = function()
 	--BASE CAN SPANWN GIANT
 		--TODO change global attribut by one
+	end,
 }
 

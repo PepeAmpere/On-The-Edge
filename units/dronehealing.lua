@@ -17,15 +17,23 @@ local unitDef = {
     SightDistance 	= 200,
     Upright 		= 0,
 
-	--Energy and metal related
+--Energy and metal related
     BuildCostEnergy = 0,
     BuildCostMetal 	= 0,
-    
---Pathfinding and related
-    MovementClass 	= "Default2x2",
+
+--Airflying
+	MaxVelocity		= 5.2,
+	BrakeRate		= 4,
+	Acceleration	= 0.2,
+	TurnRate		= 800,
+	SteeringMode	= 1,
+	ShootMe			= 1,
+	CruiseAlt		= 100,
+	Scale			= 1,
+	BankScale		= 1,
     
 --Abilities
-    Builder 		= 0,
+    Builder 		= 1,
     CanAttack 		= 0,
 	CanRepair		= 1,
     CanGuard 		= 1,
@@ -36,6 +44,7 @@ local unitDef = {
     Reclaimable 	= 1,
 	CanFly			= 1,
     
+	WorkerTime		= 1, 
 --Hitbox
 --    collisionVolumeOffsets    =  "0 0 0",
 --    collisionVolumeScales     =  "20 20 20",
