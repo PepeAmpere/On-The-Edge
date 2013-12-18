@@ -3,7 +3,7 @@ function gadget:GetInfo()
 		name = "test1",
 		desc = "Simple gadget for spawning a player's initial unit",
 		author = "ja sam",
-		date = "2010-08-30",
+		date = "2013-12-13",
 		license = "ote",
 		layer = -255,
 		enabled = true
@@ -20,6 +20,6 @@ function gadget:GameFrame(frame)
 		Spring.AddUnitDamage(heroID, 400)
 	end
 	if(frame == 300) then
-		action.SpawnDrone(heroID, UnitDefNames["dronehealing"].id, 0, 50)
+		action.SpawnAssistDrone(heroID, UnitDefNames["dronehealing"].id, 0, 50)
 	end
 end

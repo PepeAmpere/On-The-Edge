@@ -7,7 +7,7 @@ local unitDef = {
     ObjectName 				= "tank3.s3o",
     name 					= "Generic mine",
     UnitName 				= defName,
-    script 					= "minebasicscript.lua",
+    script 					= "minebasic.lua",
     
 --Unit limitations and properties
     BuildTime 				= 0,

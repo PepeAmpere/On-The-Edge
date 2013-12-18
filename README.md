@@ -1,7 +1,8 @@
 On-The-Edge
 ===========
 
-* game, map, [wiki](../../wiki) for project
-* under license CC BY-NC-SA
+* game
+* [wiki](../../wiki) for project
+* CC BY-NC-SA license + OTE license (more in [credits](/credits.md))
 
 

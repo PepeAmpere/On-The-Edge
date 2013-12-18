@@ -13,22 +13,13 @@ local spTransferUnit 		= Spring.TransferUnit
 
 local tspAction = {
 	-- AKCE PRO REPAIR DRONE
-	["SpawnDrone"] = function(unitID, unitDefID, teamBaseID, relHeight)
+	["SpawnAssistDrone"] = function(unitID, unitDefID, teamBaseID, relHeight)
 		local heroPosX, heroPosY, heroPosZ 	= spGetUnitPosition(unitID)
-		
-		-- spawn of healing drone
+		-- spawn of assist drone
 		local droneID = spCreateUnit(unitDefID, heroPosX, heroPosY + relHeight, heroPosZ, "s", teamBaseID)
 		-- set drone to repair hero unit
 		spGiveOrderToUnit(droneID, CMD.GUARD, {unitID}, {})
-		events[#events+1] = {
-			repeating           = true,
-			active              = true,
-			slow    			= true,
-            conditionsNames     = {"UnitIsAlive"},
-			conditionsParams    = {{unitID}},
-			actionsNames    	= {"DestroyDrone"}, -- at the end decrease NanobotsActive by 1 and if 0 deactivate event
-			actionsParams   	= {{droneID}}, 
-        }
+		-- TODO: drone gets own spirit, which will check its fuel and destroy it when fuel is out
 		return true
 	end,
 	-- AKCE PRO SPUSTENI HACKER DEVICE
@@ -99,21 +90,21 @@ local tspAction = {
 	end,
 	["NanobotsAttack"] = function(unitID, targetID, duration)
 	-- ATTACK OF NANOBOTS
-		-- TODO add NanobotsActive for given unit in global data structure - not true/false but duration 
+		-- TODO add ChangeNanobotsLevel for given unit in global data structure - not true/false but duration 
 		local startTime = realGameTime
 		events[#events+1] = {
 			repeating           = true,
 			active              = true,
 			slow    			= true,
-            conditionsNames     = {"UnitIsAlive", "NanobotsActive"},
-			conditionsParams    = {{tagetID},{targetID}},
+            conditionsNames     = {"UnitIsAlive", "ChangeNanobotsLevel"},
+			conditionsParams    = {{tagetID},{targetID,duration}},
 			actionsNames    	= {"NanobotsPower"}, -- at the end decrease NanobotsActive by 1 and if 0 deactivate event
 			actionsParams   	= {{targetID}}, 
         }
 	end,
 	["AcidBomb"] = function(posX, posZ, radius, duration)
 	-- ACID BOMB TO GIVEN AREA
-		-- TODO add AcidActive for all given units in global data structure, same as Nanobots
+		-- TODO add ChangeAcidLevel for all given units in global data structure, same as Nanobots
 		local startTime = realGameTime
 		local affectedUnits = spGetUnitsInSphere(posX, 0, posZ, radius)
 		
@@ -123,7 +114,7 @@ local tspAction = {
 				repeating           = true,
 				active              = true,
 				slow    			= true,
-				conditionsNames     = {"UnitIsAlive", "AcidActive"},
+				conditionsNames     = {"UnitIsAlive", "ChangeAcidLevel"},
 				conditionsParams    = {{thisUnit},{thisUnit}},
 				actionsNames    	= {"NanobotsPower"},
 				actionsParams   	= {{thisUnit}},
@@ -150,14 +141,6 @@ local tspAction = {
 	["DustStorm"] = function()
 	-- STARTS A DUSTSTORM
 		-- TODO spawn existing duststorm
-	end,
-	["PlusOneUnit"] = function()
-	-- BASE SPAWNES MORE UNITS
-		--TODO change global attribut by one
-	end,
-	["Giants"] = function()
-	--BASE CAN SPANWN GIANT
-		--TODO change global attribut by one
 	end,
 }
 

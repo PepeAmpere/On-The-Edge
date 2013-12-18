@@ -3,7 +3,7 @@ function gadget:GetInfo()
 		name = "test3",
 		desc = "Simple gadget for testing Minefiled and PlantMine",
 		author = "ja sam",
-		date = "2010-08-30",
+		date = "2013-12-13",
 		license = "ote",
 		layer = -255,
 		enabled = true

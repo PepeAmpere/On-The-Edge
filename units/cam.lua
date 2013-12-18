@@ -1,23 +1,23 @@
-local defName  		=  "tank"
+local defName  		=  "Cam"
 
 local unitDef  =  {
 --Internal settings
     BuildPic 		= "filename.bmp",
     Category 		= "TANK SMALL NOTAIR NOTSUB",
-    ObjectName 		= "tank3.s3o",
-    name 			= "Generic Tank",
+    ObjectName 		= "hermit.s3o",
+    name 			= "Cam",
     Side 			= "REP",
     TEDClass 		= "TANK",
     UnitName 		= defName,
-    script 			= "tank.lua",
+    script 			= "cam.lua",
     
 --Unit limitations and properties
     BuildTime 		= 1000,
-    Description 	= "A generic tank unit.",
+    Description 	= "Angry web camera",
     MaxDamage 		= 800,
     RadarDistance 	= 0,
     SightDistance 	= 400,
-    SoundCategory 	= "TANK",
+    SoundCategory 	= "",
     Upright 		= 0,
     
 --Energy and metal related

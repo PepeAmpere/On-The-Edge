@@ -7,7 +7,7 @@ local unitDef = {
     ObjectName 		= "tank3.s3o",
     name 			= "Healing drone",
     UnitName 		= defName,
-    script 			= "dronehealingscript.lua",
+    script 			= "drone.lua",
 
 --Unit limitations and properties
     BuildTime 		= 0,
