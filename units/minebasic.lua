@@ -4,7 +4,7 @@ local unitDef = {
 --Internal settings
     BuildPic 				= "filename.bmp",
     Category 				= "MINE NOTAIR NOTMOVE",
-    ObjectName 				= "tank3.s3o",
+    ObjectName 				= "mine.dae",
     name 					= "Generic mine",
     UnitName 				= defName,
     script 					= "minebasic.lua",
