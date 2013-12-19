@@ -1,6 +1,6 @@
-local defName  		=  "tank"
+local defName  		= "tank"
 
-local unitDef  =  {
+local unitDef = {
 --Internal settings
     BuildPic 		= "filename.bmp",
     Category 		= "TANK SMALL NOTAIR NOTSUB",
