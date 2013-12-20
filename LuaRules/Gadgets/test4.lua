@@ -15,5 +15,6 @@ local heroID
 function gadget:GameFrame(frame)
 	if(frame == 200) then
 		heroID = Spring.CreateUnit("cam", 2000, 0, 2900, 0, 0)
+		heroID = Spring.CreateUnit("bulk", 2200, 0, 3100, 0, 0)
 	end
 end

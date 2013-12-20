@@ -4,7 +4,7 @@ local unitDef  =  {
 --Internal settings
     BuildPic 		= "filename.bmp",
     Category 		= "TANK SMALL NOTAIR NOTSUB",
-    ObjectName 		= "hermit.s3o",
+    ObjectName 		= "cam.s3o",
     name 			= "Cam",
     Side 			= "REP",
     TEDClass 		= "TANK",
@@ -27,12 +27,12 @@ local unitDef  =  {
 --Pathfinding and related
     Acceleration 	= 0.15,
     BrakeRate 		= 0.1,
-    FootprintX 		= 2,
-    FootprintZ 		= 2,
+    FootprintX 		= 4,
+    FootprintZ 		= 4,
     MaxSlope 		= 15,
     MaxVelocity 	= 2.0,
     MaxWaterDepth 	= 20,
-    MovementClass 	= "Default2x2",
+    MovementClass 	= "HeroNormal",
     TurnRate		= 900,
     
 --Abilities
@@ -85,12 +85,12 @@ local unitDef  =  {
 			size = 4,
 			soundstart = "orangeblob_explo",
 			soundhit = "orangeblob_explo",
-			range = 250,
+			range = 400,
 			reloadtime = 1.5,
 			rgbcolor = "1.0 1.0 1.0",
 			turret = true,
 			texture1 = "flame",
-			weaponvelocity = 400,
+			weaponvelocity = 800,
 			explosiongenerator = "custom:TANKGUN_FX",
 			damage = {
 				default = 55,
