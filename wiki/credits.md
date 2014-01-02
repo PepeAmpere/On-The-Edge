@@ -25,6 +25,9 @@ Models + Textures + Animation
 * CaptBenz1 (Zero-K project)
 	- 1 model file, 3 textures files of hero Cam (source Hermit) (CC BY 3.0)
 	- animation script file (GNU GPL v2)
+* kingraptor/googl3frog/jalich/luckywaldo7/oscar.evans (Zero-K project)
+	- 1 model file, 2 textures files of hero (source Sumo) (CC BY 3.0)
+	- animation script file (GNU GPL v2)
 
-3rd party Lua Stuff
-===================
+3rd party other Lua Stuff
+=========================

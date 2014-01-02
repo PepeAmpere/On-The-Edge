@@ -15,7 +15,7 @@ end
 -- function script.QueryWeapon() return flare end
 -- The piece that the bullet/laser/whatever comes out of.
 
-function script.AimFromWeapon() return gun end
+-- function script.AimFromWeapon() return gun end
 -- The unit looks from this piece down the QueryWeapon piece, to see whether it's aiming at anything.
 
 function script.Killed(recentDamage, maxHealth)

@@ -92,7 +92,7 @@ function script.AimWeapon(num, heading, pitch)
 	
 	local newPitch = -pitch 
 	if (pitch <= 0) then
-		newPitch = newPitch * 3
+		newPitch = newPitch * 1.5
 	end
 	
 	-- aiming

@@ -31,7 +31,11 @@ local PI = math.pi
 local sa = math.rad(-10)
 local ma = math.rad(40)
 local la = math.rad(100)
-local pause = 440
+
+local speedMultiplier = 0.7
+
+local pause = 440 * speedMultiplier
+local minipause = pause/2
 
 local forward = 2.2
 local backward = 2
@@ -52,7 +56,7 @@ end
 
 
 local function RestoreAfterDelay()
-	Sleep( 2750)
+	Sleep(2750)
 	Turn( turret , y_axis, 0, math.rad(90) )
 	WaitForTurn(turret, y_axis)
 	Turn( torso , x_axis, 0, math.rad(90) )
@@ -107,6 +111,7 @@ end
 local function StopWalk()
 	Signal(SIG_Walk)
 	SetSignalMask( SIG_Walk )
+	
 	Move( base, y_axis,  0, 4*up )  
 	Turn( lfrontleg, y_axis, 0 )   						-- right front forward
 	Turn( lfrontleg, z_axis, 0, up )
