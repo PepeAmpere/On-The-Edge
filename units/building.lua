@@ -1,19 +1,19 @@
-local defName  		= "factory"
+local defName  		= "building"
 
 local unitDef = {
 --Internal settings
     BuildPic 		= "filename.bmp",
     Category 		= "BUILDING TOWER NOTAIR NOTSUB",
-    ObjectName 		= "factory_dummy.dae",
-    name 			= "Factory basic",
+    ObjectName 		= "building_dummy.dae",
+    name 			= "Basic building",
     Side 			= "REP",
     TEDClass 		= "TANK",
     UnitName 		= defName,
-    script 			= "factorybasic.lua",
+    script 			= "building.lua",
     
 --Unit limitations and properties
     BuildTime 		= 1000,
-    Description 	= "Base factory",
+    Description 	= "Some basic base stuff",
     MaxDamage 		= 800,
     RadarDistance 	= 0,
     SightDistance 	= 400,
