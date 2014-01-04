@@ -24,6 +24,11 @@ function LineButtonClicked(chiliButton, x, y, button, mods)
 	Spring.Echo("Line improve units called type: " .. chiliButton.action .. " in line:" .. chiliButton.inLine)
 end
 
+function UpgradeButtonClicked(chiliButton, x, y, button, mods)
+	--TODO: call action to improve units stats in given line
+	Spring.Echo("Upgrade button clicked: " .. chiliButton.upgradeid)
+end
+
 function widget:Initialize()
 	
 	if (not WG.Chili) then
@@ -42,7 +47,7 @@ function widget:Initialize()
 		dockable 		= false,
 		parent			= screen0,
 		caption			= "",
-		dragable		= false,
+		draggable		= false,
 		resizable		= true,
 		clientWidth		= wWidth,
 		clientHeight	= wHeight,
@@ -68,7 +73,7 @@ function widget:Initialize()
 		dockable		= false,
 		parent			= tacticalWindow,
 		caption			= "",
-		dragable		= false,
+		draggable		= false,
 		resizable		= false,
 		clientWidth		= wWidth -30,
 		clientHeight	= 150,
