@@ -29,6 +29,8 @@ Progressbar = Control:Inherit{
   backgroundColor = {1,1,1,1},
 
   OnChange  = {},
+  
+  orientation = "horizontal"
 }
 
 local this = Progressbar
@@ -120,13 +122,21 @@ function Progressbar:DrawControl()
   local y = self.y
   local w = self.width
   local h = self.height
+  
+  if (self.orientation == "horizontal") then
+    gl.Color(self.backgroundColor)
+    gl.Rect(w*percent,y,w,h)
 
-  gl.Color(self.backgroundColor)
-  gl.Rect(w*percent,y,w,h)
+    gl.Color(self.color)
+    gl.Rect(0,y,w*percent,h)
+  else
+    gl.Color(self.backgroundColor)
+    gl.Rect(h*percent,x,w,0)
 
-  gl.Color(self.color)
-  gl.Rect(0,y,w*percent,h)
-
+    gl.Color(self.color)
+    gl.Rect(w,h,h*percent,0)
+  end
+  
   if (self.caption) then
     (self.font):Print(self.caption, w*0.5, h*0.5, "center", "center")
   end
