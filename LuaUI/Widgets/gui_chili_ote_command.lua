@@ -15,7 +15,10 @@ local spSendCommands = Spring.SendCommands
 
 --TODO: this has to be changed when these commands for unit are defined
 local CMDPRIMARY	= 3000
-local CMDPRIMARYCAN	= 3001		
+local CMDPRIMARYCAN	= 3001
+
+--UI - Constants:
+local TACTICALHEIGHT = 300		
 
 local commandWindow
 local Chili
@@ -50,10 +53,14 @@ function widget:Initialize()
 	
 	local screenX, screenY 			= Spring.GetViewGeometry()
 	local clientWidth, clientHeight	= 80, 400
+	local yPos = screenY - clientHeight - TACTICALHEIGHT
+	if (yPos < 0) then
+		yPos=0
+	end
 	-- create window with control buttons:
 	commandWindow = Chili.Window:New{
 		x 				= screenX - clientWidth - 30,
-		y 				= "25%",
+		y 				= yPos,
 		dockable 		= false,
 		parent			= screen0,
 		caption			= "",
