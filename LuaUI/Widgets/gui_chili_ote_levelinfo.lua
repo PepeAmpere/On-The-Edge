@@ -36,7 +36,7 @@ function widget:Initialize()
 	local screen0 = Chili.Screen0
 	
 	local screenX, screenY	= Spring.GetViewGeometry()
-	local wWidth, wHeight	= 120, 300
+	local wWidth, wHeight	= 95, 300
 	
 	infoWindow = Chili.Window:New{
 		x 				= 10,
