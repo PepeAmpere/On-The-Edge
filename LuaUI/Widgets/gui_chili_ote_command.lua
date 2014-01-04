@@ -64,7 +64,7 @@ function widget:Initialize()
 		dockable 		= false,
 		parent			= screen0,
 		caption			= "",
-		dragable		= false,
+		draggable		= false,
 		resizable		= true,
 		clientWidth		= clientWidth,
 		clientHeight	= clientHeight,

@@ -678,29 +678,50 @@ end
 function DrawProgressbar(obj)
   local w = obj.width
   local h = obj.height
+  local orientation = obj.orientation
 
   local percent = (obj.value-obj.min)/(obj.max-obj.min)
 
   local skLeft,skTop,skRight,skBottom = unpack4(obj.tiles)
 
-  gl.Color(obj.backgroundColor)
-  TextureHandler.LoadTexture(0,obj.TileImageBK,obj)
-    local texInfo = gl.TextureInfo(obj.TileImageBK) or {xsize=1, ysize=1}
-    local tw,th = texInfo.xsize, texInfo.ysize
+  if (orientation == "horizontal") then
+    gl.Color(obj.backgroundColor)
+    TextureHandler.LoadTexture(0,obj.TileImageBK,obj)
+      local texInfo = gl.TextureInfo(obj.TileImageBK) or {xsize=1, ysize=1}
+      local tw,th = texInfo.xsize, texInfo.ysize
 
-    gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, 0,0,w,h, skLeft,skTop,skRight,skBottom, tw,th, 0)
-  --gl.Texture(0,false)
+      gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, 0,0,w,h, skLeft,skTop,skRight,skBottom, tw,th, 0)
+    --gl.Texture(0,false)
 
-  gl.Color(obj.color)
-  TextureHandler.LoadTexture(0,obj.TileImageFG,obj)
-    local texInfo = gl.TextureInfo(obj.TileImageFG) or {xsize=1, ysize=1}
-    local tw,th = texInfo.xsize, texInfo.ysize
+    gl.Color(obj.color)
+    TextureHandler.LoadTexture(0,obj.TileImageFG,obj)
+      local texInfo = gl.TextureInfo(obj.TileImageFG) or {xsize=1, ysize=1}
+      local tw,th = texInfo.xsize, texInfo.ysize
 
-    gl.ClipPlane(1, -1,0,0, w*percent)
-    gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, 0,0,w,h, skLeft,skTop,skRight,skBottom, tw,th, 0)
-    gl.ClipPlane(1, false)
-  gl.Texture(0,false)
+      gl.ClipPlane(1, -1,0,0, w*percent)
+      gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, 0,0,w,h, skLeft,skTop,skRight,skBottom, tw,th, 0)
+      gl.ClipPlane(1, false)
+    gl.Texture(0,false)
+  else
+    gl.Color(obj.backgroundColor)
+    TextureHandler.LoadTexture(0,obj.TileImageBK,obj)
+      local texInfo = gl.TextureInfo(obj.TileImageBK) or {xsize=1, ysize=1}
+      local tw,th = texInfo.xsize, texInfo.ysize
 
+      gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, 0,0,w,h, skLeft,skTop,skRight,skBottom, tw,th, 0)
+    --gl.Texture(0,false)
+
+    gl.Color(obj.color)
+    TextureHandler.LoadTexture(0,obj.TileImageFG,obj)
+      local texInfo = gl.TextureInfo(obj.TileImageFG) or {xsize=1, ysize=1}
+      local tw,th = texInfo.xsize, texInfo.ysize
+
+      gl.ClipPlane(1, 0, 1, 0, -h*(1-percent))
+      gl.BeginEnd(GL.TRIANGLE_STRIP, _DrawTiledTexture, 0,0,w,h, skLeft,skTop,skRight,skBottom, tw,th, 0)
+      gl.ClipPlane(1, false)
+    gl.Texture(0,false)
+  end
+  
   if (obj.caption) then
     (obj.font):Print(obj.caption, w*0.5, h*0.5, "center", "center")
   end
