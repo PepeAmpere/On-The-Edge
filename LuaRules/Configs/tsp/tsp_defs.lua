@@ -7,8 +7,9 @@
 tspDef = {
 	["example"] = {
 		-- head
-		name 		= "example",						-- same as key
 		description = "Some example power", 			-- description - not much long
+		level		= 1,
+		levelCap	= 1,
 		
 		-- GUI
 		icon 		= "LuaUI/Images/something.png",  	-- path to icon
