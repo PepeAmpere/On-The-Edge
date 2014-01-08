@@ -24,12 +24,15 @@ local modrules  = {
 	},
 	sensors = {   
 		los = {
-			losMipLevel = 4, 
+			losMipLevel = 3, 
 			losMul      = 1,
 			airMipLevel = 6,
 			airMul      = 1,
 		},
 	}, 
+	experience = {
+		experienceMult = 0,
+	}
 	
 	--flankingBonus set at given units
 	-- flankingBonus = {

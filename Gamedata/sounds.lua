@@ -34,6 +34,18 @@ local Sounds = {
 			priority = 10, --- higher numbers = less chance of cutoff
 			maxconcurrent = 4, ---how many maximum can we hear?
 		},
+		mortar1 = { 
+            file = "sounds/mortar1.wav", 
+			rolloff=3, dopplerscale = 0, maxdist = 1000,
+			priority = 10, --- higher numbers = less chance of cutoff
+			maxconcurrent = 4, ---how many maximum can we hear?
+		},
+		mortar2 = { 
+            file = "sounds/mortar2.wav", 
+			rolloff=3, dopplerscale = 0, maxdist = 1000,
+			priority = 10, --- higher numbers = less chance of cutoff
+			maxconcurrent = 4, ---how many maximum can we hear?
+		},
 
 		--[[DefaultsForSounds = { -- this are default settings
 			file = "ThisEntryMustBePresent.wav",

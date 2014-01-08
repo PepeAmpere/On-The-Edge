@@ -1,14 +1,14 @@
---           --
--- N.O.E. AI --
---           --
+--        --
+-- N.O.E. --
+--        --
 
 function gadget:GetInfo()
   return {
     name      = "N.O.E.",
-    desc      = "Special NOTA AI",
+    desc      = "Framework",		-- for AI and scenario making
     author    = "PepeAmpere",
-    date      = "March 15, 2012",
-    license   = "BY-NC-SA",
+    date      = "March 15, 2012",	-- huge update in winter 2013/14
+    license   = "notAlicense",  	-- CC BY-NC-SA if not specified on website
     layer     = 0,
     enabled   = true --  loaded by default?
   }
@@ -708,10 +708,22 @@ local function SetResources()
 			e  = sideSettings[teamIDtoName[tostring(id)]].startEnergy
 			es = sideSettings[teamIDtoName[tostring(id)]].startEnergyStorage
 		else
-			m  = floor((missionInfo.playersMetal or 1000)/missionPlayersCount)
-			ms = floor((missionInfo.playersMetal or 1000)/missionPlayersCount)
-			e  = floor((missionInfo.playersEnergy or 1000)/missionPlayersCount) 
-			es = floor((missionInfo.playersEnergy or 1000)/missionPlayersCount) 
+			-- hotfix for OTE
+			if (heroClass and oteRule) then
+				-- TODO: get metal value and class from lobby
+				local metalCurrent = 100
+				local class = "bulk"
+				Spring.Echo(oteRule.energy[heroClass[class].statsClass[3]])
+				m  = metalCurrent
+				ms = 100000
+				e  = oteRule.energy[heroClass[class].statsClass[3]]
+				es = oteRule.energy[heroClass[class].statsClass[3]]
+			else
+				m  = floor((missionInfo.playersMetal or 1000)/missionPlayersCount)
+				ms = floor((missionInfo.playersMetal or 1000)/missionPlayersCount)
+				e  = floor((missionInfo.playersEnergy or 1000)/missionPlayersCount) 
+				es = floor((missionInfo.playersEnergy or 1000)/missionPlayersCount)
+			end
 		end
 		--Spring.Echo("res",id,m,e,ms,es)
 		spSetTeamResource(id, "m", m)
@@ -1759,6 +1771,8 @@ function gadget:Initialize()
 		include "LuaRules/Configs/noe/noe_terraform.lua"
 		include "LuaRules/Configs/noe/noe_tasks.lua" 
 		include "LuaRules/Configs/noe/noe_module_loader.lua"
+		-- other rules --
+		include "LuaRules/Configs/noe/noe_rules.lua"
 		
 		--- IF mission, mission files are loaded ---
 		if (playMission) then

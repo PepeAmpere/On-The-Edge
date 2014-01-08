@@ -1,15 +1,15 @@
-local defName  		= "run"
+local defName  		= "doc"
 
 local unitDef = {
 --Internal settings
     BuildPic 		= "filename.bmp",
     Category 		= "BUG",
-    ObjectName 		= "run.s3o",
+    ObjectName 		= "doc.s3o",
     name 			= "Runner",
     Side 			= "REP",
     TEDClass 		= "TANK",
     UnitName 		= defName,
-    script 			= "run.lua",
+    script 			= "doc.lua",
     
 --Unit limitations and properties
     BuildTime 		= 1000,
@@ -54,18 +54,18 @@ local unitDef = {
 --Weapons and related
 	weapons = {
 		[1] = {
-			def                	= "orangeblob",
+			def                	= "docAutoPistol",
 			BadTargetCategory 	= "NOTAIR",
 			ExplodeAs 			= "TANKDEATH",
 			NoChaseCategory 	= "AIR",
 		},
 	},
 	weaponDefs = {
-		orangeblob = {
-			name = "Orange Plasma Cannon",
+		docAutoPistol = {
+			name = "Auto pistol",
 			weapontype = "Cannon",
 			accuracy = 10,
-			areaofeffect = 100,
+			areaofeffect = 10,
 			avoidfeature = false,
 			avoidfriendly = true,
 			canattackground = true,
@@ -74,7 +74,7 @@ local unitDef = {
 			commandfire = false,
 			craterboost = 0,
 			cratermult = 0,
-			edgeeffectiveness = 0.1,
+			edgeeffectiveness = 0.5,
 			explosionspeed = 128,
 			firestarter = 100,
 			gravityaffected = true,
@@ -86,14 +86,14 @@ local unitDef = {
 			soundstart = "orangeblob_explo",
 			soundhit = "orangeblob_explo",
 			range = 250,
-			reloadtime = 1.5,
-			rgbcolor = "1.0 1.0 1.0",
+			reloadtime = 0.2,
+			rgbcolor = "1.0 0.6 0.6",
 			turret = true,
 			texture1 = "flame",
-			weaponvelocity = 400,
+			weaponvelocity = 800,
 			explosiongenerator = "custom:TANKGUN_FX",
 			damage = {
-				default = 55,
+				default = 5,
 			},
 		},
 	}

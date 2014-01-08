@@ -20,8 +20,8 @@ local sidedata = {
 		startUnit = "cam",
 	},
 	{
-		name = "RUN",
-		startUnit = "run",
+		name = "DOC",
+		startUnit = "doc",
 	},
 }
 return sidedata

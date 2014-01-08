@@ -14,7 +14,7 @@ local unitDef = {
 --Unit limitations and properties
     BuildTime 		= 1000,
     Description 	= "Basic warrior",
-    MaxDamage 		= 800,
+    MaxDamage 		= 400,
     RadarDistance 	= 0,
     SightDistance 	= 400,
     SoundCategory 	= "TANK",

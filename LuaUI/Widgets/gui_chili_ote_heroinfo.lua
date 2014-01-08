@@ -67,12 +67,12 @@ local function DelayedInitialization()
 		x 			= 0,
 		y 			= 44,
 		parent		= infoWindow,
-		file		= heroStats["image"],
+		file		= heroStats.image,
 		minWidth	= 256,
 		minHeight	= 256,
 	}
 	
-	local actualE, maximalE = Spring.GetTeamResources(heroStats["teamID"], "energy")
+	local actualE, maximalE = Spring.GetTeamResources(heroStats.teamID, "energy")
 	if (not actualE) then actualE = 0 end
 	if (not maximalE) then maximalE = 0 end
 	energyBar = Chili.Progressbar:New{
@@ -81,7 +81,7 @@ local function DelayedInitialization()
 		parent		= infoWindow,
 		value	 	= actualE,
 		max			= maximalE,
-		caption		= "Energy: " .. '\n' .. actualE .. "/" .. maximalE,
+		caption		= "E\nN\nE\nR\nG\nY\n\n\n",
 		minWidth	= 40,
 		minHeight	= 256,
 		maxWidth	= 40,
@@ -89,7 +89,17 @@ local function DelayedInitialization()
 		color		= {0,1,1,1}
 	}
 	
-	local actualHp, maximalHp = Spring.GetUnitHealth(heroStats["unitID"])
+	energyValues = Chili.Label:New{
+		x			= 260,
+		y			= 0,
+		maxHeight	= 40,
+		maxWidth	= 40,
+		align		= "center",
+		parent		= infoWindow,
+		caption		= "[" .. maximalE .. "]" .. "\n " .. actualE,
+	}
+	
+	local actualHp, maximalHp = Spring.GetUnitHealth(heroStats.unitID)
 	if (not actualHp) then actualHp = 0 end
 	if (not maximalHp) then maximalHp = 0 end
 	hpBar = Chili.Progressbar:New{
@@ -104,16 +114,21 @@ local function DelayedInitialization()
 		color		= {0,1,0,1}
 	}
 	
-	Spring.Echo(Spring.GetUnitHealth(heroStats["unitID"]))
+	Spring.Echo(Spring.GetUnitHealth(heroStats.unitID))
+end
+
+
+local function ActivateScreen(unitID, unitDefID)
+	myUnitID 	= unitID					-- for later access to units stats
+	class		= UnitDefs[unitDefID].name	-- connection not via our tables, but via spring table (due reason on line 29)
+	active 		= true						-- we are ready to show it now
+	needUnit	= false						-- we needed this check only once
 end
 
 -- just connect UI widget with given unit and team
 function widget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
 	if (myTeamID == unitTeam and needUnit) then
-		myUnitID 	= unitID					-- for later access to units stats
-		class		= UnitDefs[unitDefID].name	-- connection not via our tables, but via spring table (due reason on line 29)
-		active 		= true						-- we are ready to show it now
-		needUnit	= false						-- we needed this check only once
+		ActivateScreen(unitID, unitDefID)
 	end
 end
 
@@ -128,17 +143,31 @@ function widget:GameFrame(frameNumber)
 	
 		-- window itself
 		heroStats = GetHeroStats()
-		actualE, maximalE = Spring.GetTeamResources(heroStats["teamID"], "energy")
+		actualE, maximalE = Spring.GetTeamResources(heroStats.teamID, "energy")
 		if (not actualE) then actualE = 0 end
 		if (not maximalE) then maximalE = 0 end
-		actualHp, maximalHp = Spring.GetUnitHealth(heroStats["unitID"])
+		actualHp, maximalHp = Spring.GetUnitHealth(heroStats.unitID)
 		if (not actualHp) then actualHp = 0 end
 		if (not maximalHp) then maximalHp = 0 end
+		actualHp = math.floor(actualHp)
+		maximalHp = math.floor(maximalHp)
+		actualE = math.floor(actualE)
+		maximalE = math.floor(maximalE)
 		hpBar:SetMinMax(0, maximalHp)
 		hpBar:SetValue(actualHp)
 		hpBar:SetCaption("HP: " .. actualHp .. "/" .. maximalHp)
 		energyBar:SetMinMax(0, maximalE)
 		energyBar:SetValue(actualE)
-		energyBar:SetCaption("HP: " .. actualE .. "/" .. maximalE)
+		-- energyBar:SetCaption("E\nN\nE\nR\nG\nY\n\n\n" .. actualE .. "\n/\n" .. maximalE)
+		energyBar:SetCaption("E\nN\nE\nR\nG\nY\n\n\n")
+		energyValues:SetCaption("[" .. maximalE .. "]" .. "\n " .. actualE)
+	else
+		-- fix for ingame reload of UI
+		if (frameNumber % 60 == 0 and needUnit) then
+			local listOfUnits = Spring.GetTeamUnits(myTeamID)
+			if (listOfUnits) then				
+				ActivateScreen(listOfUnits[1],Spring.GetUnitDefID(listOfUnits[1]))
+			end
+		end
 	end
 end
