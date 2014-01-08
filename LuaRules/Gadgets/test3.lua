@@ -19,3 +19,13 @@ function gadget:GameFrame(frame)
 		action.Minefield(200, 1800, 1, UnitDefNames["minebasic"].id, 20, "swarm", 10)
 	end
 end
+
+
+------------ just to prevent executing in non-sandbox scenarios --------------------------
+local missionName	= string.lower(Spring.GetModOptions().mission_name or "none") or "none" 
+
+function gadget:Initialize()
+	if (missionName ~= "none") then
+		gadgetHandler:RemoveGadget("test3")
+	end
+end

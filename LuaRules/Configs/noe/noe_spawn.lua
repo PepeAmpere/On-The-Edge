@@ -31,7 +31,7 @@ spawnEdit = {
 	    if (missionInfo.specMapName == Game.mapName) then
 		    return true
 		else
-		    Spring.Echo("N.O.E. mission spawner ERROR: This mission needs different map for playing (" .. missionInfo.specMapName .. ")")
+		    Spring.Echo("N.O.E. mission spawner ERROR: This mission needs different map for playing (" .. missionInfo.specMapName .. " THIS: " .. Game.mapName .. ")")
 		    return false
 		end
 	end,

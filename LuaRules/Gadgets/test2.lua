@@ -17,3 +17,14 @@ function gadget:GameFrame(frame)
 		action.Airstrike(UnitDefNames["plane"].id, 800, 800, 0)
 	end
 end
+
+
+
+------------ just to prevent executing in non-sandbox scenarios --------------------------
+local missionName	= string.lower(Spring.GetModOptions().mission_name or "none") or "none" 
+
+function gadget:Initialize()
+	if (missionName ~= "none") then
+		gadgetHandler:RemoveGadget("test2")
+	end
+end

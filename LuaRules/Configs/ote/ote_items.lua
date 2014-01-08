@@ -16,12 +16,12 @@
 
 local itemIconsPath = "LuaUI/Images/ote/items/" 
 
-local damageLaserUpgradePerPrice = {
+local damageWeaponUpgradePerPrice = {
 	free 		= 0,
-	cheap 		= 2,
-	moderate	= 5,
-	expensive	= 8,
-	ultimate	= 11,
+	cheap 		= 0.02,
+	moderate	= 0.05,
+	expensive	= 0.08,
+	ultimate	= 0.11,
 }
 local priceClass	= {
 	free 		= 0,
@@ -37,28 +37,34 @@ local panzerHeavyEffect			= 0.6
 
 oteItem = {
 	-- weaponUps
-	["laserRifle"] = {
+	["basicWeapon"] = {
 		price 			= priceClass.free,
 		icon			= itemIconsPath .. "laser1.png",
 		position		= "weapon",
 		upgrade 		= {},
+		goodHeroes		= {},
+		badHeroes		= {},
 	},
-	["laserCutter"] = {
+	["duranthiumAmmo"] = {
 		price 			= priceClass.moderate,
 		icon			= itemIconsPath .. "laser2.png",
 		position		= "weapon",
 		upgrade 		= {
-			damage = damageLaserUpgradePerPrice.moderate,
+			damage = 1+damageWeaponUpgradePerPrice.moderate,
 		},
+		goodHeroes		= {},
+		badHeroes		= {"bug"},
 	},
-	["laserGrinder"] = {
+	["dualReloader"] = {
 		price 			= priceClass.expensive,
 		icon			= itemIconsPath .. "laser3.png",
 		position		= "weapon",
 		upgrade 		= {
-			damage 	= -damageLaserUpgradePerPrice.cheap,
+			damage 	= 1-damageWeaponUpgradePerPrice.cheap,
 			reload	= 0.5,
 		},
+		goodHeroes		= {},
+		badHeroes		= {"bug"},
 	},
 	
 	-- armorUps
@@ -73,6 +79,8 @@ oteItem = {
 			flankingBonusMax 	= 1.0,
 			flankingBonusMin  	= panzerLightEffect,
 		},
+		goodHeroes		= {},
+		badHeroes		= {"cam"},
 	},
 	["panzerRear"] = {
 		price 			= priceClass.moderate,
@@ -85,6 +93,8 @@ oteItem = {
 			flankingBonusMax 	= 1.0,
 			flankingBonusMin  	= panzerLightEffect,
 		},
+		goodHeroes		= {},
+		badHeroes		= {},
 	},
 	["panzerRight"] = {
 		price 			= priceClass.moderate,
@@ -97,6 +107,8 @@ oteItem = {
 			flankingBonusMax 	= 1.0,
 			flankingBonusMin  	= panzerLightEffect,
 		},
+		goodHeroes		= {},
+		badHeroes		= {},
 	},
 	["panzerLeft"] = {
 		price 			= priceClass.moderate,
@@ -109,6 +121,8 @@ oteItem = {
 			flankingBonusMax 	= 1.0,
 			flankingBonusMin  	= panzerLightEffect,
 		},
+		goodHeroes		= {},
+		badHeroes		= {},
 	},
 	["panzerUltimate"] = {
 		price 			= priceClass.ultimate,
@@ -121,5 +135,7 @@ oteItem = {
 			flankingBonusMax 	= 1.0,
 			flankingBonusMin  	= panzerHeavyEffect,
 		},
+		goodHeroes		= {},
+		badHeroes		= {"cam"},
 	},
 }

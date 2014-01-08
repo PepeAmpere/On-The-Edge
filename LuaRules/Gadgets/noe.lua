@@ -1663,14 +1663,19 @@ function gadget:Initialize()
 					["difficulty"] = "hard",
 					["side"]       = side,
 				}
-			elseif (aiInfo == "Mission AI") then			
+			elseif (aiInfo == "Mission AI" or aiInfo == "BASE Team 1" or aiInfo == "BASE Team 2" or aiInfo == "WILDERNESS") then			
 				numberOfNoeAITeams           = numberOfNoeAITeams + 1
 				numberOfMissionAIs           = numberOfMissionAIs + 1
 				AITeamID[numberOfNoeAITeams] = id
 				local trueSide               = side
                 if (missionName ~= "none") then
 				    trueSide = missionInfo.AInames[numberOfMissionAIs]
-                end	
+                end
+				-- just hot addition for OTE --
+				if (missionName == "notAdota") then
+				    trueSide = aiInfo
+                end
+				-- end --
 				aiOptions[numberOfNoeAITeams] = {
 					["difficulty"] = "special",
 					["side"]       = trueSide, 

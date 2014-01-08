@@ -28,9 +28,11 @@ OTE base content
 * smoke fumus
 	- model, texture of hero Bulk (OTE license)
 	- model, texture of hero Soldier (OTE license)
-	- model, texture of hero Soldier ranged (OTE license)
+	- model, texture of hero Ranger (OTE license)
 	- model, texture of hero Tower main (OTE license)
-	- model, texture of hero Tower secondary (OTE license)
+	- model, texture of hero Tower small (OTE license)
+	- remodeling, retexturing all ancient Spacebugs + hive (OTE license)
+	- model, texture of Spacebugs spore tower (OTE license)
 
 3rd party
 ---------
@@ -39,8 +41,9 @@ OTE base content
 	- 1 model file, 3 textures files of hero Cam (source Hermit) (CC BY 3.0)
 	- animation script file (GNU GPL v2)
 * kingraptor/googl3frog/jalich/luckywaldo7/oscar.evans (Zero-K project)
-	- 1 model file, 2 textures files of hero (source Sumo) (CC BY 3.0)
-	- animation script file (GNU GPL v2)
+	- 1 model files, 2 textures files of hero (source Sumo) (CC BY 3.0)
+	- 1 model files, 2 textures files of hero (Glaive - old one used in NOTA as BattleCommander) (CC BY 3.0)
+	- 2 animation script files (GNU GPL v2)	
 
 Lua widgets
 ===========
@@ -48,8 +51,14 @@ Lua widgets
 OTE base content
 ----------------
 
-3rd party
----------
+* Bageta
+	- GUI module for chili
+
+3rd party or reused work
+------------------------
 
 * jK
 	- GUI framework chili (GNU GPL v2)
+	
+* PepeAmpere
+	- LOS ON at start (BY-NC-SA)

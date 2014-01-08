@@ -18,3 +18,14 @@ function gadget:GameFrame(frame)
 		heroID = Spring.CreateUnit("bulk", 2200, 0, 3100, 0, 0)
 	end
 end
+
+
+
+------------ just to prevent executing in non-sandbox scenarios --------------------------
+local missionName	= string.lower(Spring.GetModOptions().mission_name or "none") or "none" 
+
+function gadget:Initialize()
+	if (missionName ~= "none") then
+		gadgetHandler:RemoveGadget("test4")
+	end
+end

@@ -1,10 +1,10 @@
 function widget:GetInfo()
 	return {
-		name		= "CommandWindow",
+		name		= "OTE UI CommandWindow",
 		desc		= "Command Window for OTE",
 		author		= "Pavel",
 		date		= "2014-01-03",
-		license     = "GNU GPL v2",
+		license     = "OTE license",
 		layer		= math.huge,
 		enabled   	= true,
 		handler		= true,

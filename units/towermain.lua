@@ -4,7 +4,7 @@ local unitDef = {
 --Internal settings
     BuildPic 		= "filename.bmp",
     Category 		= "BUILDING TOWER NOTAIR NOTSUB",
-    ObjectName 		= "tower_basic.dae",
+    ObjectName 		= "towermain.s3o",
     name 			= "Main defence tower",
     Side 			= "REP",
     TEDClass 		= "TANK",

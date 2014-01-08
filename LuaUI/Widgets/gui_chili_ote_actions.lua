@@ -1,10 +1,10 @@
 function widget:GetInfo()
 	return {
-		name		= "HeroActionsWindow",
+		name		= "OTE UI HeroActionsWindow",
 		desc		= "Window that contains buttons for heroes actions and abilities for OTE",
 		author		= "Pavel",
 		date		= "2014-01-04",
-		license     = "GNU GPL v2",
+		license     = "OTE license",
 		layer		= math.huge,
 		enabled   	= true,
 		handler		= true,

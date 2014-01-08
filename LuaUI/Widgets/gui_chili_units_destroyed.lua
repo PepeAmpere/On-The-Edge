@@ -1,10 +1,10 @@
 function widget:GetInfo()
 	return {
-		name		= "unit destroyed window",
+		name		= "OTE UI unit destroyed window",
 		desc		= "window to keep the unitdestroyed counter",
 		author		= "Sunspot",
 		date		= "2011-06-19",
-		license         = "GNU GPL v2",
+		license     = "OTE license",
 		layer		= 2,
 		enabled   	= true  --  loaded by default?
 	}

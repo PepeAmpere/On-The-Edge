@@ -4,7 +4,7 @@ function widget:GetInfo()
  		desc		= "hello world tutorial",
  		author		= "Pavel",
  		date		= "2011-06-19",
- 		license     = "GNU GPL v2",
+		license     = "OTE license",
  		layer		= 1,
  		enabled   	= true
  	}

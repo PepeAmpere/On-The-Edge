@@ -100,7 +100,7 @@ local function HandicapTilesWithFeatures()
     local buildTileHalfSize = buildMapDivision/2
     for i=1,#buildMapRaw do
 	    local thisTile = buildMapRaw[i]
-		if (thisTile.groundBuild) then
+		if (thisTile.groundBuild and fromNameToIDTable["cormex"]) then
 			local blocking,feature = spTestBuildOrder(fromNameToIDTable["cormex"],thisTile.posX +buildTileHalfSize ,0,thisTile.posZ +buildTileHalfSize,1)
 			if (blocking == 2 and feature ~= nil) then
 				--Spring.Echo(i,feature)

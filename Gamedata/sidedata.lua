@@ -5,7 +5,7 @@ local sidedata = {
 	},
 	{
 		name = "BUG",
-		startUnit = "tank",
+		startUnit = "bug",
 	},
 	{
 		name = "BALL",
@@ -18,6 +18,10 @@ local sidedata = {
 	{
 		name = "CAM",
 		startUnit = "cam",
+	},
+	{
+		name = "RUN",
+		startUnit = "run",
 	},
 }
 return sidedata

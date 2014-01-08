@@ -6,37 +6,45 @@
 -- bigger value => better
 local heroStats = {	-- speed, health, energy, armor, dmg, reload, range, spawn
 	["ball"] 		= {2, 5, 4, 4, 2, 4, 2, 4},
+	["bug"] 		= {4, 4, 2, 4, 4, 3, 1, 2},
 	["bulk"] 		= {3, 3, 2, 3, 1, 5, 3, 3},
 	["cam"] 		= {3, 3, 3, 2, 3, 3, 3, 2},
-	["other"] 		= {},
+	["run"] 		= {5, 2, 3, 3, 3, 2, 2, 3},
+}
+
+local heroUIpath 	= "LuaUI/oteUI/heroes256x256/"
+local heroUIimage	= {
+	["ball"] 		= "ball.png",
+	["bug"] 		= "bug.png",
+	["bulk"] 		= "bulk.png",
+	["cam"] 		= "cam.png",
+	["run"] 		= "run.png",
 }
 
 heroClass = {
 	["ball"] = {
 		statsClass 	= heroStats["ball"],
+		bigImage	= heroUIpath .. heroUIimage["ball"],
+		
+	},
+	["bulk"] = {
+		statsClass 	= heroStats["bug"],
+		bigImage	= heroUIimage["bug"],
 		
 	},
 	["bulk"] = {
 		statsClass 	= heroStats["bulk"],
-		badItemsList 	= {
-			"laserRifle",
-			"laserCutter",
-			"laserGrinder",
-		},
+		bigImage	= heroUIimage["bulk"],
 		
 	},
 	["cam"] = {
 		statsClass 		= heroStats["cam"],
-		badItemsList 	= {
-			"laserRifle",
-			"laserCutter",
-			"laserGrinder",
-			"panzerFront",
-			"panzerUltimate",
-		},
+		bigImage	= heroUIimage["cam"],
+		
 	},
-	["other"] = {
-		statsClass 	= heroStats["other"],
+	["run"] = {
+		statsClass 	= heroStats["run"],
+		bigImage	= heroUIimage["run"],
 		
 	},
 }

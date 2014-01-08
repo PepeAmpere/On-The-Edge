@@ -12,6 +12,7 @@ end
 
 include "LuaRules/Configs/tsp/tsp_actions.lua"
 
+
 local heroID
 
 function gadget:GameFrame(frame)
@@ -23,3 +24,14 @@ function gadget:GameFrame(frame)
 		action.SpawnAssistDrone(heroID, UnitDefNames["dronehealing"].id, 0, 50)
 	end
 end
+
+
+------------ just to prevent executing in non-sandbox scenarios --------------------------
+local missionName	= string.lower(Spring.GetModOptions().mission_name or "none") or "none" 
+
+function gadget:Initialize()
+	if (missionName ~= "none") then
+		gadgetHandler:RemoveGadget("test1")
+	end
+end
+

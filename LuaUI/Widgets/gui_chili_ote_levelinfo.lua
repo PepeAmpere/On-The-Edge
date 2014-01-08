@@ -1,10 +1,10 @@
 function widget:GetInfo()
 	return {
-		name		= "LevelInfo",
+		name		= "OTE UI LevelInfo",
 		desc		= "Window that contains info about xp, playerLevel etc",
 		author		= "Pavel",
 		date		= "2014-01-04",
-		license     = "GNU GPL v2",
+		license     = "OTE license",
 		layer		= math.huge,
 		enabled   	= true,
 		handler		= true,

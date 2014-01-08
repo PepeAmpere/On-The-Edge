@@ -1,20 +1,22 @@
-local defName  		=  "Ball"
+VFS.Include("LuaRules/Configs/ote/ote_heroes.lua")
+VFS.Include("LuaRules/Configs/ote/ote_rules.lua")
+
+local defName  		=  "ball"
 
 local unitDef  =  {
 --Internal settings
     BuildPic 		= "filename.bmp",
     Category 		= "TANK SMALL NOTAIR NOTSUB",
     ObjectName 		= "ball.s3o",
-    name 			= defName,
-    Side 			= "REP",
-    TEDClass 		= "TANK",
+    name 			= "Ball",
+    Side 			= "BALL",
     UnitName 		= defName,
     script 			= "ball.lua",
     
 --Unit limitations and properties
     BuildTime 		= 1000,
     Description 	= "Dumball",
-    MaxDamage 		= 800,
+    MaxDamage 		= oteRule.health[heroClass[defName].statsClass[2]],
     RadarDistance 	= 0,
     SightDistance 	= 400,
     SoundCategory 	= "",

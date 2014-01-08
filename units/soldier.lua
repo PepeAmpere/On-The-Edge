@@ -4,12 +4,12 @@ local unitDef = {
 --Internal settings
     BuildPic 		= "filename.bmp",
     Category 		= "BUILDING TOWER NOTAIR NOTSUB",
-    ObjectName 		= "soldier_dummy.dae",
+    ObjectName 		= "soldier.s3o",
     name 			= "Basic soldier",
     Side 			= "REP",
     TEDClass 		= "TANK",
     UnitName 		= defName,
-    script 			= "building.lua",
+    script 			= "soldier.lua",
     
 --Unit limitations and properties
     BuildTime 		= 1000,
