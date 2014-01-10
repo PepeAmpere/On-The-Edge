@@ -117,7 +117,6 @@ local function DelayedInitialization()
 	Spring.Echo(Spring.GetUnitHealth(heroStats.unitID))
 end
 
-
 local function ActivateScreen(unitID, unitDefID)
 	myUnitID 	= unitID					-- for later access to units stats
 	class		= UnitDefs[unitDefID].name	-- connection not via our tables, but via spring table (due reason on line 29)
@@ -165,7 +164,7 @@ function widget:GameFrame(frameNumber)
 		-- fix for ingame reload of UI
 		if (frameNumber % 60 == 0 and needUnit) then
 			local listOfUnits = Spring.GetTeamUnits(myTeamID)
-			if (listOfUnits) then				
+			if (listOfUnits and (#listOfUnits > 0)) then				
 				ActivateScreen(listOfUnits[1],Spring.GetUnitDefID(listOfUnits[1]))
 			end
 		end

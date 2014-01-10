@@ -5,6 +5,23 @@
 ------------------------------------------------------------------------------
 
 oteRule = {
+	experienceRadius	= 1000,
+	experienceLevelMult	= 1.5,
+	experience	= {
+		soldier 	= 4,
+		ranger		= 4,
+		hero		= 50,
+		towerMain	= 200,
+		towerSmall	= 5,
+		bug1		= 1,
+		bug2		= 4,
+		bug3		= 8,
+		bug5		= 200,
+		bugqueen	= 1000,
+		bugtower	= 20,
+		bughive		= 40,
+	},
+
 	-- HERO GENERATION CLASSES --
 	speed 		= {2.5, 3.5, 4, 4.5, 5.5},
 	

@@ -57,6 +57,7 @@ local spSetTeamResource                = Spring.SetTeamResource
 local spAddTeamResource                = Spring.AddTeamResource
 
 ------ SETTINGS ----------
+local frameworkOFFwithoutAI			   = true		 -- depends on setting here or on modoptions in initialization
 --- !? some of the values rewritten in init depending on size of map and lobby settings now !? ---
 local step                             = 60          -- how much frames for each step -- more then 14 needed now
 local timeStep                         = 1           -- recalculation of time if step is changed
@@ -467,6 +468,14 @@ function GetRandomPlaceOnTheMap()
 	local randX = OwnRandom(1,mapX)
 	local randZ = OwnRandom(1,mapZ)
 	return randX, randZ
+end
+
+function ToBool(something)
+	if (something == 0 or something == "false" or something == "0" or something == false or something == nil) then
+		return false
+	else
+		return true
+	end
 end
 
 function TargetUsageChange(teamNumber,targetIndex,usage)
@@ -1591,11 +1600,13 @@ function gadget:GameFrame(n)
 	
 	--- SPEEDABLE NOE STUFF (MAPPING + PLANS RUN) ---
     if     ((part >= stepBeginMapping) and (part <= stepEndMapping)) then  -- mapping from 1 to 8 default
-		if (splitMapping) then  -- if game options
-		    Mapping(part,mapSplitPart,splitMapping)
-		else
-			for team=1,sideIDcount do
-				Mapping(part,team,splitMapping)
+		if (numberOfNoeAITeams > 0) then  -- if there is someone for which we map ;)
+			if (splitMapping) then  -- if game options
+				Mapping(part,mapSplitPart,splitMapping)
+			else
+				for team=1,sideIDcount do
+					Mapping(part,team,splitMapping)
+				end
 			end
 		end
 	elseif (part == stepSetGlobals) then      -- its 9 now default
@@ -1740,6 +1751,8 @@ function gadget:Initialize()
 	Spring.Echo("N.O.E. executePartLenght: " .. executePartLenght)
     Spring.Echo("N.O.E. step: " .. step)
 
+	--- framwork ON/OFF with no AI
+	frameworkOFFwithoutAI = ToBool(Spring.GetModOptions().noeautooff or frameworkOFFwithoutAI)
 
 	--- put off graphic interface
     if(options.startoptions ~= 'noe') then
@@ -1750,7 +1763,7 @@ function gadget:Initialize()
 	end
 	
 	--- is AI ON?
-	if (numberOfNoeAITeams == 0) then
+	if (frameworkOFFwithoutAI and numberOfNoeAITeams == 0) then
 	    Spring.Echo("Removing N.O.E.")
 	    _G.off = true
         gadgetHandler:RemoveGadget()

@@ -50,6 +50,21 @@ local options = {
 			{key = "normal", name = "Normal", desc = "Normal game mode"},
 		}
 	},
+	-- updates
+	{
+		key 	= "noe",
+		name 	= "NOE options",
+		desc 	= "Options of NOE framework",
+		type	= "section",
+	},
+	{
+		key 	= "noeautooff",
+		name 	= "autoOFF",
+		desc 	= "Is framework OFF when no NOE AI is added in game (as any other purpose?)",
+		type 	= "bool",
+		def 	= false,
+		section = "noe",
+	},
 }
 
 return options

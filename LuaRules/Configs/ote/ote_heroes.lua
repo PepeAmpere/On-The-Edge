@@ -12,6 +12,14 @@ local heroStats = {	-- speed, health, energy, armor, dmg, reload, range, spawn
 	["doc"] 		= {5, 2, 3, 3, 3, 2, 2, 3},
 }
 
+local heroModel		= {
+	["ball"] 		= "ball.s3o",
+	["bug"] 		= "bug.s3o",
+	["bulk"] 		= "bulk.s3o",
+	["cam"] 		= "cam.s3o",
+	["doc"] 		= "doc.s3o",
+}
+
 local heroUIpath 	= "LuaUI/oteUI/heroes256x256/"
 local heroUIimage	= {
 	["ball"] 		= "ball.png",
@@ -25,26 +33,31 @@ heroClass = {
 	["ball"] = {
 		statsClass 	= heroStats["ball"],
 		bigImage	= heroUIpath .. heroUIimage["ball"],
+		model		= heroModel["ball"],
 		
 	},
-	["bulk"] = {
+	["bug"] = {
 		statsClass 	= heroStats["bug"],
-		bigImage	= heroUIimage["bug"],
+		bigImage	= heroUIpath .. heroUIimage["bug"],
+		model		= heroModel["bug"],
 		
 	},
 	["bulk"] = {
 		statsClass 	= heroStats["bulk"],
-		bigImage	= heroUIimage["bulk"],
+		bigImage	= heroUIpath .. heroUIimage["bulk"],
+		model		= heroModel["bulk"],
 		
 	},
 	["cam"] = {
 		statsClass 	= heroStats["cam"],
-		bigImage	= heroUIimage["cam"],
+		bigImage	= heroUIpath .. heroUIimage["cam"],
+		model		= heroModel["cam"],
 		
 	},
 	["doc"] = {
 		statsClass 	= heroStats["doc"],
-		bigImage	= heroUIimage["doc"],
+		bigImage	= heroUIpath .. heroUIimage["doc"],
+		model		= heroModel["doc"]
 		
 	},
 }
