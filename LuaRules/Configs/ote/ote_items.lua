@@ -36,19 +36,32 @@ local panzerLightEffect 		= 0.8
 local panzerHeavyEffect			= 0.6
 
 oteItem = {
+	-- head sensors
+	["simpleHelmet"] = {
+		price 			= priceClass.free,
+		icon			= itemIconsPath .. "helm.png",
+		position		= "head",
+		code			= "h0",
+		upgrade 		= {},
+		goodHeroes		= {},
+		badHeroes		= {"bug"},
+	},
+	
 	-- weaponUps
 	["basicWeapon"] = {
 		price 			= priceClass.free,
-		icon			= itemIconsPath .. "laser1.png",
+		icon			= itemIconsPath .. "weapon0.png",
 		position		= "weapon",
+		code			= "w0",
 		upgrade 		= {},
 		goodHeroes		= {},
 		badHeroes		= {},
 	},
 	["duranthiumAmmo"] = {
 		price 			= priceClass.moderate,
-		icon			= itemIconsPath .. "laser2.png",
+		icon			= itemIconsPath .. "weaponAmmo.png",
 		position		= "weapon",
+		code			= "wa",
 		upgrade 		= {
 			damage = 1+damageWeaponUpgradePerPrice.moderate,
 		},
@@ -57,8 +70,9 @@ oteItem = {
 	},
 	["dualReloader"] = {
 		price 			= priceClass.expensive,
-		icon			= itemIconsPath .. "laser3.png",
+		icon			= itemIconsPath .. "weaponReload.png",
 		position		= "weapon",
+		code			= "wl",
 		upgrade 		= {
 			damage 	= 1-damageWeaponUpgradePerPrice.cheap,
 			reload	= 0.5,
@@ -68,10 +82,20 @@ oteItem = {
 	},
 	
 	-- armorUps
+	["noArmor"] = {
+		price 			= priceClass.free,
+		icon			= itemIconsPath .. "noArmor.png",
+		position		= "chest",
+		code			= "ch0",
+		upgrade 		= {},
+		goodHeroes		= {},
+		badHeroes		= {},
+	},
 	["panzerFront"] = {
 		price 			= priceClass.moderate,
 		icon			= itemIconsPath .. "panzerFront.png",
 		position		= "chest",
+		code			= "pf",
 		upgrade 		= {
 			speed				= panzerLightSpeedDecrease,
 			flankingBonusMode	= 3,
@@ -86,6 +110,7 @@ oteItem = {
 		price 			= priceClass.moderate,
 		icon			= itemIconsPath .. "panzerRear.png",
 		position		= "chest",
+		code			= "pb",
 		upgrade 		= {
 			speed				= panzerLightSpeedDecrease,
 			flankingBonusMode	= 3,
@@ -100,6 +125,7 @@ oteItem = {
 		price 			= priceClass.moderate,
 		icon			= itemIconsPath .. "panzerRight.png",
 		position		= "chest",
+		code			= "pr",
 		upgrade 		= {
 			speed				= panzerLightSpeedDecrease,
 			flankingBonusMode	= 3,
@@ -114,6 +140,7 @@ oteItem = {
 		price 			= priceClass.moderate,
 		icon			= itemIconsPath .. "panzerLeft.png",
 		position		= "chest",
+		code			= "pl",
 		upgrade 		= {
 			speed				= panzerLightSpeedDecrease,
 			flankingBonusMode	= 3,
@@ -128,6 +155,7 @@ oteItem = {
 		price 			= priceClass.ultimate,
 		icon			= itemIconsPath .. "panzerUltimate.png",
 		position		= "chest",
+		code			= "pu",
 		upgrade 		= {
 			speed				= panzerHeavySpeedDecrease,
 			flankingBonusMode	= 3,
@@ -139,3 +167,4 @@ oteItem = {
 		badHeroes		= {"cam"},
 	},
 }
+

@@ -1,12 +1,16 @@
 -- ubergenerator :) 
 VFS.Include("LuaRules/Configs/ote/ote_heroes.lua")
 VFS.Include("LuaRules/Configs/ote/ote_rules.lua")
+VFS.Include("LuaRules/Configs/ote/ote_items.lua")
+VFS.Include("LuaRules/Configs/ote/ote_items_combinator.lua")
 
-local allHeroesDefs = {}
+local allHeroesDefs 	= {}
 
-local defName  		=  "dude"
+local defName  			=  "dude"
+
 
 -- jedna class
+-- vsechny predmety
 	-- vsechny kombinace class + predmety pro dany level
 	-- pro kazdou kombinaci
 		-- jedna class + predmety
