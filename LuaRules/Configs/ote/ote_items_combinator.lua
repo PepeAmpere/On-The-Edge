@@ -47,7 +47,7 @@ for k,v in pairs(oteItem) do
 end	
 
 for k=1,reactorSettingsCounter do
-	reactorSettings[k] = k .. (reactorSettingsCounter - k + 1)
+	reactorSettings[k] = k -- .. (reactorSettingsCounter - k + 1)
 end
 
 	
@@ -78,7 +78,7 @@ for i=1,headItemsCounter do
 						reactor	= reactorSettings[k],
 						chest1	= chestDoublesItems[l].first,
 						chest2	= chestDoublesItems[l].second,
-					}
+					},
 				}
 			end
 		end

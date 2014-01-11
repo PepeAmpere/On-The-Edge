@@ -11,6 +11,9 @@ function widget:GetInfo()
 	}
 end
 
+VFS.Include("LuaRules/Configs/ote/ote_heroes.lua")
+VFS.Include("LuaRules/Gadgets/Includes/utilities.lua")
+
 local energyBar
 local hpBar
 
@@ -19,15 +22,14 @@ local active 	= false
 local needUnit	= true
 local needInit 	= true
 
-local class 	= ""									-- = name of hero
-local path 		= "LuaUI/oteUI/heroes256x256/"			-- folder with images of heroes 256x256 pixels
+local class 	= ""
+local name		= ""
 local myUnitID 	= 0
 local myTeamID	= Spring.GetMyTeamID()					-- from this we know team from the beginning
 
 local function GetHeroStats()
-	-- !! not possible to include files outside LuaUI
 	local heroStats = {
-		image	= path .. class .. ".png",
+		image	= heroClass[class].bigImage,
 		unitID	= myUnitID,
 		teamID	= myTeamID,
 	}
@@ -114,12 +116,14 @@ local function DelayedInitialization()
 		color		= {0,1,0,1}
 	}
 	
-	Spring.Echo(Spring.GetUnitHealth(heroStats.unitID))
+	-- Spring.Echo(Spring.GetUnitHealth(heroStats.unitID))
 end
 
 local function ActivateScreen(unitID, unitDefID)
 	myUnitID 	= unitID					-- for later access to units stats
-	class		= UnitDefs[unitDefID].name	-- connection not via our tables, but via spring table (due reason on line 29)
+	name		= UnitDefs[unitDefID].name
+	local tags	= split(name,"_")
+	class		= tags[1]
 	active 		= true						-- we are ready to show it now
 	needUnit	= false						-- we needed this check only once
 end
