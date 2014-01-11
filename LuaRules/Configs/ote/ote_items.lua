@@ -36,106 +36,126 @@ local panzerLightEffect 		= 0.8
 local panzerHeavyEffect			= 0.6
 
 oteItem = {
+	-- head sensors
+	["simpleHelmet"] = {
+		price 			= priceClass.free,
+		icon			= itemIconsPath .. "helm.png",
+		position		= "head",
+		code			= "h0",
+		goodHeroes		= {},
+		badHeroes		= {"bug"},
+		upgrade 		= function(defTable) 
+			return defTable
+		end,
+	},
+	
 	-- weaponUps
 	["basicWeapon"] = {
 		price 			= priceClass.free,
-		icon			= itemIconsPath .. "laser1.png",
+		icon			= itemIconsPath .. "weapon0.png",
 		position		= "weapon",
-		upgrade 		= {},
+		code			= "w0",
 		goodHeroes		= {},
 		badHeroes		= {},
+		upgrade 		= function(defTable) 
+			return defTable
+		end,
 	},
 	["duranthiumAmmo"] = {
 		price 			= priceClass.moderate,
-		icon			= itemIconsPath .. "laser2.png",
+		icon			= itemIconsPath .. "weaponAmmo.png",
 		position		= "weapon",
-		upgrade 		= {
-			damage = 1+damageWeaponUpgradePerPrice.moderate,
-		},
+		code			= "wa",
 		goodHeroes		= {},
 		badHeroes		= {"bug"},
+		upgrade 		= function(defTable)
+			local newDefaultDmg	= defTable.damage.default * (1 + damageWeaponUpgradePerPrice.moderate)
+			defTable.damage = {
+				default =  newDefaultDmg,
+			}
+			return defTable
+		end,
 	},
 	["dualReloader"] = {
 		price 			= priceClass.expensive,
-		icon			= itemIconsPath .. "laser3.png",
+		icon			= itemIconsPath .. "weaponReload.png",
 		position		= "weapon",
-		upgrade 		= {
-			damage 	= 1-damageWeaponUpgradePerPrice.cheap,
-			reload	= 0.5,
-		},
+		code			= "wl",
 		goodHeroes		= {},
-		badHeroes		= {"bug"},
+		badHeroes		= {"bug"},		
+		upgrade 		= function(defTable) 
+			local newDefaultDmg	= defTable.damage.default * 0.6
+			local newReload		= defTable.reloadtime * 0.5
+			defTable.damage = {	
+				default = newDefaultDmg,
+			}
+			defTable.reloadtime = newReload
+			return defTable
+		end,
 	},
 	
-	-- armorUps
+	-- chest
+	["noChest"] = {
+		price 			= priceClass.free,
+		icon			= itemIconsPath .. "noChest.png",
+		position		= "chest",
+		code			= "ch0",
+		goodHeroes		= {},
+		badHeroes		= {},
+		upgrade 		= function(defTable) 
+			return defTable
+		end,
+	},
 	["panzerFront"] = {
 		price 			= priceClass.moderate,
 		icon			= itemIconsPath .. "panzerFront.png",
 		position		= "chest",
-		upgrade 		= {
-			speed				= panzerLightSpeedDecrease,
-			flankingBonusMode	= 3,
-			flankingBonusDir	= {0.0, 0.0, 1.0},
-			flankingBonusMax 	= 1.0,
-			flankingBonusMin  	= panzerLightEffect,
-		},
+		code			= "pf",
 		goodHeroes		= {},
 		badHeroes		= {"cam"},
+		upgrade 		= function(defTable) 
+			local newSpeed = defTable.maxVelocity + panzerLightSpeedDecrease
+			defTable.maxVelocity 		= newSpeed
+			defTable.flankingBonusMode	= 3
+			defTable.flankingBonusDir	= {0.0, 0.0, 1.0}
+			defTable.flankingBonusMax 	= 1.0
+			defTable.flankingBonusMin 	= panzerLightEffect
+			return defTable
+		end,
 	},
-	["panzerRear"] = {
-		price 			= priceClass.moderate,
-		icon			= itemIconsPath .. "panzerRear.png",
-		position		= "chest",
-		upgrade 		= {
-			speed				= panzerLightSpeedDecrease,
-			flankingBonusMode	= 3,
-			flankingBonusDir	= {0.0, 0.0, -1.0},
-			flankingBonusMax 	= 1.0,
-			flankingBonusMin  	= panzerLightEffect,
-		},
-		goodHeroes		= {},
-		badHeroes		= {},
-	},
-	["panzerRight"] = {
-		price 			= priceClass.moderate,
-		icon			= itemIconsPath .. "panzerRight.png",
-		position		= "chest",
-		upgrade 		= {
-			speed				= panzerLightSpeedDecrease,
-			flankingBonusMode	= 3,
-			flankingBonusDir	= {-1.0, 0.0, 0.0},
-			flankingBonusMax 	= 1.0,
-			flankingBonusMin  	= panzerLightEffect,
-		},
-		goodHeroes		= {},
-		badHeroes		= {},
-	},
-	["panzerLeft"] = {
-		price 			= priceClass.moderate,
-		icon			= itemIconsPath .. "panzerLeft.png",
-		position		= "chest",
-		upgrade 		= {
-			speed				= panzerLightSpeedDecrease,
-			flankingBonusMode	= 3,
-			flankingBonusDir	= {1.0, 0.0, 0.0},
-			flankingBonusMax 	= 1.0,
-			flankingBonusMin  	= panzerLightEffect,
-		},
-		goodHeroes		= {},
-		badHeroes		= {},
-	},
-	["panzerUltimate"] = {
-		price 			= priceClass.ultimate,
-		icon			= itemIconsPath .. "panzerUltimate.png",
-		position		= "chest",
-		upgrade 		= {
-			speed				= panzerHeavySpeedDecrease,
-			flankingBonusMode	= 3,
-			flankingBonusDir	= {0.0, 0.0, 1.0},
-			flankingBonusMax 	= 1.0,
-			flankingBonusMin  	= panzerHeavyEffect,
-		},
-		goodHeroes		= {},
-		badHeroes		= {"cam"},
-	},
+	-- ["panzerRight"] = {
+		-- price 			= priceClass.moderate,
+		-- icon			= itemIconsPath .. "panzerRight.png",
+		-- position		= "chest",
+		-- code			= "pr",
+		-- goodHeroes		= {},
+		-- badHeroes		= {},
+		-- upgrade 		= function(defTable) 
+			-- local newSpeed = defTable.maxVelocity + panzerLightSpeedDecrease
+			-- defTable.maxVelocity 		= newSpeed
+			-- defTable.flankingBonusMode	= 3,
+			-- defTable.flankingBonusDir	= {-1.0, 0.0, 0.0},
+			-- defTable.flankingBonusMax 	= 1.0,
+			-- defTable.flankingBonusMin 	= panzerLightEffect,
+			-- return defTable
+		-- end,
+	-- },
+	-- ["panzerUltimate"] = {
+		-- price 			= priceClass.ultimate,
+		-- icon			= itemIconsPath .. "panzerUltimate.png",
+		-- position		= "chest",
+		-- code			= "pu",
+		-- goodHeroes		= {},
+		-- badHeroes		= {"cam"},
+		-- upgrade 		= function(defTable) 
+			-- local newSpeed = defTable.maxVelocity + panzerHeavySpeedDecrease
+			-- defTable.maxVelocity 		= newSpeed
+			-- defTable.flankingBonusMode	= 3,
+			-- defTable.flankingBonusDir	= {0.0, 0.0, 1.0},
+			-- defTable.flankingBonusMax 	= 1.0,
+			-- defTable.flankingBonusMin 	= panzerHeavyEffect,
+			-- return defTable
+		-- end,
+	-- },
 }
+

@@ -722,7 +722,7 @@ local function SetResources()
 				-- TODO: get metal value and class from lobby
 				local metalCurrent = 100
 				local class = "bulk"
-				Spring.Echo(oteRule.energy[heroClass[class].statsClass[3]])
+				-- Spring.Echo(oteRule.energy[heroClass[class].statsClass[3]])
 				m  = metalCurrent
 				ms = 100000
 				e  = oteRule.energy[heroClass[class].statsClass[3]]
