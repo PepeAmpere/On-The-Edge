@@ -5,7 +5,7 @@ local sidedata = {
 	},
 	{
 		name = "BUG",
-		startUnit = "bug_h0_w0_1_ch0_ch0_0_0_0_0",
+		startUnit = "bug_h0_w0_ch0_ch0_1_0_0_0_0",
 	},
 	{
 		name = "BALL",
