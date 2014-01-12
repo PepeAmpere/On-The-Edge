@@ -26,6 +26,10 @@ local rad200	= math.rad(200)
 
 
 function script.Create()
+	Hide( flare1)
+	Hide( flare2)
+	Move( base, y_axis, math.rad(-20), now)
+	Move( base, y_axis, math.rad(0), math.rad(40))
 	moving = false
     return 0
 end
@@ -171,4 +175,86 @@ end
 
 function script.Killed(recentDamage, maxHealth)
 	return 0
+end
+
+function script.AimWeapon1(heading, pitch)
+	Signal(SIG_Aim)
+	SetSignalMask(SIG_Aim)
+	Turn( base, y_axis, heading, math.rad(360))
+	WaitForTurn(base, y_axis)
+	return 1
+end
+
+function script.FireWeapon1()
+	Move( base, z_axis, math.rad(10), math.rad(50))
+	Move( base, y_axis, math.rad(3), math.rad(30))
+	Move( flare1, z_axis, math.rad(-20), math.rad(50))
+	Move( flare1, y_axis, math.rad(-3), math.rad(30))
+	Sleep(200)
+	Turn( cro1, x_axis, math.rad(140.016484), math.rad(900))
+	Turn( cro1, z_axis, math.rad(-30), math.rad(800))
+	Turn( cro1, y_axis, math.rad(60.005495), math.rad(500))
+	Turn( cro2, x_axis, math.rad(140.016484), math.rad(900))
+	Turn( cro2, z_axis, math.rad(30), math.rad(800))
+	Turn( cro2, y_axis, math.rad(-60.005495), math.rad(500))
+	Sleep(250)
+	Turn( cro1, x_axis, math.rad(0), math.rad(900))
+	Turn( cro1, z_axis, math.rad(0), math.rad(800))
+	Turn( cro1, y_axis, math.rad(0), math.rad(500))
+	Turn( cro2, x_axis, math.rad(0), math.rad(900))
+	Turn( cro2, z_axis, math.rad(0), math.rad(800))
+	Turn( cro2, y_axis, math.rad(0), math.rad(500))
+	Move( base, z_axis, math.rad(0), math.rad(50))
+	Move( base, y_axis, math.rad(0), math.rad(30))
+	Move( flare1, z_axis, math.rad(0), math.rad(50))
+	Move( flare1, y_axis, math.rad(0), math.rad(30))
+end
+
+function script.AimFromWeapon1()
+	return base
+end
+
+function script.Killed(recentDamage, maxHealth)
+	local severity = recentDamage/maxHealth*100
+	if( severity <= 25 ) then
+		Explode( cro1, SFX.SHATTER)
+		Explode( cro2, SFX.SHATTER)
+		Explode( leg1, SFX.FALL)
+		return (1)
+	end
+	if( severity <= 50 ) then
+		Explode( cro1, SFX.FALL)
+		Explode( cro2, SFX.FALL)
+		Explode( base, SFX.SHATTER)
+		Explode( flare1, SFX.SHATTER)
+		Explode( leg1, SFX.SHATTER)
+		Explode( leg5, SFX.FALL)
+		return (2)
+	end
+	if( severity <= 99 ) then
+		Explode( cro1, SFX.FALL)
+		Explode( cro2, SFX.FALL)
+		Explode( base, SFX.SHATTER)
+		Explode( flare1, SFX.FALL)
+		Explode( flare2, SFX.FALL)
+		Explode( leg1, SFX.FALL)
+		Explode( leg2, SFX.FALL)
+		Explode( leg3, SFX.FALL)
+		Explode( leg4, SFX.FALL)
+		Explode( leg5, SFX.SHATTER)
+		Explode( leg6, SFX.SHATTER)
+		return (3)
+	end
+	Explode( cro1, SFX.FALL)
+	Explode( cro2, SFX.FALL)
+	Explode( base, SFX.SHATTER)
+	Explode( flare1, SFX.SHATTER)
+	Explode( flare2, SFX.SHATTER)
+	Explode( leg1, SFX.FALL)
+	Explode( leg2, SFX.SHATTER)
+	Explode( leg3, SFX.SHATTER)
+	Explode( leg4, SFX.FALL)
+	Explode( leg5, SFX.FALL)
+	Explode( leg6, SFX.SHATTER)
+	return (3)
 end
