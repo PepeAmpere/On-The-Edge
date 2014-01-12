@@ -37,9 +37,11 @@ local panzerHeavyEffect			= 0.6
 
 oteItem = {
 	-- head sensors
-	["simpleHelmet"] = {
+	["noHelmet"] = {
 		price 			= priceClass.free,
 		icon			= itemIconsPath .. "helm.png",
+		shortName		= "No helmet",
+		description		= "This slot is not used",
 		position		= "head",
 		code			= "h0",
 		goodHeroes		= {},
@@ -47,12 +49,15 @@ oteItem = {
 		upgrade 		= function(defTable) 
 			return defTable
 		end,
+		upgInterpret	= {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 	},
 	
 	-- weaponUps
-	["basicWeapon"] = {
+	["noWeapon"] = {
 		price 			= priceClass.free,
 		icon			= itemIconsPath .. "weapon0.png",
+		shortName		= "No weapon",
+		description		= "This slot is not used",
 		position		= "weapon",
 		code			= "w0",
 		goodHeroes		= {},
@@ -60,25 +65,32 @@ oteItem = {
 		upgrade 		= function(defTable) 
 			return defTable
 		end,
+		upgInterpret	= {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 	},
 	["duranthiumAmmo"] = {
 		price 			= priceClass.moderate,
 		icon			= itemIconsPath .. "weaponAmmo.png",
+		shortName		= "Duranthium Ammo",
+		description		= "Anti-armor shells - weaker a bit but same amount of dmg to armored enemies",
 		position		= "weapon",
 		code			= "wa",
 		goodHeroes		= {},
 		badHeroes		= {"bug"},
 		upgrade 		= function(defTable)
-			local newDefaultDmg	= defTable.damage.default * (1 + damageWeaponUpgradePerPrice.moderate)
+			local newDefaultDmg	= defTable.damage.default * 0.8
 			defTable.damage = {
 				default =  newDefaultDmg,
+				-- TODO: add all other classes the same dmg
 			}
 			return defTable
 		end,
+		upgInterpret	= {0, -priceClass.cheap, 0, 0, 0, 0, 0, 0, 0, 0},
 	},
 	["dualReloader"] = {
 		price 			= priceClass.expensive,
 		icon			= itemIconsPath .. "weaponReload.png",
+		shortName		= "Dual realoder",
+		description		= "Upgrade which allows you to fire two times faster with worse aim",
 		position		= "weapon",
 		code			= "wl",
 		goodHeroes		= {},
@@ -92,12 +104,15 @@ oteItem = {
 			defTable.reloadtime = newReload
 			return defTable
 		end,
+		upgInterpret	= {0, -priceClass.cheap, priceClass.expensive, 0, 0, 0, 0, 0, 0, 0},
 	},
 	
 	-- chest
 	["noChest"] = {
 		price 			= priceClass.free,
 		icon			= itemIconsPath .. "noChest.png",
+		shortName		= "No chest",
+		description		= "This slot is not used",
 		position		= "chest",
 		code			= "ch0",
 		goodHeroes		= {},
@@ -105,10 +120,13 @@ oteItem = {
 		upgrade 		= function(defTable) 
 			return defTable
 		end,
+		upgInterpret	= {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 	},
 	["panzerFront"] = {
 		price 			= priceClass.moderate,
 		icon			= itemIconsPath .. "panzerFront.png",
+		shortName		= "Light front panzer",
+		description		= "Panzer which increase armor of hero for direct attacks but decrease his speed a bit in exchange",
 		position		= "chest",
 		code			= "pf",
 		goodHeroes		= {},
@@ -122,10 +140,13 @@ oteItem = {
 			defTable.flankingBonusMin 	= panzerLightEffect
 			return defTable
 		end,
+		upgInterpret	= {0, 0, 0, 0, 0, priceClass.moderate, 0, 0, 0, 0},
 	},
 	-- ["panzerRight"] = {
 		-- price 			= priceClass.moderate,
 		-- icon			= itemIconsPath .. "panzerRight.png",
+		-- shortName		= "No helmet",
+		-- description		= "No helmet",
 		-- position		= "chest",
 		-- code			= "pr",
 		-- goodHeroes		= {},
@@ -139,10 +160,13 @@ oteItem = {
 			-- defTable.flankingBonusMin 	= panzerLightEffect,
 			-- return defTable
 		-- end,
+		-- upgInterpret	= {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 	-- },
 	-- ["panzerUltimate"] = {
 		-- price 			= priceClass.ultimate,
 		-- icon			= itemIconsPath .. "panzerUltimate.png",
+		-- shortName		= "No helmet",
+		-- description		= "No helmet",
 		-- position		= "chest",
 		-- code			= "pu",
 		-- goodHeroes		= {},
@@ -156,6 +180,7 @@ oteItem = {
 			-- defTable.flankingBonusMin 	= panzerHeavyEffect,
 			-- return defTable
 		-- end,
+		-- upgInterpret	= {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 	-- },
 }
 

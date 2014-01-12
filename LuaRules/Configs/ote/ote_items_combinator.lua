@@ -46,8 +46,8 @@ for k,v in pairs(oteItem) do
 	end
 end	
 
-for k=1,reactorSettingsCounter do
-	reactorSettings[k] = k -- .. (reactorSettingsCounter - k + 1)
+for l=1,reactorSettingsCounter do
+	reactorSettings[l] = l -- .. (reactorSettingsCounter - k + 1)
 end
 
 	
@@ -66,18 +66,18 @@ end
 
 for i=1,headItemsCounter do
 	for j=1,weaponItemsCounter do
-		for k=1,reactorSettingsCounter do
-			for l=1,chestDoublesCounter do
+		for k=1,chestDoublesCounter do
+			for l=1,reactorSettingsCounter do
 				itemComboCounter 			= itemComboCounter + 1
 				-- Spring.Echo(itemComboCounter, headItems[i], weaponItems[j], reactorSettings[k], chestDoublesItems[l].first, chestDoublesItems[l].second)
 				itemCombo[itemComboCounter] = {
-					comboString = itemNameToCode[headItems[i]] .. "_" .. itemNameToCode[weaponItems[j]] .. "_" .. reactorSettings[k] .. "_" .. chestDoubles[l],
+					comboString = itemNameToCode[headItems[i]] .. "_" .. itemNameToCode[weaponItems[j]] .. "_" .. chestDoubles[k] .. "_" .. reactorSettings[l],
 					itemList	= {
 						head	= headItems[i],
 						weapon	= weaponItems[j],
-						reactor	= reactorSettings[k],
-						chest1	= chestDoublesItems[l].first,
-						chest2	= chestDoublesItems[l].second,
+						chest1	= chestDoublesItems[k].first,
+						chest2	= chestDoublesItems[k].second,
+						reactor	= reactorSettings[l],
 					},
 				}
 			end
