@@ -167,9 +167,15 @@ function widget:GameFrame(frameNumber)
 	else
 		-- fix for ingame reload of UI
 		if (frameNumber % 60 == 0 and needUnit) then
-			local listOfUnits = Spring.GetTeamUnits(myTeamID)
-			if (listOfUnits and (#listOfUnits > 0)) then				
-				ActivateScreen(listOfUnits[1],Spring.GetUnitDefID(listOfUnits[1]))
+			myTeamID			= Spring.GetMyTeamID()
+			local listOfUnits 	= Spring.GetTeamUnits(myTeamID)
+			if (listOfUnits and (#listOfUnits > 0)) then
+				for i=1,#listOfUnits do
+					local unitDefID = Spring.GetUnitDefID(listOfUnits[i])
+					if (UnitDefs[unitDefID].customParams.ishero) then
+						ActivateScreen(listOfUnits[i],unitDefID)
+					end
+				end
 			end
 		end
 	end

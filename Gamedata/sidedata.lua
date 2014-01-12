@@ -1,27 +1,27 @@
 local sidedata = {
-	{
-		name = "PIR",
-		startUnit = "tank",
-	},
+	-- {
+		-- name = "PIR",
+		-- startUnit = "tank",
+	-- },
 	{
 		name = "BUG",
 		startUnit = "bug_h0_w0_ch0_ch0_1_0_0_0_0",
 	},
 	{
 		name = "BALL",
-		startUnit = "ball",
+		startUnit = "ball_h0_w0_ch0_ch0_1_0_0_0_0",
 	},
 	{
 		name = "BULK",
-		startUnit = "bulk",
+		startUnit = "bulk_h0_w0_ch0_ch0_1_0_0_0_0",
 	},
 	{
 		name = "CAM",
-		startUnit = "cam",
+		startUnit = "cam_h0_w0_ch0_ch0_1_0_0_0_0",
 	},
 	{
 		name = "DOC",
-		startUnit = "doc",
+		startUnit = "doc_h0_w0_ch0_ch0_1_0_0_0_0",
 	},
 }
 return sidedata

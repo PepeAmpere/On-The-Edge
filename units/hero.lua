@@ -74,6 +74,7 @@ local function CreateBaseDef(className, finalName, itemList)
 			spawnTime		= 5 + 0 + oteRule.heroSpawn[heroClass[className].statsClass[9]],
 			tsps			= {},
 			nextLevelExp	= oteRule.experienceLevelFirst,
+			isHero			= true,
 		},
 	}
 	

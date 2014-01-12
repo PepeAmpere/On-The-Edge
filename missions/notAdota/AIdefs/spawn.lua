@@ -37,6 +37,15 @@ local function notAdotaSpawn(spots,firstAxis,firstAxisInc,secondAxis,secondAxisI
     for _,t in ipairs(Spring.GetTeamList()) do
 		local _,_,_,ai,faction,allyTeam = Spring.GetTeamInfo(t)
 		local unitname = Spring.GetSideData(faction)
+		
+		-- base check (then add bad faction)
+		if (ai) then
+			local AIname = Spring.GetTeamLuaAI(t)
+			if (AIname == "BASE Team 1" or AIname == "BASE Team 2" or AIname == "WILDERNESS") then
+				faction = "pir"
+			end
+		end
+		
 		-- Spring.Echo(unitname,faction)
 		if unitname and (allyTeam >= 0) and (allyTeam < 2) and (faction ~= "pir") then
 			
