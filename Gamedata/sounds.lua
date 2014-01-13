@@ -24,7 +24,7 @@ local Sounds = {
 		},
 		--- END RESERVED
 
---WEAPONS
+		--WEAPONS
 
 		orangeblob_explo = { 
             file = "sounds/Explosi3.wav", 
@@ -37,14 +37,20 @@ local Sounds = {
 		mortar1 = { 
             file = "sounds/mortar1.wav", 
 			rolloff=3, dopplerscale = 0, maxdist = 1000,
-			priority = 10, --- higher numbers = less chance of cutoff
-			maxconcurrent = 4, ---how many maximum can we hear?
+			priority = 10, 
+			maxconcurrent = 4, 
 		},
 		mortar2 = { 
             file = "sounds/mortar2.wav", 
 			rolloff=3, dopplerscale = 0, maxdist = 1000,
-			priority = 10, --- higher numbers = less chance of cutoff
-			maxconcurrent = 4, ---how many maximum can we hear?
+			priority = 10,
+			maxconcurrent = 4, 
+		},
+		mortarhit = { 
+            file = "sounds/mortar_hit.ogg", 
+			rolloff=3, dopplerscale = 0, maxdist = 1000,
+			priority = 10,
+			maxconcurrent = 4,
 		},
 
 		--[[DefaultsForSounds = { -- this are default settings

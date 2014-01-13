@@ -43,15 +43,15 @@ local unitDef = {
 --Weapons and related
 	weapons = {
 		[1] = {
-			def                	= "orangeblob",
+			def                	= "mortar",
 			BadTargetCategory 	= "NOTAIR",
 			ExplodeAs 			= "TANKDEATH",
 			NoChaseCategory 	= "AIR",
 		},
 	},
 	weaponDefs = {
-		orangeblob = {
-			name = "Orange Plasma Cannon",
+		mortar = {
+			name = "Mortar tower weapon",
 			weapontype = "Cannon",
 			accuracy = 10,
 			areaofeffect = 100,
@@ -72,8 +72,8 @@ local unitDef = {
 			intensity = 1,
 			noselfdamage = true,
 			size = 4,
-			soundstart = "orangeblob_explo",
-			soundhit = "orangeblob_explo",
+			soundstart = "mortar1",
+			soundhit = "mortarhit",
 			range = 750,
 			reloadtime = 1.5,
 			rgbcolor = "1.0 1.0 1.0",

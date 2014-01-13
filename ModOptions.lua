@@ -36,7 +36,7 @@ local options = {
 		name 	= "Mission",
 		desc 	= "Mission selection",
 		type 	= "string",
-		def 	= "none",
+		def 	= "notAdota",
 		section = "ote",
 	},
 	{
