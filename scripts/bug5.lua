@@ -22,6 +22,8 @@ function script.Create()
 end
 
 local function Walk()
+	Signal(SIG_Walk)
+	SetSignalMask(SIG_Walk)
 	while( true ) do
 	
 		if( moving ) then
