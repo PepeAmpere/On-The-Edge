@@ -10,20 +10,20 @@ headItems				= {}
 headItemsCounter		= 0
 weaponItems				= {}
 weaponItemsCounter		= 0
-chestItems				= {}
-chestItemsCounter		= 0
+bodyItems				= {}
+bodyItemsCounter		= 0
 reactorSettings			= {}
 reactorSettingsCounter	= 5
 
-chestDoubles			= {}
-chestDoublesItems		= {}
-chestDoublesCounter		= 0
+bodyDoubles				= {}
+bodyDoublesItems		= {}
+bodyDoublesCounter		= 0
 
 itemCombo				= {}
 itemComboCounter		= 0
 
 -- items code structure
--- "headItemCode_weaponItemCode_reactorSetting_ChestItem1Code_ChestItem2Code" string
+-- "headItemCode_weaponItemCode_reactorSetting_BodyItem1Code_BodyItem2Code" string
 
 for k,v in pairs(oteItem) do
 	local thisItem = oteItem[k]
@@ -40,9 +40,9 @@ for k,v in pairs(oteItem) do
 		weaponItems[weaponItemsCounter] = k
 	end
 	
-	if (thisItem.position == "chest") then
-		chestItemsCounter				= chestItemsCounter + 1
-		chestItems[chestItemsCounter] 	= k
+	if (thisItem.position == "body") then
+		bodyItemsCounter				= bodyItemsCounter + 1
+		bodyItems[bodyItemsCounter] 	= k
 	end
 end	
 
@@ -51,32 +51,32 @@ for l=1,reactorSettingsCounter do
 end
 
 	
--- chest Doubles
+-- body Doubles
 -- TODO: currently X x X version, later will be special with own conditons, otherwise i would put it in main generator
-for i=1,chestItemsCounter do
-	for j=1,chestItemsCounter do
-		chestDoublesCounter 					= chestDoublesCounter + 1
-		chestDoubles[chestDoublesCounter]		= itemNameToCode[chestItems[i]] .. "_" .. itemNameToCode[chestItems[j]]
-		chestDoublesItems[chestDoublesCounter] 	= {
-			first 	= chestItems[i],
-			second 	= chestItems[j],
+for i=1,bodyItemsCounter do
+	for j=1,bodyItemsCounter do
+		bodyDoublesCounter 						= bodyDoublesCounter + 1
+		bodyDoubles[bodyDoublesCounter]			= itemNameToCode[bodyItems[i]] .. "_" .. itemNameToCode[bodyItems[j]]
+		bodyDoublesItems[bodyDoublesCounter] 	= {
+			first 	= bodyItems[i],
+			second 	= bodyItems[j],
 		}
 	end
 end
 
 for i=1,headItemsCounter do
 	for j=1,weaponItemsCounter do
-		for k=1,chestDoublesCounter do
+		for k=1,bodyDoublesCounter do
 			for l=1,reactorSettingsCounter do
 				itemComboCounter 			= itemComboCounter + 1
-				-- Spring.Echo(itemComboCounter, headItems[i], weaponItems[j], reactorSettings[k], chestDoublesItems[l].first, chestDoublesItems[l].second)
+				-- Spring.Echo(itemComboCounter, headItems[i], weaponItems[j], reactorSettings[k], bodyDoublesItems[l].first, bodyDoublesItems[l].second)
 				itemCombo[itemComboCounter] = {
-					comboString = itemNameToCode[headItems[i]] .. "_" .. itemNameToCode[weaponItems[j]] .. "_" .. chestDoubles[k] .. "_" .. reactorSettings[l],
+					comboString = itemNameToCode[headItems[i]] .. "_" .. itemNameToCode[weaponItems[j]] .. "_" .. bodyDoubles[k] .. "_" .. reactorSettings[l],
 					itemList	= {
 						head	= headItems[i],
 						weapon	= weaponItems[j],
-						chest1	= chestDoublesItems[k].first,
-						chest2	= chestDoublesItems[k].second,
+						body1	= bodyDoublesItems[k].first,
+						body2	= bodyDoublesItems[k].second,
 						reactor	= reactorSettings[l],
 					},
 				}

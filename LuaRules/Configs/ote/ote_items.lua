@@ -107,14 +107,14 @@ oteItem = {
 		upgInterpret	= {0, -priceClass.cheap, priceClass.expensive, 0, 0, 0, 0, 0, 0, 0},
 	},
 	
-	-- chest
-	["noChest"] = {
+	-- body
+	["nobody"] = {
 		price 			= priceClass.free,
-		icon			= itemIconsPath .. "noChest.png",
-		shortName		= "No chest",
+		icon			= itemIconsPath .. "nobody.png",
+		shortName		= "No body",
 		description		= "This slot is not used",
-		position		= "chest",
-		code			= "ch0",
+		position		= "body",
+		code			= "b0",
 		goodHeroes		= {},
 		badHeroes		= {},
 		upgrade 		= function(defTable) 
@@ -127,7 +127,7 @@ oteItem = {
 		icon			= itemIconsPath .. "panzerFront.png",
 		shortName		= "Light front panzer",
 		description		= "Panzer which increase armor of hero for direct attacks but decrease his speed a bit in exchange",
-		position		= "chest",
+		position		= "body",
 		code			= "pf",
 		goodHeroes		= {},
 		badHeroes		= {"cam"},
@@ -147,7 +147,7 @@ oteItem = {
 		-- icon			= itemIconsPath .. "panzerRight.png",
 		-- shortName		= "No helmet",
 		-- description		= "No helmet",
-		-- position		= "chest",
+		-- position		= "body",
 		-- code			= "pr",
 		-- goodHeroes		= {},
 		-- badHeroes		= {},
@@ -167,7 +167,7 @@ oteItem = {
 		-- icon			= itemIconsPath .. "panzerUltimate.png",
 		-- shortName		= "No helmet",
 		-- description		= "No helmet",
-		-- position		= "chest",
+		-- position		= "body",
 		-- code			= "pu",
 		-- goodHeroes		= {},
 		-- badHeroes		= {"cam"},

@@ -5,23 +5,23 @@ local sidedata = {
 	-- },
 	{
 		name = "BUG",
-		startUnit = "bug_h0_w0_ch0_ch0_1_0_0_0_0",
+		startUnit = "bug_h0_w0_b0_b0_1_0_0_0_0",
 	},
 	{
 		name = "BALL",
-		startUnit = "ball_h0_w0_ch0_ch0_1_0_0_0_0",
+		startUnit = "ball_h0_w0_b0_b0_1_0_0_0_0",
 	},
 	{
 		name = "BULK",
-		startUnit = "bulk_h0_w0_ch0_ch0_1_0_0_0_0",
+		startUnit = "bulk_h0_w0_b0_b0_1_0_0_0_0",
 	},
 	{
 		name = "CAM",
-		startUnit = "cam_h0_w0_ch0_ch0_1_0_0_0_0",
+		startUnit = "cam_h0_w0_b0_b0_1_0_0_0_0",
 	},
 	{
 		name = "DOC",
-		startUnit = "doc_h0_w0_ch0_ch0_1_0_0_0_0",
+		startUnit = "bug_h0_w0_b0_b0_1_0_0_0_0",
 	},
 }
 return sidedata

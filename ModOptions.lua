@@ -40,6 +40,14 @@ local options = {
 		section = "ote",
 	},
 	{
+		key 	= "setup",
+		name 	= "Heroes",
+		desc 	= "Heroes setup",
+		type 	= "string",
+		def 	= "none",
+		section = "ote",
+	},
+	{
 		key 	= "startoptions",
 		name 	= "Game Modes",
 		desc 	= "Change the game mode",

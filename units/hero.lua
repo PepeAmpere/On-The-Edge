@@ -8,7 +8,23 @@ VFS.Include("LuaRules/Configs/ote/ote_heroes_weapons.lua")
 
 local allHeroesDefs 	= {}
 
-local defName  			=  "dude"
+local maxLevels 		= 5
+local triangelCorrect	= 2
+local heroDefsCounter 	= 0
+
+-- !! shortcut testing
+-- TODO: iclude file which take from options setups we need to generate
+local function SomeFunction()
+	local list = {
+		bug_h0_w0_ch0_ch0_1 = true,
+		ball_h0_w0_ch0_ch0_1 = true,
+		bulk_h0_w0_ch0_ch0_1 = true,
+		cam_h0_w0_ch0_ch0_1 = true,
+		doc_h0_w0_ch0_ch0_1 = true,		
+	}
+	return list
+end
+local listOfneeded		= SomeFunction()
 
 local function CreateBaseDef(className, finalName, itemList)
 	
@@ -106,7 +122,7 @@ local function CreateBaseDef(className, finalName, itemList)
 			newDef["energyMake"] 	= (newDef["energyMake"] or 0) + oteRule.reactorPlus[itemName]
 			newDef["autoHeal"] 		= (newDef["autoHeal"] or 0) + oteRule.autorepair[itemName]
 		end
-		if (itemClass == "chest1" or itemClass == "chest2") then
+		if (itemClass == "body1" or itemClass == "body2") then
 			-- ! later may be special
 			newDef = oteItem[itemName].upgrade(newDef)
 		end
@@ -114,6 +130,9 @@ local function CreateBaseDef(className, finalName, itemList)
 	
 	return newDef
 end
+
+Spring.Echo("----------- START OF OTE HERO DEFS CREATOR -----------")
+Spring.Echo("... listing wanted hero + items combos: ")
 
 for className,thisClass in pairs(heroClass) do
 
@@ -131,17 +150,71 @@ for className,thisClass in pairs(heroClass) do
 		-- local GenerateNextLevel()
 		allHeroesDefs[newBaseDef.unitName] = newBaseDef
 		
-		-- BFS
-		-- for i=1,15 do
-			-- finalName = heroPlusItemsCode .. "_" .. i
-		-- end
-			-- dostanu meno a vsechny vlastnosti, ktere se nemeni s levelem
-			-- mam vsechny kombinace jmen (+ table = uroven + schopnosti + predchudce + naslednici)
-			-- pak jedu, a davam vlasnosti, ktere se nemeni s levelem + pridam efekt predmetu
-			-- protoze znam level, tak ty, ktere se meni pravidelne s levelem + efekt predmetu
-			-- pak pridam tabulku se schopnostmi, predchudci a nasledniky + existuje/neexistuje
+		-- if we need this to generate
+		if (listOfneeded[heroPlusItemsCode]) then
+			Spring.Echo(heroPlusItemsCode .. "  ... generating defs")
+		
+			-- ?! no BFS, just silly thing now
+			-- TODO: one day do it more clear
+			for a=0,maxLevels do
+				for b=0,maxLevels do
+					for c=0,maxLevels do
+						if (a + b + c == 0) then -- skip and?
+						else
+							local newLevel			= a + b + c
+							local anotherNewName 	= heroPlusItemsCode .. "_" .. tostring(newLevel) .. "_" .. a .. "_" .. b .. "_" .. c
+							local newDef			= {}
+							for k,v in pairs(newBaseDef) do
+								newDef[k] = v 
+							end
+							
+							-- !add powers, only 3 now!
+							local newTSPsNames 		= heroClass[className].tsps
+							local newTSPs			= {}
+							local tspLevels			= {a, b, c}
+							for i=1, #newTSPsNames do							-- mostly 3
+								newTSPs[i] = {
+									name 	= newTSPsNames[i],
+									level 	= tspLevels[i],
+								}
+							end
+							newDef.customParams.tsps = newTSPs		
+							
+							-- imcrease healh/energy/speed/repair/charge
+							-- !! TODO: make and connect with ote rules multipliers
+							local testMultiplier = 1.02
+							local expMultiplier = 2
+							newDef.unitName						= anotherNewName
+							newDef.maxDamage 					= newBaseDef.maxDamage * testMultiplier^newLevel
+							newDef.customParams.energyStorage 	= newBaseDef.customParams.energyStorage * testMultiplier^newLevel
+							newDef.maxVelocity 					= newBaseDef.maxVelocity * testMultiplier^newLevel
+							newDef.energyMake 					= newBaseDef.energyMake * testMultiplier^newLevel
+							newDef.autoHeal 					= newBaseDef.autoHeal * testMultiplier^newLevel
+							
+							newDef.customParams.spawnTime 		= newBaseDef.customParams.spawnTime + newLevel
+							newDef.customParams.nextLevelExp 	= newBaseDef.customParams.nextLevelExp * expMultiplier^newLevel
+
+							-- kill bad levels combinations
+							-- just triangular equations 
+							if ((a+b+triangelCorrect < c) or (a+c+triangelCorrect < b) or (c+b+triangelCorrect < a)) then
+								--No spring echo pls, its thousands of variations without line 150
+								--Spring.Echo("bad one: ", anotherNewName) 
+							else
+								allHeroesDefs[anotherNewName] 	= newDef
+								heroDefsCounter					= heroDefsCounter + 1
+								--Spring.Echo(anotherNewName) 
+							end
+						end
+					end
+				end
+			end
+		-- ! END OF DUMMY GENERATOR ;)
+		end
 	end
 end
+
+Spring.Echo("OTE hero defs creator: " .. heroDefsCounter .. " definitions made!")
+Spring.Echo("----------- END OF OTE HERO DEFS CREATOR -----------")
 		
 -- final table completing
 -- for k,v in pairs(newSpiritDef) do
