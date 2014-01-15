@@ -4,6 +4,7 @@ Main Team
 * PepeAmpere
 	- design and lead
 	- AI frameworks NOE + TSP
+	- autohost setup + host plugin
 * Bageta (Pavel Pilař)
 	- AI, rules
 	- GUI
@@ -11,7 +12,8 @@ Main Team
 		- mines, projectiles
 		- dummy models
 * Michal Wirth
-	- lobby setup
+	- Hero lobby setup
+	- server DB with heores setups
 	- game webpage
 * Josef Pelant
 	- soundtrack
@@ -19,8 +21,8 @@ Main Team
 * Jakub Marek (?)
 	- dead man 
 
-Models + Textures + Animation
-=============================
+Models + Textures + Animation + Sounds
+======================================
 
 OTE base content
 ----------------
@@ -29,10 +31,16 @@ OTE base content
 	- model, texture of hero Bulk (OTE license)
 	- model, texture of hero Soldier (OTE license)
 	- model, texture of hero Ranger (OTE license)
+	- model, texture of hero Builder (OTE license)
+	- model, texture of hero Mortar (OTE license)
 	- model, texture of hero Tower main (OTE license)
 	- model, texture of hero Tower small (OTE license)
+	- all models and textures in OTE base pack (OTE license)
 	- remodeling, retexturing all ancient Spacebugs + hive (OTE license)
 	- model, texture of Spacebugs spore tower (OTE license)
+	
+* Josef Pelant
+	- all music and sound content (OTE license)
 
 3rd party
 ---------
@@ -62,3 +70,14 @@ OTE base content
 	
 * PepeAmpere
 	- LOS ON at start (BY-NC-SA)
+	
+Other contributors and credits
+==============================
+
+* bibim
+	- for help with setting up SPADS autohost and making plugin for it
+
+Testers
+-------
+
+

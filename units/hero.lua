@@ -5,6 +5,8 @@ VFS.Include("LuaRules/Configs/ote/ote_items.lua")
 -- + dependant
 VFS.Include("LuaRules/Configs/ote/ote_items_combinator.lua")
 VFS.Include("LuaRules/Configs/ote/ote_heroes_weapons.lua")
+-- + gameSettings
+
 
 local allHeroesDefs 	= {}
 
@@ -16,11 +18,11 @@ local heroDefsCounter 	= 0
 -- TODO: iclude file which take from options setups we need to generate
 local function SomeFunction()
 	local list = {
-		bug_h0_w0_ch0_ch0_1 = true,
-		ball_h0_w0_ch0_ch0_1 = true,
-		bulk_h0_w0_ch0_ch0_1 = true,
-		cam_h0_w0_ch0_ch0_1 = true,
-		doc_h0_w0_ch0_ch0_1 = true,		
+		bug_h0_w0_b0_b0_1 = true,
+		ball_h0_w0_b0_b0_1 = true,
+		bulk_h0_w0_b0_b0_1 = true,
+		cam_h0_w0_b0_b0_1 = true,
+		doc_h0_w0_b0_b0_1 = true,		
 	}
 	return list
 end

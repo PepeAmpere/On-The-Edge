@@ -39,25 +39,14 @@ local options = {
 		def 	= "notAdota",
 		section = "ote",
 	},
-	{
-		key 	= "setup",
-		name 	= "Heroes",
-		desc 	= "Heroes setup",
-		type 	= "string",
-		def 	= "none",
-		section = "ote",
-	},
-	{
-		key 	= "startoptions",
-		name 	= "Game Modes",
-		desc 	= "Change the game mode",
-		type 	= "list",
-		def 	= "normal",
-		section = "ote",
-		items 	= {
-			{key = "normal", name = "Normal", desc = "Normal game mode"},
-		}
-	},
+	-- {
+		-- key 	= "heroes",
+		-- name 	= "Heroes",
+		-- desc 	= "Heroes setup",
+		-- type 	= "string",
+		-- def 	= "none",
+		-- section = "ote",
+	-- },
 	-- updates
 	{
 		key 	= "noe",
