@@ -67,8 +67,26 @@ OTE base content
 
 * jK
 	- GUI framework chili (GNU GPL v2)
+	- healthbars (with edits by PepeAmpere) (GNU GPL v2)
+	- ally cursors (GNU GPL v2)
 	
+* TheFatController
+	- ally cursors (GNU GPL v2)
+
+* Niobium
+	- Custom Formations2 - based on 'Custom Formations' by jK and gunblob (GNU GPL v2)
+
+* very_bad_soldier
+	- smooth camera (GNU GPL v2)
+	
+* Evil4Zerggin
+	- attack AOE (GNU LGPL, v2.1)
+	
+* Jools
+	- soundControl (GNU GPL v2)
+
 * PepeAmpere
+	- armors (BY-NC-SA)
 	- LOS ON at start (BY-NC-SA)
 	
 Other contributors and credits
