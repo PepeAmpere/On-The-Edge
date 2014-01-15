@@ -6,7 +6,7 @@ VFS.Include("LuaRules/Configs/ote/ote_items.lua")
 VFS.Include("LuaRules/Configs/ote/ote_items_combinator.lua")
 VFS.Include("LuaRules/Configs/ote/ote_heroes_weapons.lua")
 -- + gameSettings
-
+VFS.Include("LuaRules/Configs/ote/ote_heroes_presetup.lua")
 
 local allHeroesDefs 	= {}
 
@@ -17,14 +17,14 @@ local heroDefsCounter 	= 0
 -- !! shortcut testing
 -- TODO: iclude file which take from options setups we need to generate
 local function SomeFunction()
-	local list = {
-		bug_h0_w0_b0_b0_1 = true,
-		ball_h0_w0_b0_b0_1 = true,
-		bulk_h0_w0_b0_b0_1 = true,
-		cam_h0_w0_b0_b0_1 = true,
-		doc_h0_w0_b0_b0_1 = true,		
-	}
-	return list
+	-- local list = {
+		-- bug_h0_w0_b0_b0_1 = true,
+		-- ball_h0_w0_b0_b0_1 = true,
+		-- bulk_h0_w0_b0_b0_1 = true,
+		-- cam_h0_w0_b0_b0_1 = true,
+		-- doc_h0_w0_b0_b0_1 = true,		
+	-- }
+	return neededCombos			-- from LuaRules/Configs/ote/ote_heroes_presetup.lua
 end
 local listOfneeded		= SomeFunction()
 

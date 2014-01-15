@@ -7,3 +7,4 @@
 include "LuaRules/Configs/ote/ote_rules.lua"
 include "LuaRules/Configs/ote/ote_heroes.lua"
 include "LuaRules/Configs/ote/ote_items.lua"
+include "LuaRules/Configs/ote/ote_heroes_game_setup.lua"

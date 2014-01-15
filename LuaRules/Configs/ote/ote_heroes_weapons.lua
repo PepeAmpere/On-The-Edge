@@ -14,8 +14,8 @@ local heroWeaponsIndex = {
 local heroWeaponsDefs = {	 --	ball, bug, bulk, cam, doc 
 	name 				= { "long_beam", "big_bite", "heavy_mg", "paralyzer", "auto_pistol" },
 	weapontype 			= { "BeamLaser", "Melee", "BeamLaser", "BeamLaser", "Cannon" },
-	accuracy 			= { 10, 20, 10, 10, 10 },
-	areaofeffect 		= { 100, 16, 100, 100, 100 },
+	accuracy 			= { 10, 10, 20, 10, 10 },
+	areaofeffect 		= { 100, 100, 16, 100, 100 },
 	avoidfeature 		= { false, false, false, false, false },
 	avoidfriendly 		= { true, true, true, true, true },
 	canattackground 	= { true, true, true, true, true },
@@ -30,22 +30,22 @@ local heroWeaponsDefs = {	 --	ball, bug, bulk, cam, doc
 	gravityaffected 	= { true, true, true, true, true },
 	impulseboost 		= { 0, 0, 0, 0, 0 },
 	impulsefactor 		= { 0, 0, 0, 0, 0 },
-	intensity 			= { 1, 1, 1, 1, 1 },
+	intensity 			= { 1, 1, 0.4, 1, 1 },
 	noselfdamage 		= { true,true,true,true,true },
-	size 				= { 4, 2, 4, 4, 4 },
+	size 				= { 4, 4, 2, 4, 4 },
 	soundstart 			= { "orangeblob_explo", "orangeblob_explo", "orangeblob_explo", "orangeblob_explo", "orangeblob_explo" },
 	soundhit 			= { "orangeblob_explo", "orangeblob_explo", "orangeblob_explo", "orangeblob_explo", "orangeblob_explo" },
 
 	rgbcolor 			= { "1.0 1.0 1.0", "1.0 1.0 0.0", "1.0 1.0 1.0", "1.0 1.0 1.0", "0.1 0.6 1.0" },
-	rgbcolor2 			= { "1.0 1.0 1.0", "1.0 0.6 0.0", "1.0 1.0 1.0", "1.0 1.0 1.0", "0.1 0.6 1.0" },
+	rgbcolor2 			= { "1.0 1.0 1.0", "1.0 1.0 0.0", "1.0 0.6 0.0", "1.0 1.0 1.0", "0.1 0.6 1.0" },
 	turret 				= { true, true, true, true, true },
 	texture1 			= { "flame", "flame", "flame", "flame", "flame" },
-	weaponvelocity 		= { 800, 1000, 800, 800, 800 },
+	weaponvelocity 		= { 800, 800, 1000, 800, 800 },
 	explosiongenerator 	= { "custom:TANKGUN_FX", "custom:TANKGUN_FX", "custom:TANKGUN_FX", "custom:TANKGUN_FX", "custom:TANKGUN_FX" },
 
-	range 				= { 400, 600, 400, 400, 400 },
-	reloadtime 			= { 1.5, 0.08, 1.5, 1.5, 1.5 },
-	damage 				= { {default = 55}, {default = 4}, {default = 55}, {default = 55}, {default = 55} },
+	range 				= { 400, 400, 600, 400, 400 },
+	reloadtime 			= { 1.5, 1.5, 0.08, 1.5, 1.5 },
+	damage 				= { {default = 55}, {default = 55}, {default = 4}, {default = 55}, {default = 55} },
 }
 
 -- final

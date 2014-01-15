@@ -49,6 +49,11 @@ local function notAdotaSpawn(spots,firstAxis,firstAxisInc,secondAxis,secondAxisI
 		-- Spring.Echo(unitname,faction)
 		if unitname and (allyTeam >= 0) and (allyTeam < 2) and (faction ~= "pir") then
 			
+			-- ! rewrite - fast change :) 
+			local restOfName = "_0_0_0_0"
+			unitname = teamHeroUnitDef[tostring(t)]   -- this structure from LuaRules/Configs/ote/ote_heroes_game_setup.lua
+			unitname = unitname .. restOfName
+			
 			local good = true
 			if (allyTeam == 1) then
 				good = false

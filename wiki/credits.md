@@ -69,6 +69,10 @@ OTE base content
 	- GUI framework chili (GNU GPL v2)
 	- healthbars (with edits by PepeAmpere) (GNU GPL v2)
 	- ally cursors (GNU GPL v2)
+	- burning units (GNU GPL v2)
+
+* Quantum
+	- burning units (GNU GPL v2)
 	
 * TheFatController
 	- ally cursors (GNU GPL v2)
