@@ -7,16 +7,16 @@ VFS.Include("LuaRules/Configs/ote/ote_items_combinator.lua")
 VFS.Include("LuaRules/Configs/ote/ote_heroes_weapons.lua")
 -- + gameSettings
 VFS.Include("LuaRules/Configs/ote/ote_heroes_presetup.lua")
+-- + utility
+VFS.Include("LuaRules/Gadgets/Includes/utilities.lua")
 
 local allHeroesDefs 	= {}
 
-local maxLevels 		= 5
+local maxLevels 		= 6
 local triangelCorrect	= 2
 local heroDefsCounter 	= 0
 
--- !! shortcut testing
--- TODO: iclude file which take from options setups we need to generate
-local function SomeFunction()
+local function GetNeeded()
 	-- local list = {
 		-- bug_h0_w0_b0_b0_1 = true,
 		-- ball_h0_w0_b0_b0_1 = true,
@@ -26,9 +26,13 @@ local function SomeFunction()
 	-- }
 	return neededCombos			-- from LuaRules/Configs/ote/ote_heroes_presetup.lua
 end
-local listOfneeded		= SomeFunction()
+local listOfneeded		= GetNeeded()
 
-local function CreateBaseDef(className, finalName, itemList)
+local function CreatHeroDefName(classPlusItems,level,a,b,c)
+	return (classPlusItems .. "_" .. tostring(level) .. "_" .. a .. "_" .. b .. "_" .. c)
+end
+
+local function CreateBaseDef(className, heroPlusItemsCode, finalName, itemList)
 	
 	local newDef = {
 		-- head
@@ -98,14 +102,18 @@ local function CreateBaseDef(className, finalName, itemList)
 	
 	-- OTE RULES EDITS
 	newDef["energyMake"] 	= oteRule.reactorMove[heroClass[className].statsClass[1]] -- !currently based on speed instead own move produce value
+	newDef["autoHeal"] 		= 0
 	-- ? weapons settings are directly done via LuaRules/Configs/ote/ote_heroes_weapons.lua
 	-- tsps
 	local newTSPsNames 	= heroClass[className].tsps
 	local newTSPs		= {}
+	local tspUpdates	= {{1,0,0}, {0,1,0},{0,0,1}}
 	for i=1, #newTSPsNames do							-- mostly 3
 		newTSPs[i] = {
-			name 	= newTSPsNames[i],
-			level 	= 0,
+			name 				= newTSPsNames[i],
+			level 				= 0,
+			nextLevelName		= CreatHeroDefName(heroPlusItemsCode,1,tspUpdates[i][1],tspUpdates[i][2],tspUpdates[i][3]),
+			nextLevelAllowed	= true,
 		}
 	end
 	newDef.customParams.tsps = newTSPs
@@ -130,87 +138,138 @@ local function CreateBaseDef(className, finalName, itemList)
 		end
 	end
 	
-	return newDef
+	return newDef, newTSPs
 end
 
 Spring.Echo("----------- START OF OTE HERO DEFS CREATOR -----------")
 Spring.Echo("... listing wanted hero + items combos: ")
 
-for className,thisClass in pairs(heroClass) do
-
-	-- to every class of heroes add all combinations of items
-	for i=1,itemComboCounter do
-		local heroPlusItemsCode	= className .. "_" .. itemCombo[i].comboString
-		
-		-- for each class
-		-- level 0
-		local level 		= 0
-		local finalName 	= heroPlusItemsCode .. "_" .. level
-		local skills		= {0,0,0}								-- ?! max level for each skill is 5 now
-		
-		local newBaseDef 	= CreateBaseDef(className, finalName, itemCombo[i].itemList)
-		-- local GenerateNextLevel()
-		allHeroesDefs[newBaseDef.unitName] = newBaseDef
-		
-		-- if we need this to generate
-		if (listOfneeded[heroPlusItemsCode]) then
-			Spring.Echo(heroPlusItemsCode .. "  ... generating defs")
-		
-			-- ?! no BFS, just silly thing now
-			-- TODO: one day do it more clear
-			for a=0,maxLevels do
-				for b=0,maxLevels do
-					for c=0,maxLevels do
-						if (a + b + c == 0) then -- skip and?
-						else
-							local newLevel			= a + b + c
-							local anotherNewName 	= heroPlusItemsCode .. "_" .. tostring(newLevel) .. "_" .. a .. "_" .. b .. "_" .. c
-							local newDef			= {}
-							for k,v in pairs(newBaseDef) do
-								newDef[k] = v 
-							end
-							
-							-- !add powers, only 3 now!
-							local newTSPsNames 		= heroClass[className].tsps
-							local newTSPs			= {}
-							local tspLevels			= {a, b, c}
-							for i=1, #newTSPsNames do							-- mostly 3
-								newTSPs[i] = {
-									name 	= newTSPsNames[i],
-									level 	= tspLevels[i],
-								}
-							end
-							newDef.customParams.tsps = newTSPs		
-							
-							-- imcrease healh/energy/speed/repair/charge
-							-- !! TODO: make and connect with ote rules multipliers
-							local testMultiplier = 1.02
-							local expMultiplier = 2
-							newDef.unitName						= anotherNewName
-							newDef.maxDamage 					= newBaseDef.maxDamage * testMultiplier^newLevel
-							newDef.customParams.energyStorage 	= newBaseDef.customParams.energyStorage * testMultiplier^newLevel
-							newDef.maxVelocity 					= newBaseDef.maxVelocity * testMultiplier^newLevel
-							newDef.energyMake 					= newBaseDef.energyMake * testMultiplier^newLevel
-							newDef.autoHeal 					= newBaseDef.autoHeal * testMultiplier^newLevel
-							
-							newDef.customParams.spawnTime 		= newBaseDef.customParams.spawnTime + newLevel
-							newDef.customParams.nextLevelExp 	= newBaseDef.customParams.nextLevelExp * expMultiplier^newLevel
-
-							-- kill bad levels combinations
-							-- just triangular equations 
-							if ((a+b+triangelCorrect < c) or (a+c+triangelCorrect < b) or (c+b+triangelCorrect < a)) then
-								--No spring echo pls, its thousands of variations without line 150
-								--Spring.Echo("bad one: ", anotherNewName) 
-							else
-								allHeroesDefs[anotherNewName] 	= newDef
-								heroDefsCounter					= heroDefsCounter + 1
-								--Spring.Echo(anotherNewName) 
-							end
-						end
+for heroPlusItemsCode,_ in pairs(listOfneeded) do
+	local setup		= split(heroPlusItemsCode, "_")
+	local className = setup[1]
+	local itemList	= {
+		head	= itemCodeToName[setup[2]],	-- from itemCodeToName[] - LuaRules/Configs/ote/ote_heroes_presetup.lua
+		weapon	= itemCodeToName[setup[3]],
+		body1	= itemCodeToName[setup[4]],
+		body2	= itemCodeToName[setup[5]],
+		reactor	= reactorSettings[setup[6]],
+	}
+	
+	-- for each class
+	-- level 0
+	local level 				= 0
+	local finalName 			= heroPlusItemsCode .. "_" .. level
+	local skills				= {0,0,0}								-- ?! max level for each skill is 5 now
+	
+	local newBaseDef,newTsps	= CreateBaseDef(className, heroPlusItemsCode, finalName, itemList)
+	allHeroesDefs[newBaseDef.unitName] = newBaseDef
+	
+	-- if we need this to generate
+	Spring.Echo(heroPlusItemsCode .. "  ... generating defs")
+	
+	-- help structure
+	local allDefsCombinations = {}	
+	-- init base
+	allDefsCombinations[newBaseDef.unitName] = {
+		level 	= 0,
+		tsps	= newTsps,
+	}
+	
+	-- ?! no BFS, just silly thing now
+	-- TODO: one day do it more clear
+	for a=0,maxLevels do
+		for b=0,maxLevels do
+			for c=0,maxLevels do
+				if (a + b + c == 0) then -- skip and?
+				else
+					local newLevel			= a + b + c
+					local anotherNewName 	= CreatHeroDefName(heroPlusItemsCode,newLevel,a,b,c)
+					local newTSPsNames 		= heroClass[className].tsps
+					local newTSPs			= {}
+					local tspLevels			= {a, b, c}
+					local tspUpdates		= {{1,0,0}, {0,1,0},{0,0,1}}
+					for i=1, #newTSPsNames do							-- mostly 3
+						newTSPs[i] = {
+							name 				= newTSPsNames[i],
+							level 				= tspLevels[i],
+							nextLevelName		= CreatHeroDefName(heroPlusItemsCode,newLevel+1,a + tspUpdates[i][1],b + tspUpdates[i][2],c + tspUpdates[i][3]),
+							nextLevelAllowed	= true,
+						}
 					end
+					allDefsCombinations[anotherNewName] = {
+						level 	= newLevel,
+						tsps	= newTSPs,
+					}
+					-- Spring.Echo(anotherNewName)
 				end
 			end
-		-- ! END OF DUMMY GENERATOR ;)
+		end
+	end
+	-- ! END OF DUMMY GENERATOR ;)
+	
+	-- MARK BAD DEVELOPMENT
+	for newDefName,subDefs in pairs(allDefsCombinations) do
+		local a,b,c				= subDefs.tsps[1].level, subDefs.tsps[2].level, subDefs.tsps[3].level
+		local tspUpdates		= {{-1,0,0}, {0,-1,0},{0,0,-1}}
+		
+		-- just triangular equations or max
+		if ((a+b+triangelCorrect < c) or (a+c+triangelCorrect < b) or (c+b+triangelCorrect < a) or (a==maxLevels) or (b==maxLevels) or (c==maxLevels)) then
+			-- look back and select where impossible updates
+			for i=1,3 do
+				if ((a + tspUpdates[i][1] >= 0) and (b + tspUpdates[i][2] >=0) and (c + tspUpdates[i][3] >= 0)) then
+					local newName = CreatHeroDefName(heroPlusItemsCode,subDefs.level-1,a + tspUpdates[i][1],b + tspUpdates[i][2],c + tspUpdates[i][3])
+					-- Spring.Echo(newDefName)
+					-- Spring.Echo(newName)
+					-- Spring.Echo(heroPlusItemsCode,subDefs.level-1,a + tspUpdates[i][1],b + tspUpdates[i][2],c + tspUpdates[i][3])
+					-- Spring.Echo(allDefsCombinations[newName])
+					-- Spring.Echo(allDefsCombinations[newName].tsps)
+					-- Spring.Echo(allDefsCombinations[newName].tsps[i])
+					allDefsCombinations[newName].tsps[i].nextLevelAllowed = false
+				end
+			end
+		end
+	end
+	
+	
+	for newDefName,subDefs in pairs(allDefsCombinations) do	
+		local a,b,c				= subDefs.tsps[1].level, subDefs.tsps[2].level, subDefs.tsps[3].level
+		local newLevel			= subDefs.level
+		local newDef			= {}
+		for k,v in pairs(newBaseDef) do
+			newDef[k] = v 
+		end
+		
+		-- !add powers, only 3 now!
+		
+		newDef.customParams.tsps = {}
+		for k,v in pairs(subDefs.tsps) do
+			newDef.customParams.tsps[k] = v 
+		end
+				
+		
+		-- imcrease healh/energy/speed/repair/charge
+		-- !! TODO: make and connect with ote rules multipliers
+		local testMultiplier = 1.02
+		local expMultiplier = 2
+		newDef.unitName						= newDefName
+		newDef.maxDamage 					= newBaseDef.maxDamage * testMultiplier^newLevel
+		newDef.customParams.energyStorage 	= newBaseDef.customParams.energyStorage * testMultiplier^newLevel
+		newDef.maxVelocity 					= newBaseDef.maxVelocity * testMultiplier^newLevel
+		newDef.energyMake 					= newBaseDef.energyMake * testMultiplier^newLevel
+		newDef.autoHeal 					= newBaseDef.autoHeal * testMultiplier^newLevel
+		
+		newDef.customParams.spawnTime 		= newBaseDef.customParams.spawnTime + newLevel
+		newDef.customParams.nextLevelExp 	= newBaseDef.customParams.nextLevelExp * expMultiplier^newLevel
+
+		-- kill bad levels combinations
+		-- just triangular equations 
+		if ((a+b+triangelCorrect < c) or (a+c+triangelCorrect < b) or (c+b+triangelCorrect < a) or (a==maxLevels) or (b==maxLevels) or (c==maxLevels)) then
+			-- No spring echo pls, its thousands of variations without line 150
+			-- Spring.Echo("bad one: ", newDefName) 
+		else
+			allHeroesDefs[newDefName] 		= newDef
+			heroDefsCounter					= heroDefsCounter + 1
+			--Spring.Echo(newDefName) 
 		end
 	end
 end
@@ -219,7 +278,7 @@ Spring.Echo("OTE hero defs creator: " .. heroDefsCounter .. " definitions made!"
 Spring.Echo("----------- END OF OTE HERO DEFS CREATOR -----------")
 		
 -- final table completing
--- for k,v in pairs(newSpiritDef) do
+-- for k,v in pairs(allHeroesDefs) do
 	-- spiritDef[k] = v 
 -- end
 

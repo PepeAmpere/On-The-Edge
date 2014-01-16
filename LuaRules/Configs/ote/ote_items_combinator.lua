@@ -49,37 +49,40 @@ end
 for l=1,reactorSettingsCounter do
 	reactorSettings[l] = l -- .. (reactorSettingsCounter - k + 1)
 end
-
 	
--- body Doubles
--- TODO: currently X x X version, later will be special with own conditons, otherwise i would put it in main generator
-for i=1,bodyItemsCounter do
-	for j=1,bodyItemsCounter do
-		bodyDoublesCounter 						= bodyDoublesCounter + 1
-		bodyDoubles[bodyDoublesCounter]			= itemNameToCode[bodyItems[i]] .. "_" .. itemNameToCode[bodyItems[j]]
-		bodyDoublesItems[bodyDoublesCounter] 	= {
-			first 	= bodyItems[i],
-			second 	= bodyItems[j],
-		}
+-- body Doubles (! NOT USED NOW)
+function AllDoubles()
+	for i=1,bodyItemsCounter do
+		for j=1,bodyItemsCounter do
+			bodyDoublesCounter 						= bodyDoublesCounter + 1
+			bodyDoubles[bodyDoublesCounter]			= itemNameToCode[bodyItems[i]] .. "_" .. itemNameToCode[bodyItems[j]]
+			bodyDoublesItems[bodyDoublesCounter] 	= {
+				first 	= bodyItems[i],
+				second 	= bodyItems[j],
+			}
+		end
 	end
 end
 
-for i=1,headItemsCounter do
-	for j=1,weaponItemsCounter do
-		for k=1,bodyDoublesCounter do
-			for l=1,reactorSettingsCounter do
-				itemComboCounter 			= itemComboCounter + 1
-				-- Spring.Echo(itemComboCounter, headItems[i], weaponItems[j], reactorSettings[k], bodyDoublesItems[l].first, bodyDoublesItems[l].second)
-				itemCombo[itemComboCounter] = {
-					comboString = itemNameToCode[headItems[i]] .. "_" .. itemNameToCode[weaponItems[j]] .. "_" .. bodyDoubles[k] .. "_" .. reactorSettings[l],
-					itemList	= {
-						head	= headItems[i],
-						weapon	= weaponItems[j],
-						body1	= bodyDoublesItems[k].first,
-						body2	= bodyDoublesItems[k].second,
-						reactor	= reactorSettings[l],
-					},
-				}
+-- all items (! NOT USED NOW)
+function AllItems()
+	for i=1,headItemsCounter do
+		for j=1,weaponItemsCounter do
+			for k=1,bodyDoublesCounter do
+				for l=1,reactorSettingsCounter do
+					itemComboCounter 			= itemComboCounter + 1
+					-- Spring.Echo(itemComboCounter, headItems[i], weaponItems[j], reactorSettings[k], bodyDoublesItems[l].first, bodyDoublesItems[l].second)
+					itemCombo[itemComboCounter] = {
+						comboString = itemNameToCode[headItems[i]] .. "_" .. itemNameToCode[weaponItems[j]] .. "_" .. bodyDoubles[k] .. "_" .. reactorSettings[l],
+						itemList	= {
+							head	= headItems[i],
+							weapon	= weaponItems[j],
+							body1	= bodyDoublesItems[k].first,
+							body2	= bodyDoublesItems[k].second,
+							reactor	= reactorSettings[l],
+						},
+					}
+				end
 			end
 		end
 	end
