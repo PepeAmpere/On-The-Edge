@@ -17,16 +17,19 @@ local playerLevelCaption
 local upgradePointsCaption
 
 local Chili
+local active 	= false
+local needUnit	= true
+local needInit 	= true
 
-local upgradePoints = 1
-local playerLevel	= 1
+local upgradePoints = 0
+local playerLevel	= 0
 local myTeamID		= Spring.GetMyTeamID()					-- from this we know team from the beginning
-local playerMetal	= 100
-local playerXP		= 50
-local nextLevelOn	= 100
+local playerMetal	= 0
+local playerXP		= 0
+local nextLevelOn	= 0
 --TODO: add function to listen to massages and update gui
 
-function widget:Initialize()
+local function DelayedInitialization()
 	
 	if (not WG.Chili) then
 		widgetHandler:RemoveWidget()
@@ -37,7 +40,7 @@ function widget:Initialize()
 	local screen0 = Chili.Screen0
 	
 	local screenX, screenY	= Spring.GetViewGeometry()
-	local wWidth, wHeight	= 95, 300
+	local wWidth, wHeight	= 65, 250
 	
 	infoWindow = Chili.Window:New{
 		x 				= 10,
@@ -61,36 +64,66 @@ function widget:Initialize()
 	
 	xpBar = Chili.Progressbar:New{
 		x			= 0,
-		y			= 30,
+		y			= 20,
 		parent		= infoWindow,
 		max 		= nextLevelOn, 	--int maximum value of the Progressbar (default 100)
 		value		= playerXP, 	--int value of the Progressbar (default 100)
-		caption 	= "EXP: " .. playerXP .. "/" .. nextLevelOn, -- string text to be displayed (default "")
-		minWidth	= 90,
-		minHeight	= 200,
+		caption 	= "EXP: \n" .. playerXP .. "/" .. nextLevelOn, -- string text to be displayed (default "")
+		minWidth	= 65,
+		maxWidth	= 65,
+		minHeight	= 180,
 		orientation = "vertical"
 	}
 	
 	playerLevelCaption = Chili.Label:New{
 		x		= 0,
-		y		= 240,
+		y		= 205,
 		parent	= infoWindow,
 		caption	= "LVL: " .. playerLevel, -- string text contained in the editbox (default "")
 	}
 	
 	upgradePointsCaption = Chili.Label:New{
-		x		= 60,
-		y		= 240,
+		x		= 0,
+		y		= 225,
 		parent	= infoWindow,
-		caption	= upgradePoints .. "UP", -- string text contained in the editbox (default "")
+		caption	= upgradePoints .. " UP", -- string text contained in the editbox (default "")
 	}
 	
 end
 
+local function ActivateScreen(unitID, unitDefID)
+	myUnitID 	= unitID					-- for later access to units stats
+	nextLevelOn	= UnitDefs[unitDefID].customParams.nextlevelexp
+	playerLevel	= UnitDefs[unitDefID].customParams.level
+	active 		= true						-- we are ready to show it now
+	needUnit	= false						-- we needed this check only once
+end
+
 function widget:GameFrame(frameNumber)
-	-- playerMetal = --TODO: get from struct
-	-- playerXP 	= --TODO: get from struct
-	metalCaption:SetCaption(Spring.GetTeamResources(myTeamID,"metal"))
-	xpBar:SetValue(playerXP)
-	xpBar:SetCaption("EXP: " .. playerXP .. "/" .. nextLevelOn)
+	if (active) then	
+		-- i moved init here because we dont want to start init + show UI until hero is spawned before game is started
+		if (needInit) then
+			DelayedInitialization()
+			needInit = false 			-- we needed this init only once
+		end
+
+		-- playerMetal = --TODO: get from struct
+		-- playerXP 	= --TODO: get from struct
+		metalCaption:SetCaption(Spring.GetTeamResources(myTeamID,"metal"))
+		xpBar:SetValue(playerXP)
+		xpBar:SetCaption("EXP: \n" .. playerXP .. "/" .. nextLevelOn)
+	else
+		if (frameNumber % 60 == 0 and needUnit) then
+			myTeamID			= Spring.GetMyTeamID()
+			local listOfUnits 	= Spring.GetTeamUnits(myTeamID)
+			if (listOfUnits and (#listOfUnits > 0)) then
+				for i=1,#listOfUnits do
+					local unitDefID = Spring.GetUnitDefID(listOfUnits[i])
+					if (UnitDefs[unitDefID].customParams.ishero) then
+						ActivateScreen(listOfUnits[i],unitDefID)
+					end
+				end
+			end
+		end
+	end
 end

@@ -24,8 +24,8 @@ local needInit 	= true
 
 local class 	= ""
 local name		= ""
-local myUnitID 	= 0
 local myTeamID	= Spring.GetMyTeamID()					-- from this we know team from the beginning
+local myUnitID	= 0
 
 local function GetHeroStats()
 	local heroStats = {
@@ -33,7 +33,6 @@ local function GetHeroStats()
 		unitID	= myUnitID,
 		teamID	= myTeamID,
 	}
-	--now returns example table for debug:
 	return heroStats
 end
 
@@ -48,12 +47,12 @@ local function DelayedInitialization()
 	local screen0 = Chili.Screen0
 	
 	local screenX, screenY	= Spring.GetViewGeometry()
-	local wWidth, wHeight	= 300, 300
+	local wWidth, wHeight	= 200, 200
 	
 	local heroStats = GetHeroStats()
 	
 	infoWindow = Chili.Window:New{
-		x 				= 130,
+		x 				= 100,
 		y 				= screenY - wHeight - 30,
 		dockable 		= false,
 		parent			= screen0,
@@ -70,29 +69,29 @@ local function DelayedInitialization()
 		y 			= 44,
 		parent		= infoWindow,
 		file		= heroStats.image,
-		minWidth	= 256,
-		minHeight	= 256,
+		minWidth	= 156,
+		minHeight	= 156,
 	}
 	
 	local actualE, maximalE = Spring.GetTeamResources(heroStats.teamID, "energy")
 	if (not actualE) then actualE = 0 end
 	if (not maximalE) then maximalE = 0 end
 	energyBar = Chili.Progressbar:New{
-		x			= 260,
+		x			= 160,
 		y			= 44,
 		parent		= infoWindow,
 		value	 	= actualE,
 		max			= maximalE,
 		caption		= "E\nN\nE\nR\nG\nY\n\n\n",
 		minWidth	= 40,
-		minHeight	= 256,
+		minHeight	= 156,
 		maxWidth	= 40,
 		orientation	= "vertical",
 		color		= {0,1,1,1}
 	}
 	
 	energyValues = Chili.Label:New{
-		x			= 260,
+		x			= 160,
 		y			= 0,
 		maxHeight	= 40,
 		maxWidth	= 40,
@@ -111,7 +110,7 @@ local function DelayedInitialization()
 		value	 	= actualHp,
 		max			= maximalHp,
 		caption		= "HP: " .. actualHp .. "/" .. maximalHp, 
-		minWidth	= 256,
+		minWidth	= 156,
 		minHeight	= 40,
 		color		= {0,1,0,1}
 	}

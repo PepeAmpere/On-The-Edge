@@ -20,8 +20,15 @@ local powersWindow
 local upgradeWindow
 
 local Chili
+local active 	= false
+local needUnit	= true
+local needInit 	= true
+
+local myTeamID	= Spring.GetMyTeamID()					-- from this we know team from the beginning
+local myUnitID	= 0
 
 local upgradePoints = 1
+local powers		= nil
 
 function ButtonClicked(chiliButton, x, y, button, mods)
 	--TODO: call some action, and/or check conditions
@@ -33,39 +40,8 @@ function UpgradeButtonClicked(chiliButton, x, y, button, mods)
 	Spring.Echo("Upgrade called to:" .. chiliButton.action)
 end
 
-function GetHeroPowers()
-	--TODO: FROM HERO DEFINITION GET NAMES AND LEVES OF POWERS AND FROM THEIR DEFINITION GET IMAGE, CAPTION ETC.
-	local powers = {
-		{
-			name 		= "power1",
-			level 		= 1,
-			levelCap	= 2,
-			action 		= "action1",
-			image		= "power_image1",
-			caption		= "power_caption",
-		},
-		{
-			name 		= "power2",
-			level 		= 3,
-			levelCap	= 3,
-			action 		= "action2",
-			image		= "power_image2",
-			caption		= "power_caption",
-		},
-		{
-			name 		= "power3",
-			level 		= 2,
-			levelCap	= 3,
-			action 		= "action3",
-			image		= "power_image1",
-			caption		= "power_caption",
-		},
-	}
-	-- now returns some example table for debug purpouses
-	return powers
-end
 
-function GeneratePowersButtons(powers)
+function GeneratePowersButtons()
 	for i=1, #powers do
 		local button = Chili.Button:New{
 			parent		= powersWindow,
@@ -77,17 +53,18 @@ function GeneratePowersButtons(powers)
 			minHeight	= 50,
 			maxWidth	= 50,
 			caption 	= powers[i]["name"],
-			action 		= powers[i]["action"],
+			level 		= powers[i]["level"],
 			OnMouseDown = {ButtonClicked},
 		}
 	end
 end
 
-function GenerateUpgradeButtons(powers, points)
+function GenerateUpgradeButtons(points)
 	for i=1, #powers do
-		local disabled = false
-		if (powers[i]["level"] == powers[i]["levelCap"] or points==0) then
-			disabled = true
+		local disabled = true
+		Spring.Echo(powers[i]["nextLevelAllowed"])
+		if (powers[i]["nextLevelAllowed"] and points~=0) then
+			disabled = false
 		end
 		if not disabled then
 			local button = Chili.Button:New{
@@ -100,7 +77,7 @@ function GenerateUpgradeButtons(powers, points)
 				minHeight	= 50,
 				maxWidth	= 50,
 				caption 	= "+1",
-				action 		= "upgrade" .. powers[i]["action"],
+				nextlevel	= powers[i]["nextlevelname"],
 				OnMouseDown = {UpgradeButtonClicked},
 			}
 		end
@@ -110,20 +87,18 @@ end
 function LevelUp()
 	upgradePoints = upgradePoints - 1
 	powersWindow:clearChildren()
-	local powers = GetHeroPowers()
-	GeneratePowersButtons(powers)
+	GeneratePowersButtons()
 	upgradeWindow:clearChildren()
-	GenerateUpgradeButtons(powers, upgradePoints)
+	GenerateUpgradeButtons(upgradePoints)
 end
 
 function LevelUpPossible()
 	upgradePoints = upgradePoints + 1
 	upgradeWindow:clearChildren()
-	local powers = GetHeroPowers()
-	GenerateUpgradeButtons(powers, upgradePoints)
+	GenerateUpgradeButtons(upgradePoints)
 end
 
-function widget:Initialize()
+local function DelayedInitialization()
 	
 	if (not WG.Chili) then
 		widgetHandler:RemoveWidget()
@@ -133,7 +108,6 @@ function widget:Initialize()
 	Chili = WG.Chili
 	local screen0 = Chili.Screen0
 	
-	local powers = GetHeroPowers()
 	local wWidth = #powers*POWERBUTTONSIZE + #powers*5
 	
 	local screenX, screenY	= Spring.GetViewGeometry()
@@ -178,7 +152,56 @@ function widget:Initialize()
 		backgroundColor	= {0,0,0,1},
 	}
 	
-	GeneratePowersButtons(powers)
-	GenerateUpgradeButtons(powers, upgradePoints)
+	GeneratePowersButtons()
+	GenerateUpgradeButtons(upgradePoints)
 	
+end
+
+local function ActivateScreen(unitID, unitDefID)
+	myUnitID 	= unitID					-- for later access to units stats
+	Spring.Echo(unitDefID, UnitDefs[unitDefID].name, UnitDefs[unitDefID].customParams)
+	local params = UnitDefs[unitDefID].customParams
+	
+	powers = {}
+	
+	for i=1,params.tsps_size do
+		local tspName 		= "tsp" .. i .. "_name"
+		local tspLevel		= "tsp" .. i .. "_level"	
+		local tspNextName	= "tsp" .. i .. "_nextlevelname"
+		local tspNextAllow	= "tsp" .. i .. "_nextlevelallowed"
+		powers[i] = {
+			name 				= params[tspName],
+			level				= params[tspLevel],
+			nextLevelName		= params[tspNextName],
+			nextLevelAllowed	= params[tspNextAllow],
+		}
+	end
+	
+	Spring.Echo(powers)
+	active 		= true						-- we are ready to show it now
+	needUnit	= false						-- we needed this check only once
+end
+
+function widget:GameFrame(frameNumber)
+	if (active) then	
+		-- i moved init here because we dont want to start init + show UI until hero is spawned before game is started
+		if (needInit) then
+			DelayedInitialization()
+			needInit = false 			-- we needed this init only once
+		end
+
+	else
+		if (frameNumber % 60 == 0 and needUnit) then
+			myTeamID			= Spring.GetMyTeamID()
+			local listOfUnits 	= Spring.GetTeamUnits(myTeamID)
+			if (listOfUnits and (#listOfUnits > 0)) then
+				for i=1,#listOfUnits do
+					local unitDefID = Spring.GetUnitDefID(listOfUnits[i])
+					if (UnitDefs[unitDefID].customParams.ishero) then
+						ActivateScreen(listOfUnits[i],unitDefID)
+					end
+				end
+			end
+		end
+	end
 end
