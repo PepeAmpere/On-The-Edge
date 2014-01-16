@@ -122,7 +122,7 @@ local function CreateBaseDef(className, heroPlusItemsCode, finalName, itemList)
 	-- TODO: fix this shit
 	-- newDef.customParams["tsps"] = Deepcopy(newTSPs)
 	
-	newDef.customParams["tsp_size"] 				= #newTSPsNames	
+	newDef.customParams["tsps_size"] 				= #newTSPsNames	
 	newDef.customParams["tsp1_name"] 				= newTSPs[1].name
 	newDef.customParams["tsp1_level"] 				= newTSPs[1].level
 	newDef.customParams["tsp1_nextLevelName"] 		= newTSPs[1].nextLevelName
@@ -281,7 +281,7 @@ for heroPlusItemsCode,_ in pairs(listOfneeded) do
 		newDef.customParams.nextLevelExp 	= math.floor(newBaseDef.customParams.nextLevelExp * expMultiplier^newLevel)
 		newDef.customParams.level			= newLevel
 		
-		newDef.customParams["tsp_size"] 				= 3
+		newDef.customParams["tsps_size"] 				= 3
 		newDef.customParams["tsp1_name"] 				= subDefs.tsps[1].name
 		newDef.customParams["tsp1_level"] 				= subDefs.tsps[1].level
 		newDef.customParams["tsp1_nextLevelName"] 		= subDefs.tsps[1].nextLevelName
