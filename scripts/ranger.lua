@@ -6,10 +6,11 @@ local right_leg_top		= piece 'right_leg_top'
 local right_leg_middle	= piece 'right_leg_middle'
 local right_leg_feet	= piece 'right_leg_feet'
 local body				= piece 'body'
-local left_shield		= piece 'left_shield'
-local right_shield		= piece 'right_shield'
-local left_gun			= piece 'left_gun'
-local right_gun			= piece 'right_gun'
+local container			= piece 'cantainer' 
+local left_top_tube		= piece 'left_top_tube'
+local right_top_tube	= piece 'right_top_tube'
+local left_gun			= piece 'left_bottom_tube'
+local right_gun			= piece 'right_bottom_tube'
 
 local moving = false
 
