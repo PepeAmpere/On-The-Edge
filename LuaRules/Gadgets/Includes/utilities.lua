@@ -64,3 +64,11 @@ function table.contains(table, element)
 	end   
 	return false 
 end
+
+function ToBool(someVaule)
+	if(someVaule == 1 or someVaule == true) then
+		return true
+	else
+		return false
+	end
+end

@@ -20,6 +20,7 @@ local Chili
 
 local upgradePoints = 1
 local playerLevel	= 1
+local myTeamID		= Spring.GetMyTeamID()					-- from this we know team from the beginning
 local playerMetal	= 100
 local playerXP		= 50
 local nextLevelOn	= 100
@@ -55,7 +56,7 @@ function widget:Initialize()
 		x		= 0,
 		y		= 0,
 		parent	= infoWindow,
-		caption	= playerMetal, -- string text contained in the editbox (default "")
+		caption	= Spring.GetTeamResources(myTeamID,"metal"), 
 	}
 	
 	xpBar = Chili.Progressbar:New{
@@ -89,7 +90,7 @@ end
 function widget:GameFrame(frameNumber)
 	-- playerMetal = --TODO: get from struct
 	-- playerXP 	= --TODO: get from struct
-	metalCaption:SetCaption(playerMetal)
+	metalCaption:SetCaption(Spring.GetTeamResources(myTeamID,"metal"))
 	xpBar:SetValue(playerXP)
 	xpBar:SetCaption("EXP: " .. playerXP .. "/" .. nextLevelOn)
 end

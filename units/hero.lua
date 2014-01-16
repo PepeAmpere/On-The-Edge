@@ -63,6 +63,8 @@ local function CreateBaseDef(className, heroPlusItemsCode, finalName, itemList)
 		turnRate		= 1000,
 		maxWaterDepth 	= 20,
 		movementClass 	= heroClass[className].movement,
+		footprintX		= heroClass[className].footprint,
+		footprintZ		= heroClass[className].footprint,
 		
 		-- ability
 		builder 		= 0,
@@ -139,6 +141,21 @@ local function CreateBaseDef(className, heroPlusItemsCode, finalName, itemList)
 	end
 	
 	return newDef, newTSPs
+end
+
+function Deepcopy(orig)
+    local orig_type = type(orig)
+    local copy
+    if orig_type == 'table' then
+        copy = {}
+        for orig_key, orig_value in next, orig, nil do
+            copy[Deepcopy(orig_key)] = Deepcopy(orig_value)
+        end
+        setmetatable(copy, Deepcopy(getmetatable(orig)))
+    else -- number, string, boolean, etc
+        copy = orig
+    end
+    return copy
 end
 
 Spring.Echo("----------- START OF OTE HERO DEFS CREATOR -----------")
@@ -218,48 +235,36 @@ for heroPlusItemsCode,_ in pairs(listOfneeded) do
 			for i=1,3 do
 				if ((a + tspUpdates[i][1] >= 0) and (b + tspUpdates[i][2] >=0) and (c + tspUpdates[i][3] >= 0)) then
 					local newName = CreatHeroDefName(heroPlusItemsCode,subDefs.level-1,a + tspUpdates[i][1],b + tspUpdates[i][2],c + tspUpdates[i][3])
-					-- Spring.Echo(newDefName)
-					-- Spring.Echo(newName)
-					-- Spring.Echo(heroPlusItemsCode,subDefs.level-1,a + tspUpdates[i][1],b + tspUpdates[i][2],c + tspUpdates[i][3])
-					-- Spring.Echo(allDefsCombinations[newName])
-					-- Spring.Echo(allDefsCombinations[newName].tsps)
-					-- Spring.Echo(allDefsCombinations[newName].tsps[i])
 					allDefsCombinations[newName].tsps[i].nextLevelAllowed = false
 				end
 			end
 		end
 	end
 	
-	
 	for newDefName,subDefs in pairs(allDefsCombinations) do	
 		local a,b,c				= subDefs.tsps[1].level, subDefs.tsps[2].level, subDefs.tsps[3].level
 		local newLevel			= subDefs.level
-		local newDef			= {}
-		for k,v in pairs(newBaseDef) do
-			newDef[k] = v 
-		end
+		local newDef			= Deepcopy(newBaseDef)
 		
-		-- !add powers, only 3 now!
-		
+		-- !add powers, only 3 now!		
 		newDef.customParams.tsps = {}
 		for k,v in pairs(subDefs.tsps) do
 			newDef.customParams.tsps[k] = v 
-		end
-				
+		end				
 		
 		-- imcrease healh/energy/speed/repair/charge
 		-- !! TODO: make and connect with ote rules multipliers
-		local testMultiplier = 1.02
-		local expMultiplier = 2
+		local testMultiplier = 1.04
+		local expMultiplier = 1.1
 		newDef.unitName						= newDefName
-		newDef.maxDamage 					= newBaseDef.maxDamage * testMultiplier^newLevel
-		newDef.customParams.energyStorage 	= newBaseDef.customParams.energyStorage * testMultiplier^newLevel
+		newDef.maxDamage 					= math.floor(newBaseDef.maxDamage * testMultiplier^newLevel)
+		newDef.customParams.energyStorage 	= math.floor(newBaseDef.customParams.energyStorage * testMultiplier^newLevel)
 		newDef.maxVelocity 					= newBaseDef.maxVelocity * testMultiplier^newLevel
 		newDef.energyMake 					= newBaseDef.energyMake * testMultiplier^newLevel
 		newDef.autoHeal 					= newBaseDef.autoHeal * testMultiplier^newLevel
 		
-		newDef.customParams.spawnTime 		= newBaseDef.customParams.spawnTime + newLevel
-		newDef.customParams.nextLevelExp 	= newBaseDef.customParams.nextLevelExp * expMultiplier^newLevel
+		newDef.customParams.spawnTime 		= newBaseDef.customParams.spawnTime + 2*newLevel
+		newDef.customParams.nextLevelExp 	= math.floor(newBaseDef.customParams.nextLevelExp * expMultiplier^newLevel)
 
 		-- kill bad levels combinations
 		-- just triangular equations 

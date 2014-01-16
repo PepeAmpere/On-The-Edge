@@ -708,9 +708,10 @@ local function SetResources()
 	---- RESOURCES SETTING FOR ALL NOE GAMES -----
 	for i=1,#teamList do
 		local id = teamList[i]
-		local _,_,_,isAI,side = Spring.GetTeamInfo(id)
-		local aiInfo          = Spring.GetTeamLuaAI(id)
+		local _,_,_,isAI,side 	= Spring.GetTeamInfo(id)
+		local aiInfo          	= Spring.GetTeamLuaAI(id)
 		local m,ms,e,es
+		local setThem 			= {true,true,true,true}
 		if ((isAI) and (aiInfo == "Mission AI") and (sideSettings[teamIDtoName[tostring(id)]].startMetal ~= nil)) then
 			m  = sideSettings[teamIDtoName[tostring(id)]].startMetal
 			ms = sideSettings[teamIDtoName[tostring(id)]].startMetalStorage
@@ -719,14 +720,16 @@ local function SetResources()
 		else
 			-- hotfix for OTE
 			if (heroClass and oteRule) then
-				-- TODO: get metal value and class from lobby
-				local metalCurrent = 100
-				local class = "bulk"
+				-- TODO: get metal value and class from setup
+				local metalCurrent 	= 0
+				setThem[1]	= false
+				setThem[2]	= false
+				setThem[4]	= false
 				-- Spring.Echo(oteRule.energy[heroClass[class].statsClass[3]])
-				m  = metalCurrent
+				-- m  = metalCurrent
 				ms = 100000
-				e  = oteRule.energy[heroClass[class].statsClass[3]]
-				es = oteRule.energy[heroClass[class].statsClass[3]]
+				-- e  = oteRule.energy[heroClass[class].statsClass[3]]
+				-- es = oteRule.energy[heroClass[class].statsClass[3]]
 			else
 				m  = floor((missionInfo.playersMetal or 1000)/missionPlayersCount)
 				ms = floor((missionInfo.playersMetal or 1000)/missionPlayersCount)
@@ -735,10 +738,10 @@ local function SetResources()
 			end
 		end
 		--Spring.Echo("res",id,m,e,ms,es)
-		spSetTeamResource(id, "m", m)
-		spSetTeamResource(id, "e", e)
-		spSetTeamResource(id, "ms", ms)
-		spSetTeamResource(id, "es", es)
+		if (setThem[1]) then spSetTeamResource(id, "m", m) end
+		if (setThem[2]) then spSetTeamResource(id, "e", e) end 
+		if (setThem[3]) then spSetTeamResource(id, "ms", ms) end 
+		if (setThem[4]) then spSetTeamResource(id, "es", es) end
 	end
 	---- END OF RESOURCES SETTING ----
 end

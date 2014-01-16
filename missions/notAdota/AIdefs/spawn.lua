@@ -36,7 +36,8 @@ local function notAdotaSpawn(spots,firstAxis,firstAxisInc,secondAxis,secondAxisI
 	local counterBad		= 0
     for _,t in ipairs(Spring.GetTeamList()) do
 		local _,_,_,ai,faction,allyTeam = Spring.GetTeamInfo(t)
-		local unitname = Spring.GetSideData(faction)
+		local unitname 					= Spring.GetSideData(faction)
+		local coins						= 10
 		
 		-- base check (then add bad faction)
 		if (ai) then
@@ -55,6 +56,7 @@ local function notAdotaSpawn(spots,firstAxis,firstAxisInc,secondAxis,secondAxisI
 			if (unitname == nil) then
 				unitname = faction .. "_h0_w0_b0_b0_3"
 				Spring.Echo("ERROR!!!: NOE spawner: fixed hero name")
+				coins	 = 10
 			end
 			unitname = unitname .. restOfName
 			
@@ -74,6 +76,11 @@ local function notAdotaSpawn(spots,firstAxis,firstAxisInc,secondAxis,secondAxisI
 				sx = spanwSpotsBad[counterBad][1]
 				sz = spanwSpotsBad[counterBad][2]
 			end
+			
+			-- TODO: change value of coins for people with hero setup
+			Spring.SetTeamResource(t, "m", coins*100)
+			Spring.SetTeamResource(t, "e", UnitDefNames[unitname].customParams.energystorage)
+			Spring.SetTeamResource(t, "es", UnitDefNames[unitname].customParams.energystorage)
 			
 			-- use spawn planner
 			newSpawnThis[#newSpawnThis+1] = {name = "t_" .. unitname, posX = sx, posZ = sz, facing = "s", teamName = teamIDtoName[tostring(t)], checkType = "none", gameTime = 0}
