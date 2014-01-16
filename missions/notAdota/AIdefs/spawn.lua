@@ -6,7 +6,7 @@
 -- ! need add resources start setting
 
 newSpawnDef = {
-
+	
 }
 
 newSpawnThis = {

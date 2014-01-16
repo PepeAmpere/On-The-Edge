@@ -119,7 +119,21 @@ local function CreateBaseDef(className, heroPlusItemsCode, finalName, itemList)
 			nextLevelAllowed	= true,
 		}
 	end
-	newDef.customParams.tsps = newTSPs
+	-- TODO: fix this shit
+	-- newDef.customParams["tsps"] = Deepcopy(newTSPs)
+	
+	newDef.customParams["tsp1_name"] 				= newTSPs[1].name
+	newDef.customParams["tsp1_level"] 				= newTSPs[1].level
+	newDef.customParams["tsp1_nextLevelName"] 		= newTSPs[1].nextLevelName
+	newDef.customParams["tsp1_nextLevelAllowed"] 	= newTSPs[1].nextLevelAllowed
+	newDef.customParams["tsp2_name"] 				= newTSPs[2].name
+	newDef.customParams["tsp2_level"] 				= newTSPs[2].level
+	newDef.customParams["tsp2_nextLevelName"] 		= newTSPs[2].nextLevelName
+	newDef.customParams["tsp2_nextLevelAllowed"] 	= newTSPs[2].nextLevelAllowed
+	newDef.customParams["tsp3_name"] 				= newTSPs[3].name
+	newDef.customParams["tsp3_level"] 				= newTSPs[3].level
+	newDef.customParams["tsp3_nextLevelName"] 		= newTSPs[3].nextLevelName
+	newDef.customParams["tsp3_nextLevelAllowed"] 	= newTSPs[3].nextLevelAllowed
 	
 	-- ITEMS EDITS
 	for itemClass,itemName in pairs(itemList) do
@@ -247,8 +261,9 @@ for heroPlusItemsCode,_ in pairs(listOfneeded) do
 		local newLevel			= subDefs.level
 		local newDef			= Deepcopy(newBaseDef)
 		
-		-- !add powers, only 3 now!		
-		newDef.customParams.tsps = Deepcopy(subDefs.tsps)
+		-- !add powers, only 3 now!	
+		-- TODO: make again better !!!!! bug stupid bug
+		-- newDef.customParams.tsps = Deepcopy(subDefs.tsps)
 		
 		-- imcrease healh/energy/speed/repair/charge
 		-- !! TODO: make and connect with ote rules multipliers
@@ -264,6 +279,19 @@ for heroPlusItemsCode,_ in pairs(listOfneeded) do
 		newDef.customParams.spawnTime 		= newBaseDef.customParams.spawnTime + 2*newLevel
 		newDef.customParams.nextLevelExp 	= math.floor(newBaseDef.customParams.nextLevelExp * expMultiplier^newLevel)
 		newDef.customParams.level			= newLevel
+		
+		newDef.customParams["tsp1_name"] 				= subDefs.tsps[1].name
+		newDef.customParams["tsp1_level"] 				= subDefs.tsps[1].level
+		newDef.customParams["tsp1_nextLevelName"] 		= subDefs.tsps[1].nextLevelName
+		newDef.customParams["tsp1_nextLevelAllowed"] 	= subDefs.tsps[1].nextLevelAllowed
+		newDef.customParams["tsp2_name"] 				= subDefs.tsps[2].name
+		newDef.customParams["tsp2_level"] 				= subDefs.tsps[2].level
+		newDef.customParams["tsp2_nextLevelName"] 		= subDefs.tsps[2].nextLevelName
+		newDef.customParams["tsp2_nextLevelAllowed"] 	= subDefs.tsps[2].nextLevelAllowed
+		newDef.customParams["tsp3_name"] 				= subDefs.tsps[3].name
+		newDef.customParams["tsp3_level"] 				= subDefs.tsps[3].level
+		newDef.customParams["tsp3_nextLevelName"] 		= subDefs.tsps[3].nextLevelName
+		newDef.customParams["tsp3_nextLevelAllowed"] 	= subDefs.tsps[3].nextLevelAllowed
 
 		-- kill bad levels combinations
 		-- just triangular equations 
@@ -274,6 +302,9 @@ for heroPlusItemsCode,_ in pairs(listOfneeded) do
 			allHeroesDefs[newDefName] 		= newDef
 			heroDefsCounter					= heroDefsCounter + 1
 			--Spring.Echo(newDefName) 
+			-- for k,v in pairs(newDef.customParams.tsps[1]) do
+				-- Spring.Echo(k,v)
+			-- end
 		end
 	end
 end

@@ -18,9 +18,11 @@ end
 include "LuaRules/Configs/ote/ote_rules.lua"
 
 -- for k,v in pairs(UnitDefs) do
-	-- Spring.Echo("---")
-	-- for a,b in pairs(v.customParams) do
-		-- Spring.Echo(k,a,b)
+	-- Spring.Echo(v.customParams.tsp1_name)
+	-- local tspList = v.customParams.tsps
+	-- for i=1,#tspList do
+		-- thisTsp = tspList[i]
+		-- Spring.Echo(thisTsp.name, thisTsp.level, thisTsp.nextLevelName, thisTsp.nextLevelAllowed)
 	-- end
 -- end
 
