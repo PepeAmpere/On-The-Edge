@@ -41,21 +41,27 @@ local barHeight = 3
 local barWidth  = 14  --// (barWidth)x2 total width!!!
 local barAlpha  = 0.9
 
-local bossBarHeight = 9
+local bossBarHeight = 20 -- 9
 local bossBarWidth  = 42
 local bossBarAlpha  = 1.0
+
 local boss = {
 	-- TODO update this
-	["hertrapper"] = 21,
-	["hercleaver"] = 25,
-	["herfatboy"] = 40,
-	["herjuggernaut"] = 45,
-	["hermarksman"] = 12,
-	["herpivot"] = 30,
-	["herstalwart"] = 20,
-	["cormonstaq"] = 40,
-	["repmum"] = 40,
+	["cam"] = 21,
+	-- ["hercleaver"] = 25,
+	-- ["herfatboy"] = 40,
+	-- ["herjuggernaut"] = 45,
+	-- ["hermarksman"] = 12,
+	-- ["herpivot"] = 30,
+	-- ["herstalwart"] = 20,
+	-- ["cormonstaq"] = 40,
+	-- ["repmum"] = 40,
 }
+for k,v in pairs(UnitDefs) do
+	if (v.customParams.ishero) then
+		boss[v.name] = math.floor(v.health / 15)
+	end
+end
 local isAllied = {}	  
 
 local featureBarHeight = 3
@@ -455,7 +461,7 @@ do
     local yoffset = 0
     for i=1,barsN do
       local barInfo = bars[i]
-	  if (barInfo.boss) then yoffset = 15 end
+	  if (barInfo.boss) then yoffset = 30 end
       DrawUnitBar(yoffset,barInfo.progress,barInfo.color,barInfo.boss,barInfo.bossName)
       if (fullText) then
         if (barShader) then glMyText(1) end

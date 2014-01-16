@@ -93,7 +93,7 @@ local unitDef = {
 			weaponvelocity = 400,
 			explosiongenerator = "custom:TANKGUN_FX",
 			damage = {
-				default = 55,
+				default = 28,
 			},
 		},
 	}

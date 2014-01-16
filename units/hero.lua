@@ -78,10 +78,10 @@ local function CreateBaseDef(className, heroPlusItemsCode, finalName, itemList)
 		capturable		= 0,
 		
 		-- TODO: add spheres for each bot in heroClass[className]
-		--    collisionVolumeOffsets    =  "0 0 0",
-		--    collisionVolumeScales     =  "20 20 20",
-		--    collisionVolumeTest       =  1,
-		--    collisionVolumeType       =  "box",
+	   -- collisionVolumeOffsets    =  "0 0 0",
+	   -- collisionVolumeScales     =  "70 100 70",
+	   -- collisionVolumeTest       =  1,
+	   -- collisionVolumeType       =  "cylY",
 		
 		weapons = {
 			[1] = {
@@ -99,6 +99,7 @@ local function CreateBaseDef(className, heroPlusItemsCode, finalName, itemList)
 			tsps			= {},
 			nextLevelExp	= oteRule.experienceLevelFirst,
 			isHero			= true,
+			level			= 0,
 		},
 	}
 	
@@ -265,6 +266,7 @@ for heroPlusItemsCode,_ in pairs(listOfneeded) do
 		
 		newDef.customParams.spawnTime 		= newBaseDef.customParams.spawnTime + 2*newLevel
 		newDef.customParams.nextLevelExp 	= math.floor(newBaseDef.customParams.nextLevelExp * expMultiplier^newLevel)
+		newDef.customParams.level			= newLevel
 
 		-- kill bad levels combinations
 		-- just triangular equations 
