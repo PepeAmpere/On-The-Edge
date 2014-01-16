@@ -9,10 +9,24 @@ local moveDefs =
 	},
 	{
 		name = "HeroNormal",
-		footprintX = 4,
+		footprintX = 5,
 		maxWaterDepth = 10,
 		maxSlope = 20,
-		crushStrength = 100,
+		crushStrength = 200,
+	},	
+	{
+		name = "HeroFat",
+		footprintX = 6,
+		maxWaterDepth = 10,
+		maxSlope = 20,
+		crushStrength = 1200,
+	},
+	{
+		name = "HeroSlim",
+		footprintX = 4,
+		maxWaterDepth = 10,
+		maxSlope = 30,
+		crushStrength = 50,
 	},
 }
 

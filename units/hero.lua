@@ -58,7 +58,7 @@ local function CreateBaseDef(className, finalName, itemList)
 		brakeRate 		= 0.2,
 		turnRate		= 1000,
 		maxWaterDepth 	= 20,
-		movementClass 	= "HeroNormal",
+		movementClass 	= heroClass[className].movement,
 		
 		-- ability
 		builder 		= 0,

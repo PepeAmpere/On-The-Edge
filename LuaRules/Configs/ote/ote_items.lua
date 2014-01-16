@@ -26,9 +26,9 @@ local damageWeaponUpgradePerPrice = {
 local priceClass	= {
 	free 		= 0,
 	cheap 		= 1,
-	moderate	= 2,
-	expensive	= 3,
-	ultimate	= 5,	
+	moderate	= 3,
+	expensive	= 5,
+	ultimate	= 7,	
 }
 local panzerLightSpeedDecrease 	= -0.4
 local panzerHeavySpeedDecrease 	= -1.0
@@ -39,14 +39,74 @@ oteItem = {
 	-- head sensors
 	["noHelmet"] = {
 		price 			= priceClass.free,
-		icon			= itemIconsPath .. "helm.png",
+		icon			= itemIconsPath .. "head0.png",
 		shortName		= "No helmet",
-		description		= "This slot is not used",
+		description		= "This slot is not used.",
 		position		= "head",
 		code			= "h0",
 		goodHeroes		= {},
 		badHeroes		= {"bug"},
 		upgrade 		= function(defTable) 
+			return defTable
+		end,
+		upgInterpret	= {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+	},
+	["singleScope"] = {
+		price 			= priceClass.cheap,
+		icon			= itemIconsPath .. "headScope.png",
+		shortName		= "Single Scope",
+		description		= "Slightly increase Line Of Sight (LOS) of Hero.",
+		position		= "head",
+		code			= "hlls",
+		goodHeroes		= {},
+		badHeroes		= {},
+		upgrade 		= function(defTable) 
+			-- TODO: add LOS
+			return defTable
+		end,
+		upgInterpret	= {0, 0, 0, 0, priceClass.cheap, 0, 0, 0, 0, 0},
+	},
+	["googolGlass"] = {
+		price 			= priceClass.ultimate,
+		icon			= itemIconsPath .. "headSuperScope.png",
+		shortName		= "Googol Glass",
+		description		= "Superexpensive long range scope which allows you to see tiny bunny in mouth of angry Spacebug for 50 miles.",
+		position		= "head",
+		code			= "hgls",
+		goodHeroes		= {},
+		badHeroes		= {"doc"},
+		upgrade 		= function(defTable) 
+			-- TODO: add LOS
+			return defTable
+		end,
+		upgInterpret	= {0, 0, 0, 0, priceClass.ultimate, 0, 0, 0, 0, 0},
+	},
+	["tinyRadarEmitor"] = {
+		price 			= priceClass.moderate,
+		icon			= itemIconsPath .. "headRadar.png",
+		shortName		= "Tiny Radar Emitor",
+		description		= "RADAR! Small distance radar emitor in nice metal helm. Nothing more, nothing less.",
+		position		= "head",
+		code			= "hetr",
+		goodHeroes		= {},
+		badHeroes		= {},
+		upgrade 		= function(defTable) 
+			-- TODO: add radar
+			return defTable
+		end,
+		upgInterpret	= {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+	},
+	["backupUnit"] = {
+		price 			= priceClass.expensive,
+		icon			= itemIconsPath .. "headBackUp.png",
+		shortName		= "Back-up Unit",
+		description		= "Memory cloud decrease spawn time of Hero.",
+		position		= "head",
+		code			= "hspw",
+		goodHeroes		= {},
+		badHeroes		= {},
+		upgrade 		= function(defTable) 
+			-- TODO: decsrease time
 			return defTable
 		end,
 		upgInterpret	= {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -57,7 +117,7 @@ oteItem = {
 		price 			= priceClass.free,
 		icon			= itemIconsPath .. "weapon0.png",
 		shortName		= "No weapon",
-		description		= "This slot is not used",
+		description		= "This slot is not used.",
 		position		= "weapon",
 		code			= "w0",
 		goodHeroes		= {},
@@ -71,9 +131,9 @@ oteItem = {
 		price 			= priceClass.moderate,
 		icon			= itemIconsPath .. "weaponAmmo.png",
 		shortName		= "Duranthium Ammo",
-		description		= "Anti-armor shells - weaker a bit but same amount of dmg to armored enemies",
+		description		= "Anti-armor shells - weaker a bit but same amount of dmg to armored enemies.",
 		position		= "weapon",
-		code			= "wa",
+		code			= "wdam",
 		goodHeroes		= {},
 		badHeroes		= {"bug"},
 		upgrade 		= function(defTable)
@@ -90,9 +150,9 @@ oteItem = {
 		price 			= priceClass.expensive,
 		icon			= itemIconsPath .. "weaponReload.png",
 		shortName		= "Dual realoder",
-		description		= "Upgrade which allows you to fire two times faster with worse aim",
+		description		= "Upgrade which allows you to fire two times faster with worse aim.",
 		position		= "weapon",
-		code			= "wl",
+		code			= "wdrl",
 		goodHeroes		= {},
 		badHeroes		= {"bug"},		
 		upgrade 		= function(defTable) 
@@ -106,13 +166,30 @@ oteItem = {
 		end,
 		upgInterpret	= {0, -priceClass.cheap, priceClass.expensive, 0, 0, 0, 0, 0, 0, 0},
 	},
+	["gravitonShells"] = {
+		price 			= priceClass.ultimate,
+		icon			= itemIconsPath .. "weaponShells.png",
+		shortName		= "Graviton Shells",
+		description		= "Hit by shell add motion to target. Need some energy upkeep.",
+		position		= "weapon",
+		code			= "wgsh",
+		goodHeroes		= {"bulk"},
+		badHeroes		= {},		
+		upgrade 		= function(defTable) 
+			-- TODO: do effect
+			-- add push
+			-- decrease energy prod.
+			return defTable
+		end,
+		upgInterpret	= {0, 0, priceClass.ultimate, 0, 0, 0, 0, 0, 0, -priceClass.cheap},
+	},
 	
 	-- body
 	["nobody"] = {
 		price 			= priceClass.free,
 		icon			= itemIconsPath .. "nobody.png",
 		shortName		= "No body",
-		description		= "This slot is not used",
+		description		= "This slot is not used.",
 		position		= "body",
 		code			= "b0",
 		goodHeroes		= {},
@@ -126,21 +203,131 @@ oteItem = {
 		price 			= priceClass.moderate,
 		icon			= itemIconsPath .. "panzerFront.png",
 		shortName		= "Light front panzer",
-		description		= "Panzer which increase armor of hero for direct attacks but decrease his speed a bit in exchange",
+		description		= "Panzer which increase armor of hero for direct attacks but decrease his speed a bit in exchange.",
 		position		= "body",
-		code			= "pf",
+		code			= "bfpz",
 		goodHeroes		= {},
 		badHeroes		= {"cam"},
 		upgrade 		= function(defTable) 
-			local newSpeed = defTable.maxVelocity + panzerLightSpeedDecrease
+			local newSpeed 	= defTable.maxVelocity + panzerLightSpeedDecrease
+			local newHealth = defTable.maxDamage + 25
 			defTable.maxVelocity 		= newSpeed
 			defTable.flankingBonusMode	= 3
 			defTable.flankingBonusDir	= {0.0, 0.0, 1.0}
 			defTable.flankingBonusMax 	= 1.0
 			defTable.flankingBonusMin 	= panzerLightEffect
+			defTable.maxDamage			= newHealth
 			return defTable
 		end,
-		upgInterpret	= {0, 0, 0, 0, 0, priceClass.moderate, 0, 0, 0, 0},
+		upgInterpret	= {-priceClass.cheap, 0, 0, 0, 0, priceClass.moderate, 0, 0, 0, 0},
+	},
+	["standardRadarEmitor"] = {
+		price 			= priceClass.expensive,
+		icon			= itemIconsPath .. "bodyRadar.png",
+		shortName		= "Standard Radar Emitor",
+		description		= "RADAR! Powerfull scan device you!",
+		position		= "body",
+		code			= "bemr",
+		goodHeroes		= {},
+		badHeroes		= {},
+		upgrade 		= function(defTable) 
+			-- TODO: add radar
+			return defTable
+		end,
+		upgInterpret	= {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+	},
+	["smallEnergyStorage"] = {
+		price 			= priceClass.cheap,
+		icon			= itemIconsPath .. "bodySmallEnergyStorage.png",
+		shortName		= "Small Energy Storage",
+		description		= "Additional auto-battery. Enough for recharging you cell phone.",
+		position		= "body",
+		code			= "bsme",
+		goodHeroes		= {},
+		badHeroes		= {},
+		upgrade 		= function(defTable) 
+			-- TODO: add estor
+			return defTable
+		end,
+		upgInterpret	= {0, 0, 0, 0, 0, 0, 0, priceClass.cheap, 0, 0},
+	},
+	["bigEnergyStorage"] = {
+		price 			= priceClass.expensive,
+		icon			= itemIconsPath .. "bodyBigEnergyStorage.png",
+		shortName		= "Big Energy Storage",
+		description		= "Where others stop, we start. Bentoi battery for profi users.",
+		position		= "body",
+		code			= "bbge",
+		goodHeroes		= {},
+		badHeroes		= {"bug"},
+		upgrade 		= function(defTable) 
+			-- TODO: add estor
+			return defTable
+		end,
+		upgInterpret	= {0, 0, 0, 0, 0, 0, 0, priceClass.expensive, 0, 0},
+	},
+	["plasmaShieldEmitor"] = {
+		price 			= priceClass.ultimate,
+		icon			= itemIconsPath .. "bodyPlasmaShield.png",
+		shortName		= "Plasma Shield Emitor",
+		description		= "Ultimate solution for annonying plasma around your head.",
+		position		= "body",
+		code			= "bpsh",
+		goodHeroes		= {},
+		badHeroes		= {"bulk", "bug"},
+		upgrade 		= function(defTable) 
+			-- TODO: add plasma shield
+			return defTable
+		end,
+		upgInterpret	= {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+	},
+	["cloakEmitor"] = {
+		price 			= priceClass.expensive,
+		icon			= itemIconsPath .. "bodyCloakEmitor.png",
+		shortName		= "Cloak Emitor",
+		description		= "PREADOTOR mode! Mu ha ha ha ha!!!",
+		position		= "body",
+		code			= "becl",
+		goodHeroes		= {},
+		badHeroes		= {"bulk"},
+		upgrade 		= function(defTable) 
+			-- TODO: add shield
+			-- energy consumption!
+			return defTable
+		end,
+		upgInterpret	= {0, 0, 0, 0, 0, 0, 0, 0, 0, -priceClass.expensive},
+	},
+	["pathingUnit"] = {
+		price 			= priceClass.moderate,
+		icon			= itemIconsPath .. "bodySpeed.png",
+		shortName		= "Pathing Unit",
+		description		= "Generaly improve speed, especially in steep places.",
+		position		= "body",
+		code			= "bspd",
+		goodHeroes		= {},
+		badHeroes		= {},
+		upgrade 		= function(defTable) 
+			-- TODO: add speed
+			-- ? add bonus in steep terrian? not now, maybe later
+			return defTable
+		end,
+		upgInterpret	= {priceClass.cheap, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+	},
+	["jammerEmitor"] = {
+		price 			= priceClass.ultimate,
+		icon			= itemIconsPath .. "bodyJammer.png",
+		shortName		= "Jammer Emitor",
+		description		= "Hide hero and all around him aside hungry enemy radar eyes. Cost huge amount of energy.",
+		position		= "body",
+		code			= "bejm",
+		goodHeroes		= {},
+		badHeroes		= {},
+		upgrade 		= function(defTable) 
+			-- TODO: add jammer
+			-- decrease energy production a lot
+			return defTable
+		end,
+		upgInterpret	= {0, 0, 0, 0, 0, 0, 0, 0, 0, -priceClass.ultimate},
 	},
 	-- ["panzerRight"] = {
 		-- price 			= priceClass.moderate,

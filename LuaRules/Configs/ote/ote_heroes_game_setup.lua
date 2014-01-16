@@ -32,6 +32,7 @@ for i=1,#teamList do
 	else
 		teamHeroUnitDef[tostring(teamID)] = "none"
 	end
+	Spring.Echo(teamHeroUnitDef[tostring(teamID)])
 
 end
 

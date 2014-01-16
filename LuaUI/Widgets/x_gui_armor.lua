@@ -14,7 +14,7 @@ function widget:GetInfo()
 end
 
 -- configs
-local distance 				= 32
+local distance 				= 64
 local fontSize 				= 8
 local lineWidth 			= 1
 local blue					= 0.3

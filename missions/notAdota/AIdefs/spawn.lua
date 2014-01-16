@@ -52,6 +52,10 @@ local function notAdotaSpawn(spots,firstAxis,firstAxisInc,secondAxis,secondAxisI
 			-- ! rewrite - fast change :) 
 			local restOfName = "_0_0_0_0"
 			unitname = teamHeroUnitDef[tostring(t)]   -- this structure from LuaRules/Configs/ote/ote_heroes_game_setup.lua
+			if (unitname == nil) then
+				unitname = faction .. "_h0_w0_b0_b0_3"
+				Spring.Echo("ERROR!!!: NOE spawner: fixed hero name")
+			end
 			unitname = unitname .. restOfName
 			
 			local good = true

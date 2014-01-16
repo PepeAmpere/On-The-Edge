@@ -30,6 +30,7 @@ heroClass = {
 		script		= "ball.lua",
 		description	= "Dumball",
 		tsps		= heroesTSPnames["ball"],
+		movement	= "HeroFat",
 		
 	},
 	["bug"] = {
@@ -39,6 +40,7 @@ heroClass = {
 		script		= "bug.lua",
 		description	= "Angry bug",
 		tsps		= heroesTSPnames["bug"],
+		movement	= "HeroNormal",
 		
 	},
 	["bulk"] = {
@@ -48,6 +50,7 @@ heroClass = {
 		script		= "bulk.lua",
 		description	= "Mr. Bulk",
 		tsps		= heroesTSPnames["bulk"],
+		movement	= "HeroNormal",
 		
 	},
 	["cam"] = {
@@ -57,6 +60,7 @@ heroClass = {
 		script		= "cam.lua",
 		description	= "Angry webcamera",
 		tsps		= heroesTSPnames["cam"],
+		movement	= "HeroNormal",
 		
 	},
 	["doc"] = {
@@ -66,6 +70,7 @@ heroClass = {
 		script		= "doc.lua",
 		description	= "Crazy runner",
 		tsps		= heroesTSPnames["doc"],
+		movement	= "HeroSlim",
 		
 	},
 }

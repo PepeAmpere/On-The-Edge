@@ -42,6 +42,13 @@ OTE base content
 * Josef Pelant
 	- all music and sound content (OTE license)
 
+Sound samples
+-------------
+
+* http://www.freesfx.co.uk
+* http://www.freesound.org/
+* http://soundbible.com/
+	
 3rd party
 ---------
 	
@@ -53,8 +60,8 @@ OTE base content
 	- 1 model files, 2 textures files of hero (Glaive - old one used in NOTA as BattleCommander) (CC BY 3.0)
 	- 2 animation script files (GNU GPL v2)	
 
-Lua widgets
-===========
+Lua widgets and gadgets
+=======================
 
 OTE base content
 ----------------
@@ -101,5 +108,7 @@ Other contributors and credits
 
 Testers
 -------
+
+
 
 
