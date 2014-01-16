@@ -248,10 +248,7 @@ for heroPlusItemsCode,_ in pairs(listOfneeded) do
 		local newDef			= Deepcopy(newBaseDef)
 		
 		-- !add powers, only 3 now!		
-		newDef.customParams.tsps = {}
-		for k,v in pairs(subDefs.tsps) do
-			newDef.customParams.tsps[k] = v 
-		end				
+		newDef.customParams.tsps = Deepcopy(subDefs.tsps)
 		
 		-- imcrease healh/energy/speed/repair/charge
 		-- !! TODO: make and connect with ote rules multipliers

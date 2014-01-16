@@ -48,6 +48,7 @@ local bossBarAlpha  = 1.0
 local boss = {
 	-- TODO update this
 	["cam"] = 21,
+	["bugqueen"] = 40,
 	-- ["hercleaver"] = 25,
 	-- ["herfatboy"] = 40,
 	-- ["herjuggernaut"] = 45,

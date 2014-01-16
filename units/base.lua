@@ -42,7 +42,9 @@ for i=1,#names do
 		Side 			= "REP",
 		TEDClass 		= "TANK",
 		UnitName 		= unitDefName,
-		script 			= "template.lua",    
+		script 			= "template.lua",   
+
+		maxDamage		= 1000,
 	}
 	
 	allBaseDefs[unitDefName] = unitDef
