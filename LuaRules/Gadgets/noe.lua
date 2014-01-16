@@ -1698,9 +1698,9 @@ function gadget:Initialize()
 				    trueSide = missionInfo.AInames[numberOfMissionAIs]
                 end
 				-- just hot addition for OTE --
-				if (missionName == "notAdota") then
-				    trueSide = aiInfo
-                end
+				-- if (missionName == "notAdota") then
+				    -- trueSide = aiInfo
+                -- end
 				-- end --
 				aiOptions[numberOfNoeAITeams] = {
 					["difficulty"] = "special",

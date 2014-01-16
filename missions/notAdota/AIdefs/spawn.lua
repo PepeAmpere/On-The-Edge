@@ -186,12 +186,6 @@ local function notAdotaSpawn(spots,firstAxis,firstAxisInc,secondAxis,secondAxisI
 		local coins						= 10
 		
 		-- base check (then add bad faction)
-		if (ai) then
-			local AIname = Spring.GetTeamLuaAI(t)
-			if (AIname == "BASE Team 1" or AIname == "BASE Team 2" or AIname == "WILDERNESS") then
-				faction = "pir"
-			end
-		end
 		
 		-- Spring.Echo(unitname,faction)
 		if unitname and (allyTeam >= 0) and (allyTeam < 2) and (faction ~= "pir") then
@@ -228,8 +222,16 @@ local function notAdotaSpawn(spots,firstAxis,firstAxisInc,secondAxis,secondAxisI
 			Spring.SetTeamResource(t, "e", UnitDefNames[unitname].customParams.energystorage)
 			Spring.SetTeamResource(t, "es", UnitDefNames[unitname].customParams.energystorage)
 			
-			-- use spawn planner
-			newSpawnThis[#newSpawnThis+1] = {name = "t_" .. unitname, posX = sx, posZ = sz, facing = "s", teamName = teamIDtoName[tostring(t)], checkType = "none", gameTime = 0}
+			local AIname = "none"
+			if (ai) then
+				AIname = Spring.GetTeamLuaAI(t)
+			end
+			
+			if (AIname ~= "Mission AI") then 
+				-- use spawn planner
+				newSpawnThis[#newSpawnThis+1] = {name = "t_" .. unitname, posX = sx, posZ = sz, facing = "s", teamName = teamIDtoName[tostring(t)], checkType = "none", gameTime = 0}
+				Spring.Echo("Spawner: " .. unitname, t)
+			end
 		end
 	end
 end

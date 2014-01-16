@@ -9,19 +9,9 @@
 
 return {
   {
-    name 		= 'BASE Team 1',
+    name 		= 'Mission AI',
     desc 		= 'Base forces controler',
 	AItype 		= 'Army commander',
-  },
-  {
-    name 		= 'BASE Team 2',
-    desc 		= 'Base forces controler',
-	AItype 		= 'Army commander',
-  },
-  {
-    name 		= 'WILDERNESS',
-    desc 		= 'Jungle mastermind',
-	AItype 		= 'animal',
   },
 }
 

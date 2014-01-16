@@ -45,6 +45,7 @@ for i=1,#names do
 		script 			= "template.lua",   
 
 		maxDamage		= 1000,
+		SightDistance 	= 500,
 	}
 	
 	allBaseDefs[unitDefName] = unitDef

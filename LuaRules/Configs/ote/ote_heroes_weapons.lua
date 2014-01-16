@@ -43,7 +43,7 @@ local heroWeaponsDefs = {	 --	ball, bug, bulk, cam, doc
 	weaponvelocity 		= { 800, 800, 1000, 800, 800 },
 	explosiongenerator 	= { "custom:TANKGUN_FX", "custom:TANKGUN_FX", "custom:TANKGUN_FX", "custom:TANKGUN_FX", "custom:TANKGUN_FX" },
 
-	range 				= { 400, 400, 600, 400, 400 },
+	range 				= { 400, 150, 600, 400, 400 },
 	reloadtime 			= { 1.5, 1.5, 0.08, 1.5, 0.5 },
 	damage 				= { {default = 55}, {default = 55}, {default = 4}, {default = 55}, {default = 55} },
 }
