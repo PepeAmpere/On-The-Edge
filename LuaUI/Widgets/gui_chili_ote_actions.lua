@@ -208,7 +208,7 @@ local function ActivateScreen(unitID, unitDefID)
 end
 
 function widget:RecvLuaMsg(msg, playerID)
-	--if (playerID ~= LOCALPLAYER) then return end
+	if (playerID ~= Spring.GetMyPlayerID()) then return end
 	
 	if(msg == "LEVELUP")then
 		---Spring.Echo("Projde!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1")
