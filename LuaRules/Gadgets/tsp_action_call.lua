@@ -18,6 +18,11 @@ include "LuaRules/Configs/noe/noe_formations.lua"
 local change		= false
 local params		= {}
 
+local changeU	= false
+local wait		= 5
+local paramsU	= {}
+local x,y,z		= 0,0,0
+local teamIDU	= 0
 
 if ( gadgetHandler:IsSyncedCode()) then
 
@@ -64,6 +69,29 @@ function gadget:GameFrame(frameNumber)
 		CallAction(params["unitID"], params["actionName"], params["actionLevel"])
 		change = false
 	end
+	
+	if(changeU) then
+		if(wait == 5) then
+			x,y,z = Spring.GetUnitPosition(paramsU[1])
+			teamIDU = Spring.GetUnitTeam(paramsU[1])
+			Spring.DestroyUnit(paramsU[1])
+		end
+		
+		if(wait > 0) then
+			wait = wait - 1
+		end
+		
+		if wait==0 then
+			Spring.Echo("PRORRRRRRRRROOOOBBBBBBBBBBBBBBBBBBBBBBBBBDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAG")
+			Spring.CreateUnit(paramsU[2], x, y, z, "south", teamIDU, false, false, paramsU[1])
+			Spring.SendLuaUIMsg("LEVELUP", "a")
+			wait = 5
+			changeU = false
+		end
+	end
+	if(wait == 0) then
+		
+	end
 end
 
 function gadget:RecvLuaMsg(msg, playerID)
@@ -81,6 +109,12 @@ function gadget:RecvLuaMsg(msg, playerID)
 		}
 		change = true
 	end
+	
+	if(tokens[1] == "UPBUTTONCLICKED")then
+		paramsU = {tokens[2], tokens[3]}
+		changeU = true
+	end
+	
 end
 
 end

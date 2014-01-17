@@ -25,11 +25,18 @@ local Chili
 local active 	= false
 local needUnit	= true
 local needInit 	= true
+local update	= false
 
-local myTeamID	= Spring.GetMyTeamID()					-- from this we know team from the beginning
-local myUnitID	= 0
+local myTeamID		= Spring.GetMyTeamID()					-- from this we know team from the beginning
+local myUnitID		= 0
+local playerLevel	= 0
+local playerMetal	= 0
+local playerXP		= 0
+local nextLevelOn	= 0
+local unitDef		= 0
+local myUnitID		= 0
+local upgradePoints	= 0
 
-local upgradePoints = 0
 local powers		= nil
 
 function ButtonClicked(chiliButton, x, y, button, mods)
@@ -38,12 +45,12 @@ end
 
 function UpgradeButtonClicked(chiliButton, x, y, button, mods)
 	upgradePoints = upgradePoints - 1
-	Spring.SendLuaUIMsg("POINTSDOWN", "a")
 	Spring.SendLuaRulesMsg("UPBUTTONCLICKED" .. "-" .. myUnitID .. "-" .. chiliButton.nextlevel)
 end
 
 
 function GeneratePowersButtons()
+	powersWindow:ClearChildren()
 	for i=1, #powers do
 		local button = Chili.Button:New{
 			parent		= powersWindow,
@@ -62,6 +69,7 @@ function GeneratePowersButtons()
 end
 
 function GenerateUpgradeButtons(points)
+	upgradeWindow:ClearChildren()
 	for i=1, #powers do
 		local disabled = true
 		Spring.Echo(powers[i]["nextLevelAllowed"])
@@ -154,11 +162,65 @@ local function DelayedInitialization()
 	GeneratePowersButtons()
 	GenerateUpgradeButtons(upgradePoints)
 	
+	local screenX, screenY	= Spring.GetViewGeometry()
+	local wWidth, wHeight	= 65, 250
+	
+	infoWindow = Chili.Window:New{
+		x 				= 10,
+		y 				= screenY - wHeight - 30,
+		dockable 		= false,
+		parent			= screen0,
+		caption			= "",
+		draggable		= false,
+		resizable		= true,
+		clientWidth		= wWidth,
+		clientHeight	= wHeight,
+		backgroundColor	= {0,0,0,1},
+	}
+	
+	metalCaption = Chili.Label:New{
+		x		= 0,
+		y		= 0,
+		parent	= infoWindow,
+		caption	= Spring.GetTeamResources(myTeamID,"metal"), 
+	}
+	
+	xpBar = Chili.Progressbar:New{
+		x			= 0,
+		y			= 20,
+		parent		= infoWindow,
+		max 		= nextLevelOn, 	--int maximum value of the Progressbar (default 100)
+		value		= playerXP, 	--int value of the Progressbar (default 100)
+		caption 	= "EXP: \n" .. playerXP .. "/" .. nextLevelOn, -- string text to be displayed (default "")
+		minWidth	= 65,
+		maxWidth	= 65,
+		minHeight	= 180,
+		orientation = "vertical"
+	}
+	
+	playerLevelCaption = Chili.Label:New{
+		x		= 0,
+		y		= 205,
+		parent	= infoWindow,
+		caption	= "LVL: " .. playerLevel, -- string text contained in the editbox (default "")
+	}
+	
+	upgradePointsCaption = Chili.Label:New{
+		x		= 0,
+		y		= 225,
+		parent	= infoWindow,
+		caption	= upgradePoints .. " UP", -- string text contained in the editbox (default "")
+	}
+	
 end
 
 local function ActivateScreen(unitID, unitDefID)
 	myUnitID 	= unitID					-- for later access to units stats
-	--Spring.Echo(unitDefID, UnitDefs[unitDefID].name, UnitDefs[unitDefID].customParams)
+	unitDef		= unitDefID
+	
+	nextLevelOn	= UnitDefs[unitDefID].customParams.nextlevelexp
+	playerLevel	= UnitDefs[unitDefID].customParams.level
+	
 	local params = UnitDefs[unitDefID].customParams
 	
 	powers = {}
@@ -177,8 +239,26 @@ local function ActivateScreen(unitID, unitDefID)
 	end
 	
 	Spring.Echo(powers)
+	
+	if update then
+		GeneratePowersButtons()
+		GenerateUpgradeButtons(upgradePoints)
+	end
+	
 	active 		= true						-- we are ready to show it now
 	needUnit	= false						-- we needed this check only once
+	update		= false
+end
+
+local function AddExp(amount)
+	local value = playerXP + amount
+	Spring.Echo(value)
+	if (value >= tonumber(nextLevelOn)) then
+		upgradePoints = upgradePoints + 1
+		playerXP = value - nextLevelOn
+	else
+		playerXP = value
+	end
 end
 
 function widget:RecvLuaMsg(msg, playerID)
@@ -186,22 +266,19 @@ function widget:RecvLuaMsg(msg, playerID)
 	
 	local tokens = split(msg,"-")
 	if(tokens[1] == "LEVELUP")then
-		---Spring.Echo("Projde!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1")
-		upgradeWindow:ClearChildren()
-		powersWindow:ClearChildren()
-		
 		active 		= false
 		needUnit	= true
-		
-		GeneratePowersButtons()
-		GenerateUpgradeButtons(upgradePoints)
+		update		= true
 	end
 	
-	if(tokens[1] == "POINTSUP") then
-		upgradePoints = upgradePoints + 1
-		upgradeWindow:ClearChildren()
-		GenerateUpgradeButtons(upgradePoints)
+	if(tokens[1] == "EXPUP") then
+		Spring.Echo(tokens[3], myUnitID)
+		if(tokens[3] == tostring(myUnitID)) then
+			Spring.Echo("CALL??")
+			AddExp(tokens[4])
+		end
 	end
+	
 end
 
 function widget:GameFrame(frameNumber)
@@ -212,6 +289,12 @@ function widget:GameFrame(frameNumber)
 			needInit = false 			-- we needed this init only once
 		end
 
+		metalCaption:SetCaption(Spring.GetTeamResources(myTeamID,"metal"))
+		xpBar:SetValue(playerXP)
+		xpBar:SetCaption("EXP: \n" .. playerXP .. "/" .. nextLevelOn)
+		playerLevelCaption:SetCaption("LVL: " .. playerLevel)
+		upgradePointsCaption:SetCaption(upgradePoints .. " UP")
+		
 	else
 		if (frameNumber % 60 == 0 and needUnit) then
 			myTeamID			= Spring.GetMyTeamID()
