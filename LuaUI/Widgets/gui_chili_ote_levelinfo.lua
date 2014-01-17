@@ -27,6 +27,7 @@ local myTeamID		= Spring.GetMyTeamID()					-- from this we know team from the be
 local playerMetal	= 0
 local playerXP		= 0
 local nextLevelOn	= 0
+local unitDef		= 0
 --TODO: add function to listen to massages and update gui
 
 local function DelayedInitialization()
@@ -92,11 +93,21 @@ local function DelayedInitialization()
 end
 
 local function ActivateScreen(unitID, unitDefID)
+	unitDef		= unitDefID
 	myUnitID 	= unitID					-- for later access to units stats
 	nextLevelOn	= UnitDefs[unitDefID].customParams.nextlevelexp
 	playerLevel	= UnitDefs[unitDefID].customParams.level
 	active 		= true						-- we are ready to show it now
 	needUnit	= false						-- we needed this check only once
+end
+
+function widget:RecvLuaMsg(msg, playerID)
+	--if (playerID ~= LOCALPLAYER) then return end
+	
+	if(msg == "LEVELUP")then
+		Spring.Echo("Projde!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1")
+		playerLevel = playerLevel + 1
+	end
 end
 
 function widget:GameFrame(frameNumber)
@@ -112,6 +123,9 @@ function widget:GameFrame(frameNumber)
 		metalCaption:SetCaption(Spring.GetTeamResources(myTeamID,"metal"))
 		xpBar:SetValue(playerXP)
 		xpBar:SetCaption("EXP: \n" .. playerXP .. "/" .. nextLevelOn)
+		playerLevelCaption:SetCaption("LVL: " .. playerLevel)
+		
+		
 	else
 		if (frameNumber % 60 == 0 and needUnit) then
 			myTeamID			= Spring.GetMyTeamID()

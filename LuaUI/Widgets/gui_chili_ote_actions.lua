@@ -11,6 +11,8 @@ function widget:GetInfo()
 	}
 end
 
+VFS.Include("LuaRules/Gadgets/Includes/utilities.lua")
+
 --UI Constants
 local POWERBUTTONSIZE = 50
 -----
@@ -36,8 +38,7 @@ function ButtonClicked(chiliButton, x, y, button, mods)
 end
 
 function UpgradeButtonClicked(chiliButton, x, y, button, mods)
-	--TODO: call action to improve units stats in given line
-	Spring.Echo("Upgrade called to:" .. chiliButton.action)
+	Spring.SendLuaRulesMsg("UPBUTTONCLICKED" .. "-" .. myUnitID .. "-" .. chiliButton.nextlevel)
 end
 
 
@@ -63,9 +64,14 @@ function GenerateUpgradeButtons(points)
 	for i=1, #powers do
 		local disabled = true
 		Spring.Echo(powers[i]["nextLevelAllowed"])
-		if (powers[i]["nextLevelAllowed"] and points~=0) then
-			disabled = false
+		local allowed = ToBool( tostring(powers[i]["nextLevelAllowed"]))
+		if (allowed) then
+			if(points ~= 0) then
+				disabled = false
+			end
 		end
+		Spring.Echo("DISABLED?")
+		Spring.Echo(disabled)
 		if not disabled then
 			local button = Chili.Button:New{
 				parent		= upgradeWindow,
@@ -77,20 +83,39 @@ function GenerateUpgradeButtons(points)
 				minHeight	= 50,
 				maxWidth	= 50,
 				caption 	= "+1",
-				nextlevel	= powers[i]["nextlevelname"],
+				nextlevel	= powers[i]["nextLevelName"],
 				OnMouseDown = {UpgradeButtonClicked},
 			}
 		end
 	end
 end
 
-function LevelUp()
-	upgradePoints = upgradePoints - 1
-	powersWindow:clearChildren()
-	GeneratePowersButtons()
-	upgradeWindow:clearChildren()
-	GenerateUpgradeButtons(upgradePoints)
-end
+-- function LevelUp()
+	--upgradePoints = upgradePoints - 1
+	
+	-- local unitDefID = Spring.GetUnitDefID(myUnitID)
+	-- local params = UnitDefs[unitDefID].customParams
+	
+	-- powers = {}
+	
+	-- for i=1,params.tsps_size do
+		-- local tspName 		= "tsp" .. i .. "_name"
+		-- local tspLevel		= "tsp" .. i .. "_level"	
+		-- local tspNextName	= "tsp" .. i .. "_nextlevelname"
+		-- local tspNextAllow	= "tsp" .. i .. "_nextlevelallowed"
+		-- powers[i] = {
+			-- name 				= params[tspName],
+			-- level				= params[tspLevel],
+			-- nextLevelName		= params[tspNextName],
+			-- nextLevelAllowed	= params[tspNextAllow],
+		-- }
+	-- end
+	
+	-- powersWindow:clearChildren()
+	-- GeneratePowersButtons()
+	-- upgradeWindow:clearChildren()
+	-- GenerateUpgradeButtons(upgradePoints)
+-- end
 
 function LevelUpPossible()
 	upgradePoints = upgradePoints + 1
@@ -159,7 +184,7 @@ end
 
 local function ActivateScreen(unitID, unitDefID)
 	myUnitID 	= unitID					-- for later access to units stats
-	Spring.Echo(unitDefID, UnitDefs[unitDefID].name, UnitDefs[unitDefID].customParams)
+	--Spring.Echo(unitDefID, UnitDefs[unitDefID].name, UnitDefs[unitDefID].customParams)
 	local params = UnitDefs[unitDefID].customParams
 	
 	powers = {}
@@ -180,6 +205,17 @@ local function ActivateScreen(unitID, unitDefID)
 	Spring.Echo(powers)
 	active 		= true						-- we are ready to show it now
 	needUnit	= false						-- we needed this check only once
+end
+
+function widget:RecvLuaMsg(msg, playerID)
+	--if (playerID ~= LOCALPLAYER) then return end
+	
+	if(msg == "LEVELUP")then
+		---Spring.Echo("Projde!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1")
+		active 		= false
+		needUnit	= true
+		needInit 	= true
+	end
 end
 
 function widget:GameFrame(frameNumber)
