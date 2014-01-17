@@ -95,10 +95,14 @@ OTE base content
 	
 * Jools
 	- soundControl (GNU GPL v2)
+	
+* Beherith
+	projectile lights (GNU GPL v2)
 
 * PepeAmpere
 	- armors (BY-NC-SA)
-	- LOS ON at start (BY-NC-SA)
+	- LOS ON at start (BY-NC-SA)	
+
 	
 Other contributors and credits
 ==============================

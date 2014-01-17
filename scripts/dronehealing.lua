@@ -3,5 +3,5 @@ function script.Create()
 end
 
 function script.Killed(recentDamage, maxHealth)
-	return 0
+	return 1
 end

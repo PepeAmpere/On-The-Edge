@@ -2,8 +2,8 @@ local moveDefs =
 {
 	{
 		name = "Default2x2",
-		footprintX = 2,
-		footprintZ = 2,
+		footprintX = 3,
+		footprintZ = 3,
 		maxWaterDepth = 10,
 		maxSlope = 20,
 		crushStrength = 25,

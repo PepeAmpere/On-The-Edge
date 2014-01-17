@@ -19,6 +19,7 @@ local unitDef = {
     SightDistance 	= 400,
     SoundCategory 	= "TANK",
     Upright 		= 0,
+	iconType		= "tower",
     
 --Energy and metal related
     BuildCostEnergy = 100,
@@ -35,10 +36,10 @@ local unitDef = {
     Reclaimable 	= 0,
     
 --Hitbox
---    collisionVolumeOffsets    =  "0 0 0",
---    collisionVolumeScales     =  "20 20 20",
---    collisionVolumeTest       =  1,
---    collisionVolumeType       =  "box",
+   collisionVolumeOffsets    =  "0 0 0",
+   collisionVolumeScales     =  "150 300 150",
+   collisionVolumeTest       =  1,
+   collisionVolumeType       =  "cylY",
     
 --Weapons and related
 	weapons = {
@@ -71,8 +72,8 @@ local unitDef = {
 			impulsefactor = 0,
 			intensity = 1,
 			noselfdamage = true,
-			size = 4,
-			soundstart = "mortar1",
+			size = 10,
+			soundstart = "grenade_launch",
 			soundhit = "mortarhit",
 			range = 750,
 			reloadtime = 1.5,

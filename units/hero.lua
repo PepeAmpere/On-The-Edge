@@ -49,7 +49,8 @@ local function CreateBaseDef(className, heroPlusItemsCode, finalName, itemList)
 		maxDamage 		= oteRule.health[heroClass[className].statsClass[2]],
 		radarDistance 	= 0,
 		sightDistance 	= oteRule.los[heroClass[className].statsClass[8]],
-		mass 			= 1000,
+		mass 			= 1500,
+		iconType		= "hero",		
 		
 		soundCategory 	= "",
 		upright 		= 0,

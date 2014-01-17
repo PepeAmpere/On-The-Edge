@@ -15,7 +15,7 @@ local heroWeaponsDefs = {	 --	ball, bug, bulk, cam, doc
 	name 				= { "long_beam", "big_bite", "heavy_mg", "paralyzer", "auto_pistol" },
 	weapontype 			= { "BeamLaser", "Melee", "BeamLaser", "BeamLaser", "Cannon" },
 	accuracy 			= { 10, 10, 20, 10, 10 },
-	areaofeffect 		= { 100, 100, 16, 100, 100 },
+	areaofeffect 		= { 100, 100, 16, 100, 20 },
 	avoidfeature 		= { false, false, false, false, false },
 	avoidfriendly 		= { true, true, true, true, true },
 	canattackground 	= { true, true, true, true, true },
@@ -32,12 +32,12 @@ local heroWeaponsDefs = {	 --	ball, bug, bulk, cam, doc
 	impulsefactor 		= { 0, 0, 0, 0, 0 },
 	intensity 			= { 1, 1, 0.4, 1, 1 },
 	noselfdamage 		= { true,true,true,true,true },
-	size 				= { 4, 4, 2, 4, 4 },
-	soundstart 			= { "orangeblob_explo", "orangeblob_explo", "orangeblob_explo", "orangeblob_explo", "orangeblob_explo" },
-	soundhit 			= { "orangeblob_explo", "orangeblob_explo", "orangeblob_explo", "orangeblob_explo", "orangeblob_explo" },
+	size 				= { 4, 4, 2, 4, 8 },
+	soundstart 			= { "bfglaser", "bite2", "heavy_shot", "laser2", "heavy_shot" },
+	--soundhit 			= { "orangeblob_explo", "orangeblob_explo", "orangeblob_explo", "orangeblob_explo", "orangeblob_explo" },
 
-	rgbcolor 			= { "1.0 1.0 1.0", "1.0 1.0 0.0", "1.0 1.0 1.0", "1.0 1.0 1.0", "0.1 0.6 1.0" },
-	rgbcolor2 			= { "1.0 1.0 1.0", "1.0 1.0 0.0", "1.0 0.6 0.0", "1.0 1.0 1.0", "0.1 0.6 1.0" },
+	rgbcolor 			= { "1.0 1.0 1.0", "1.0 1.0 0.0", "1.0 1.0 1.0", "1.0 1.0 1.0", "0.1 0.8 0.6" },
+	rgbcolor2 			= { "1.0 1.0 1.0", "1.0 1.0 0.0", "1.0 0.6 0.0", "1.0 1.0 1.0", "0.1 0.8 0.6" },
 	turret 				= { true, true, true, true, true },
 	texture1 			= { "flame", "flame", "flame", "flame", "flame" },
 	weaponvelocity 		= { 800, 800, 1000, 800, 800 },
@@ -45,7 +45,7 @@ local heroWeaponsDefs = {	 --	ball, bug, bulk, cam, doc
 
 	range 				= { 400, 150, 600, 400, 400 },
 	reloadtime 			= { 1.5, 1.5, 0.08, 1.5, 0.5 },
-	damage 				= { {default = 55}, {default = 55}, {default = 4}, {default = 55}, {default = 55} },
+	damage 				= { {default = 55}, {default = 55}, {default = 8}, {default = 35}, {default = 25} },
 }
 
 -- final

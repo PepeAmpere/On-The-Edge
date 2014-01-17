@@ -19,7 +19,7 @@ for i=1,#names do
 		Category 		= "NOTHERO NOTTOWER AIR CREEP",
 		ObjectName 		= "tank3.s3o",
 		name 			= "Healing drone",
-		script 			= "drone.lua",
+		script 			= "dronehealing.lua",
 
 	--Unit limitations and properties
 		BuildTime 		= 0,
@@ -54,7 +54,7 @@ for i=1,#names do
 		Reclaimable 	= 1,
 		CanFly			= 1,
 		
-		WorkerTime		= i, 
+		WorkerTime		= i*0.4, 
 	--Hitbox
 	--    collisionVolumeOffsets    =  "0 0 0",
 	--    collisionVolumeScales     =  "20 20 20",
