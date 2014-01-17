@@ -46,10 +46,10 @@ local unitDef = {
     Reclaimable 	= 0,
     
 --Hitbox
---    collisionVolumeOffsets    =  "0 0 0",
---    collisionVolumeScales     =  "20 20 20",
---    collisionVolumeTest       =  1,
---    collisionVolumeType       =  "box",
+   collisionVolumeOffsets    =  "0 0 0",
+   collisionVolumeScales     =  "40 50 40",
+   collisionVolumeTest       =  1,
+   collisionVolumeType       =  "cylY",
     
 --Weapons and related
 	weapons = {

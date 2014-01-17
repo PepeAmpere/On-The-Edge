@@ -25,7 +25,7 @@ local unitDef = {
     BuildCostMetal 	= 0,
     
 --Pathfinding and related
-	MaxVelocity		= 4,
+	MaxVelocity		= 2.5,
 	BrakeRate		= 0.4,
 	Acceleration	= 0.5,
     FootprintX 		= 2,
@@ -46,10 +46,10 @@ local unitDef = {
     Reclaimable 	= 0,
     
 --Hitbox
---    collisionVolumeOffsets    =  "0 0 0",
---    collisionVolumeScales     =  "20 20 20",
---    collisionVolumeTest       =  1,
---    collisionVolumeType       =  "box",
+   collisionVolumeOffsets    =  "0 0 0",
+   collisionVolumeScales     =  "40 50 40",
+   collisionVolumeTest       =  1,
+   collisionVolumeType       =  "box",
     
 --Weapons and related
 	weapons = {

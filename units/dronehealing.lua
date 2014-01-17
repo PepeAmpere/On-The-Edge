@@ -38,7 +38,7 @@ for i=1,#names do
 		TurnRate		= 800,
 		SteeringMode	= 1,
 		ShootMe			= 1,
-		CruiseAlt		= 100,
+		CruiseAlt		= 250,
 		Scale			= 1,
 		BankScale		= 1,
 		

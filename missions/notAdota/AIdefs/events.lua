@@ -3,7 +3,7 @@
 
 newEvents = {
     {	repeating			= true,					active			= true,								slow	= true,
-		conditionsNames		= {"timeMinute"},		actionsNames	= {"spawnAll"},
+		conditionsNames		= {"timeMinute"},		actionsNames	= {"SpawnAll"},
 		conditionsParams	= {{}},					actionsParams	= {{}},
 	}, 
 }

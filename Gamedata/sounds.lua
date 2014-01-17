@@ -181,13 +181,13 @@ local Sounds = {
 			maxconcurrent = 4,
 		},
 		ontheedge1_1 = { 
-            file = "sounds/notsorted/ontheedge1_1.mp3", 
+            file = "sounds/notsorted/ontheedge1_1.ogg", 
 			rolloff=3, dopplerscale = 0, maxdist = 1000,
 			priority = 10,
 			maxconcurrent = 4,
 		},
 		ontheedge2 = { 
-            file = "sounds/notsorted/ontheedge2.ogg", 
+            file = "sounds/notsorted/ontheedge2_2.ogg", 
 			rolloff=3, dopplerscale = 0, maxdist = 1000,
 			priority = 10,
 			maxconcurrent = 4,
