@@ -212,6 +212,9 @@ function widget:RecvLuaMsg(msg, playerID)
 	
 	if(msg == "LEVELUP")then
 		---Spring.Echo("Projde!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1")
+		upgradeWindow:ClearChildren()
+		powersWindow:ClearChildren()
+		
 		active 		= false
 		needUnit	= true
 		needInit 	= true
