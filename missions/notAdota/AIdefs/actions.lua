@@ -77,7 +77,7 @@ newAction = {
 		if (Spring.AreTeamsAllied(unitTeam,teamNames["BASE1"])) then
 			Spring.CreateUnit(unitDefID, goodPos[1][1], 0, goodPos[1][2],"s",unitTeam,false,false,unitID)
 		else
-			Spring.CreateUnit(unitDefID, badPos[1][1], 0, badPos[1][2],"s",false,false,unitID)
+			Spring.CreateUnit(unitDefID, badPos[1][1], 0, badPos[1][2],"s",unitTeam,false,false,unitID)
 		end
         return true
 	end,

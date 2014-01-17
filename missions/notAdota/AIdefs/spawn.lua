@@ -334,7 +334,7 @@ local function notAdotaSpawn(spots,firstAxis,firstAxisInc,secondAxis,secondAxisI
 			unitname = unitname .. restOfName
 			
 			local good = true
-			if (allyTeam == 1) then
+			if (Spring.AreTeamsAllied(t,teamNames["BASE2"])) then
 				good = false
 				counterBad 	= counterBad + 1
 			else
