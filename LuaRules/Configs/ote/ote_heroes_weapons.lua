@@ -32,7 +32,7 @@ local heroWeaponsDefs = {	 --	ball, bug, bulk, cam, doc
 	impulsefactor 		= { 0, 0, 0, 0, 0 },
 	intensity 			= { 1, 1, 0.4, 1, 1 },
 	noselfdamage 		= { true,true,true,true,true },
-	size 				= { 4, 4, 2, 4, 8 },
+	size 				= { 4, 4, 2, 5, 8 },
 	soundstart 			= { "bfglaser", "bite2", "heavy_shot", "laser2", "heavy_shot" },
 	--soundhit 			= { "orangeblob_explo", "orangeblob_explo", "orangeblob_explo", "orangeblob_explo", "orangeblob_explo" },
 
@@ -43,9 +43,9 @@ local heroWeaponsDefs = {	 --	ball, bug, bulk, cam, doc
 	weaponvelocity 		= { 800, 800, 1000, 800, 800 },
 	explosiongenerator 	= { "custom:TANKGUN_FX", "custom:TANKGUN_FX", "custom:TANKGUN_FX", "custom:TANKGUN_FX", "custom:TANKGUN_FX" },
 
-	range 				= { 400, 150, 600, 400, 400 },
+	range 				= { 400, 150, 700, 400, 500 },
 	reloadtime 			= { 1.5, 1.5, 0.08, 1.5, 0.5 },
-	damage 				= { {default = 55}, {default = 55}, {default = 8}, {default = 35}, {default = 25} },
+	damage 				= { {default = 55}, {default = 55}, {default = 8}, {default = 55}, {default = 25} },
 }
 
 -- final
