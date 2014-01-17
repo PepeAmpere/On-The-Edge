@@ -32,7 +32,10 @@ local modrules  = {
 	}, 
 	experience = {
 		experienceMult = 0,
-	}
+	},
+	nanospray = {
+		allow_team_colours = true,
+	},
 	
 	--flankingBonus set at given units
 	-- flankingBonus = {

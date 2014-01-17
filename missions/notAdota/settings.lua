@@ -13,8 +13,8 @@ missionInfo = {
 	playersEnergy		= 0,
 	AIcount      		= 3,
 	AInames      = {
-	    "BASE Team 1",
-		"BASE Team 2",
+	    "BASE1",
+		"BASE2",
 		"WILDERNESS",
 	},
 	victoryCount		= 1,

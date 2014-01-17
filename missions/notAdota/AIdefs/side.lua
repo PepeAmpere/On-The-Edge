@@ -2,7 +2,7 @@
 ----- more about: http://springrts.com/phpbb/viewtopic.php?f=55&t=28259
 
 newSideSettings = {
-    ["BASE Team 1"] = {
+    ["BASE1"] = {
         ["groups"] = {
 		    "peeweeGroup",
         },
@@ -10,7 +10,7 @@ newSideSettings = {
 		    {toolPurpose = "basicGroundMex", unitName = "armmex"},
 		},
 	},
-	["BASE Team 2"] = {
+	["BASE2"] = {
         ["groups"] = {
 		    "peeweeGroup",
         },

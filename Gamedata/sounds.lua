@@ -187,7 +187,7 @@ local Sounds = {
 			maxconcurrent = 4,
 		},
 		ontheedge2 = { 
-            file = "sounds/notsorted/ontheedge2.mp3", 
+            file = "sounds/notsorted/ontheedge2.ogg", 
 			rolloff=3, dopplerscale = 0, maxdist = 1000,
 			priority = 10,
 			maxconcurrent = 4,
@@ -253,13 +253,13 @@ local Sounds = {
 			maxconcurrent = 4,
 		},		
 		sniper = { 
-            file = "sounds/notsorted/sniper.mp3", 
+            file = "sounds/notsorted/sniper.wav", 
 			rolloff=3, dopplerscale = 0, maxdist = 5000,
 			priority = 10,
 			maxconcurrent = 4,
 		},
 		submachine_gun_oneshot = { 
-            file = "sounds/notsorted/submachine_gun_oneshot.mp3", 
+            file = "sounds/notsorted/submachine_gun_oneshot.wav", 
 			rolloff=3, dopplerscale = 0, maxdist = 1000,
 			priority = 10,
 			maxconcurrent = 4,

@@ -87,13 +87,13 @@ local unitDef = {
 			soundhit = "orangeblob_explo",
 			range = 250,
 			reloadtime = 1.5,
-			rgbcolor = "1.0 1.0 1.0",
+			rgbcolor = "1.0 0.5 0.5",
 			turret = true,
 			texture1 = "flame",
 			weaponvelocity = 400,
 			explosiongenerator = "custom:TANKGUN_FX",
 			damage = {
-				default = 28,
+				default = 22,
 			},
 		},
 	}

@@ -24,7 +24,7 @@ for i=1,#teamList do
 		end
 	elseif (leader and ai) then
 		local aiInfo = Spring.GetTeamLuaAI(teamID)
-		if (aiInfo == "BASE team 1" or aiInfo == "BASE team 2" or aiInfo == "WILDERNESS") then
+		if (aiInfo == "BASE1" or aiInfo == "BASE2" or aiInfo == "WILDERNESS" or aiInfo == "Mission AI") then
 			teamHeroUnitDef[tostring(teamID)] = "none"
 		else
 			teamHeroUnitDef[tostring(teamID)] = side .. defaultItems

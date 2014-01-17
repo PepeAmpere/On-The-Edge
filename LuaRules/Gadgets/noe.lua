@@ -1689,7 +1689,7 @@ function gadget:Initialize()
 					["difficulty"] = "hard",
 					["side"]       = side,
 				}
-			elseif (aiInfo == "Mission AI" or aiInfo == "BASE Team 1" or aiInfo == "BASE Team 2" or aiInfo == "WILDERNESS") then			
+			elseif (aiInfo == "Mission AI" or aiInfo == "BASE1" or aiInfo == "BASE2" or aiInfo == "WILDERNESS") then			
 				numberOfNoeAITeams           = numberOfNoeAITeams + 1
 				numberOfMissionAIs           = numberOfMissionAIs + 1
 				AITeamID[numberOfNoeAITeams] = id
