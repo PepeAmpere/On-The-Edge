@@ -52,13 +52,13 @@ function gadget:UnitDestroyed(unitID, unitDefID, teamID, attackerID, attackerDef
 		-- if attacker hero, send just to him
 		-- Spring.Echo(ToBool(UnitDefs[attackerDefID].customParams.ishero),attackerDefID,UnitDefs[attackerDefID].name,UnitDefs[attackerDefID].customParams.ishero)
 		if (UnitDefs[attackerDefID].customParams.ishero) then								
-			local finalMsg = "cashup-single-" .. attackerID .. "-" .. revenue
+			local finalMsg = "CASHUP-SINGLE-" .. attackerID .. "-" .. revenue
 			Spring.Echo(finalMsg)
 			Spring.SendLuaRulesMsg(finalMsg)
 			Spring.SendLuaUIMsg(finalMsg)
 		else
 		-- send whole team
-			local finalMsg = "cashup-team-" .. attackerTeamID .. "-" .. revenue
+			local finalMsg = "CASHUP-TEAM-" .. attackerTeamID .. "-" .. revenue
 			Spring.Echo(finalMsg)
 			Spring.SendLuaRulesMsg(finalMsg)
 			Spring.SendLuaUIMsg(finalMsg)

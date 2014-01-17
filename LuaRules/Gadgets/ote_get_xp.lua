@@ -82,7 +82,7 @@ function gadget:UnitDestroyed(unitID, unitDefID, teamID)
 	-- send it message about xp update
 	for i=1,heroesinRadiusCounter do
 		-- message: expup-unitID-experience
-		local finalMsg = "expup-single-" .. heroesInRadius[i] .. "-" .. finalRevenue
+		local finalMsg = "EXPUP-SINGLE-" .. heroesInRadius[i] .. "-" .. finalRevenue
 		Spring.Echo(finalMsg)
 		Spring.SendLuaRulesMsg(finalMsg) 
 		Spring.SendLuaUIMsg(finalMsg)
