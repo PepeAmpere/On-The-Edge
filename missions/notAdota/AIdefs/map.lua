@@ -2,7 +2,11 @@
 ----- more about: http://code.google.com/p/nota/wiki/NOE_map
 
 newMap = {
-	["example"] = { -- just an example
-		[1]  = {0,0},
+	["topLine"] = { -- just an example
+		[1]  = {803,6544},
+		[2]  = {912,4724},
+		[3]  = {999,963},
+		[4]  = {3260,565},
+		[5]  = {6203,969},
 	},
 }

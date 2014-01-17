@@ -24,7 +24,6 @@ local rad0		= math.rad(0)
 local rad100	= math.rad(100)
 local rad200	= math.rad(200)
 
-
 function script.Create()
 	Hide( flare1)
 	Hide( flare2)
@@ -54,7 +53,7 @@ end
 
 local function Walk()
 	Signal(SIG_Walk)
-	SetSignalMask(SIG_Walk)
+	SetSignalMask(SIG_Walk)	
 	while ( true ) do
 	
 		if (moving) then

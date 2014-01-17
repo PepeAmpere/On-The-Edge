@@ -238,6 +238,7 @@ end
 
 notAdotaSpawn(8,500,100,6750,100)	
 
+
 function NewSpawner()
 	--Spring.Echo("N.O.E. mission_spawner: mission spawner works, but its empty")
 end

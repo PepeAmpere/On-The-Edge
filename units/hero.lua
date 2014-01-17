@@ -221,12 +221,17 @@ for heroPlusItemsCode,_ in pairs(listOfneeded) do
 					local newTSPs			= {}
 					local tspLevels			= {a, b, c}
 					local tspUpdates		= {{1,0,0}, {0,1,0},{0,0,1}}
+					
+					local allow				= true
+					if (level >= maxLevels*3) then
+						allow = false
+					end
 					for i=1, #newTSPsNames do							-- mostly 3
 						newTSPs[i] = {
 							name 				= newTSPsNames[i],
 							level 				= tspLevels[i],
 							nextLevelName		= CreatHeroDefName(heroPlusItemsCode,newLevel+1,a + tspUpdates[i][1],b + tspUpdates[i][2],c + tspUpdates[i][3]),
-							nextLevelAllowed	= true,
+							nextLevelAllowed	= allow,
 						}
 					end
 					allDefsCombinations[anotherNewName] = {
@@ -300,14 +305,15 @@ for heroPlusItemsCode,_ in pairs(listOfneeded) do
 		if ((a+b+triangelCorrect < c) or (a+c+triangelCorrect < b) or (c+b+triangelCorrect < a) or (a==maxLevels) or (b==maxLevels) or (c==maxLevels)) then
 			-- No spring echo pls, its thousands of variations without line 150
 			-- Spring.Echo("bad one: ", newDefName) 
-		else
-			allHeroesDefs[newDefName] 		= newDef
-			heroDefsCounter					= heroDefsCounter + 1
-			--Spring.Echo(newDefName) 
-			-- for k,v in pairs(newDef.customParams.tsps[1]) do
-				-- Spring.Echo(k,v)
-			-- end
+			newDef.customParams["tsp1_nextLevelAllowed"] = false
+			newDef.customParams["tsp2_nextLevelAllowed"] = false
+			newDef.customParams["tsp3_nextLevelAllowed"] = false
 		end
+		
+		allHeroesDefs[newDefName] 		= newDef
+		heroDefsCounter					= heroDefsCounter + 1
+		--Spring.Echo(newDefName) 
+		--Spring.Echo(newDef.customParams.level,subDefs.tsps[1].nextLevelAllowed,subDefs.tsps[2].nextLevelAllowed,subDefs.tsps[3].nextLevelAllowed)
 	end
 end
 

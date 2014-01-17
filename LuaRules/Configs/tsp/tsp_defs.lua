@@ -49,5 +49,8 @@ tspDef = {
 		effectActionsNames 			= {},
 		effectActionsParams 		= {},
 		
-	}
+	},
 }
+
+
+
