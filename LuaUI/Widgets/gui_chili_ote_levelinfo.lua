@@ -11,6 +11,8 @@ function widget:GetInfo()
 	}
 end
 
+VFS.Include("LuaRules/Gadgets/Includes/utilities.lua")
+
 local infoWindow
 local metalCaption
 local playerLevelCaption
@@ -28,6 +30,7 @@ local playerMetal	= 0
 local playerXP		= 0
 local nextLevelOn	= 0
 local unitDef		= 0
+local myUnitID		= 0
 --TODO: add function to listen to massages and update gui
 
 local function DelayedInitialization()
@@ -101,13 +104,43 @@ local function ActivateScreen(unitID, unitDefID)
 	needUnit	= false						-- we needed this check only once
 end
 
+local function AddExp(amount)
+	local value = playerXP + amount
+	Spring.Echo(value)
+	if (value >= tonumber(nextLevelOn)) then
+		upgradePoints = upgradePoints + 1
+		Spring.SendLuaUIMsg("POINTSUP", "a")
+		playerXP = value - nextLevelOn
+	else
+		playerXP = value
+	end
+end
+
 function widget:RecvLuaMsg(msg, playerID)
 	if (playerID ~= Spring.GetMyPlayerID()) then return end
 	
-	if(msg == "LEVELUP")then
+	Spring.Echo("MSG RECIEVED")
+	
+	local tokens = split(msg,"-")
+	if(tokens[1] == "LEVELUP")then
 		Spring.Echo("Projde!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1")
-		playerLevel = playerLevel + 1
+		active 		= false
+		needUnit	= true
+		--needInit 	= true
 	end
+	
+	if(tokens[1] == "EXPUP") then
+		Spring.Echo(tokens[3], myUnitID)
+		if(tokens[3] == tostring(myUnitID)) then
+			Spring.Echo("CALL??")
+			AddExp(tokens[4])
+		end
+	end
+	
+	if(tokens[1] == "POINTSDOWN") then
+		upgradePoints = upgradePoints - 1
+	end
+	
 end
 
 function widget:GameFrame(frameNumber)
@@ -124,7 +157,7 @@ function widget:GameFrame(frameNumber)
 		xpBar:SetValue(playerXP)
 		xpBar:SetCaption("EXP: \n" .. playerXP .. "/" .. nextLevelOn)
 		playerLevelCaption:SetCaption("LVL: " .. playerLevel)
-		
+		upgradePointsCaption:SetCaption(upgradePoints .. " UP")
 		
 	else
 		if (frameNumber % 60 == 0 and needUnit) then

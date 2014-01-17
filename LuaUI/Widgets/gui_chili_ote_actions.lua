@@ -29,7 +29,7 @@ local needInit 	= true
 local myTeamID	= Spring.GetMyTeamID()					-- from this we know team from the beginning
 local myUnitID	= 0
 
-local upgradePoints = 1
+local upgradePoints = 0
 local powers		= nil
 
 function ButtonClicked(chiliButton, x, y, button, mods)
@@ -38,6 +38,8 @@ function ButtonClicked(chiliButton, x, y, button, mods)
 end
 
 function UpgradeButtonClicked(chiliButton, x, y, button, mods)
+	upgradePoints = upgradePoints - 1
+	Spring.SendLuaUIMsg("POINTSDOWN", "a")
 	Spring.SendLuaRulesMsg("UPBUTTONCLICKED" .. "-" .. myUnitID .. "-" .. chiliButton.nextlevel)
 end
 
@@ -89,33 +91,6 @@ function GenerateUpgradeButtons(points)
 		end
 	end
 end
-
--- function LevelUp()
-	--upgradePoints = upgradePoints - 1
-	
-	-- local unitDefID = Spring.GetUnitDefID(myUnitID)
-	-- local params = UnitDefs[unitDefID].customParams
-	
-	-- powers = {}
-	
-	-- for i=1,params.tsps_size do
-		-- local tspName 		= "tsp" .. i .. "_name"
-		-- local tspLevel		= "tsp" .. i .. "_level"	
-		-- local tspNextName	= "tsp" .. i .. "_nextlevelname"
-		-- local tspNextAllow	= "tsp" .. i .. "_nextlevelallowed"
-		-- powers[i] = {
-			-- name 				= params[tspName],
-			-- level				= params[tspLevel],
-			-- nextLevelName		= params[tspNextName],
-			-- nextLevelAllowed	= params[tspNextAllow],
-		-- }
-	-- end
-	
-	-- powersWindow:clearChildren()
-	-- GeneratePowersButtons()
-	-- upgradeWindow:clearChildren()
-	-- GenerateUpgradeButtons(upgradePoints)
--- end
 
 function LevelUpPossible()
 	upgradePoints = upgradePoints + 1
@@ -210,14 +185,23 @@ end
 function widget:RecvLuaMsg(msg, playerID)
 	if (playerID ~= Spring.GetMyPlayerID()) then return end
 	
-	if(msg == "LEVELUP")then
+	local tokens = split(msg,"-")
+	if(tokens[1] == "LEVELUP")then
 		---Spring.Echo("Projde!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1")
 		upgradeWindow:ClearChildren()
 		powersWindow:ClearChildren()
 		
 		active 		= false
 		needUnit	= true
-		needInit 	= true
+		
+		GeneratePowersButtons()
+		GenerateUpgradeButtons(upgradePoints)
+	end
+	
+	if(tokens[1] == "POINTSUP") then
+		upgradePoints = upgradePoints + 1
+		upgradeWindow:ClearChildren()
+		GenerateUpgradeButtons(upgradePoints)
 	end
 end
 
