@@ -5,7 +5,7 @@ function widget:GetInfo()
 		author		= "Pavel",
 		date		= "2014-01-04",
 		license     = "OTE license",
-		layer		= math.huge,
+		layer		= 80,
 		enabled   	= true,
 		handler		= true,
 	}
@@ -122,7 +122,7 @@ function widget:RecvLuaMsg(msg, playerID)
 	Spring.Echo("MSG RECIEVED")
 	
 	local tokens = split(msg,"-")
-	if(tokens[1] == "LEVELUP")then
+	if(tokens[1] == "LEVELUPINFO")then
 		Spring.Echo("Projde!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1")
 		active 		= false
 		needUnit	= true

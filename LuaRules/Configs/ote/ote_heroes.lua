@@ -17,7 +17,7 @@ local heroesTSPnames = {
 	["bug"] 		= {"none1", "none2", "none3"},
 	["bulk"] 		= {"none1", "none2", "none3"},
 	["cam"] 		= {"none1", "none2", "none3"},
-	["doc"] 		= {"none1", "none2", "none3"},
+	["doc"] 		= {"drone", "bugs", "minefield"},
 }
 
 local heroUIpath 	= "LuaUI/oteUI/heroes256x256/"

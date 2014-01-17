@@ -29,12 +29,11 @@ local needInit 	= true
 local myTeamID	= Spring.GetMyTeamID()					-- from this we know team from the beginning
 local myUnitID	= 0
 
-local upgradePoints = 0
+local upgradePoints = 5
 local powers		= nil
 
 function ButtonClicked(chiliButton, x, y, button, mods)
-	--TODO: call some action, and/or check conditions
-	Spring.Echo("Action called from powers menu: " .. chiliButton.action)
+	Spring.SendLuaRulesMsg("TSPACTION" .. "-" .. myUnitID .. "-" .. chiliButton.caption .. "-" .. chiliButton.level)
 end
 
 function UpgradeButtonClicked(chiliButton, x, y, button, mods)
@@ -77,7 +76,7 @@ function GenerateUpgradeButtons(points)
 		if not disabled then
 			local button = Chili.Button:New{
 				parent		= upgradeWindow,
-				x			= (i-1)*45,
+				x			= ((i-1)*45)+8,
 				y 			= 0,
 				padding		= {3, 3, 3, 3},
 				margin		= {0, 0, 0, 0},
@@ -111,9 +110,9 @@ local function DelayedInitialization()
 	local wWidth = #powers*POWERBUTTONSIZE + #powers*5
 	
 	local screenX, screenY	= Spring.GetViewGeometry()
-	local wHeight			= 140
+	local wHeight			= 150
 	
-	actionWindow = Chili.Window:New{
+	actionWindow = Chili.Control:New{
 		x 				= screenX/2 - wWidth/2,
 		y 				= screenY - wHeight - 30,
 		dockable 		= false,
@@ -139,7 +138,7 @@ local function DelayedInitialization()
 		backgroundColor	= {0,0,0,1},
 	}
 	
-	upgradeWindow = Chili.Window:New{
+	upgradeWindow = Chili.Control:New{
 		x				= 0,
 		y				= 0,
 		dockable 		= false,
@@ -147,8 +146,8 @@ local function DelayedInitialization()
 		caption			= "",
 		draggable		= false,
 		resizable		= true,
-		clientWidth		= wWidth - 25,
-		clientHeight	= 40,
+		clientWidth		= wWidth - 15,
+		clientHeight	= 55,
 		backgroundColor	= {0,0,0,1},
 	}
 	

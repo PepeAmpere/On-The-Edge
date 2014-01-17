@@ -13,10 +13,11 @@ local spTransferUnit 		= Spring.TransferUnit
 
 local tspAction = {
 	-- AKCE PRO REPAIR DRONE
-	["SpawnAssistDrone"] = function(unitID, unitDefID, teamBaseID, relHeight)
+	["SpawnAssistDrone"] = function(unitID, teamID, actionLevel)
 		local heroPosX, heroPosY, heroPosZ 	= spGetUnitPosition(unitID)
 		-- spawn of assist drone
-		local droneID = spCreateUnit(unitDefID, heroPosX, heroPosY + relHeight, heroPosZ, "s", teamBaseID)
+		local unitDef = "dronehealing" .. actionLevel
+		local droneID = spCreateUnit(unitDef, heroPosX, heroPosY + 50, heroPosZ, "s", teamID)
 		-- set drone to repair hero unit
 		spGiveOrderToUnit(droneID, CMD.GUARD, {unitID}, {})
 		-- TODO: drone gets own spirit, which will check its fuel and destroy it when fuel is out

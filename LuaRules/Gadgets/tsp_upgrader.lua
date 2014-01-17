@@ -39,6 +39,7 @@ function gadget:GameFrame(frameNumber)
 		if wait==0 then
 			Spring.CreateUnit(params[2], x, y, z, "south", teamID, false, false, params[1])
 			Spring.SendLuaUIMsg("LEVELUP", "a")
+			Spring.SendLuaUIMsg("LEVELUPINFO", "a")
 			wait = 5
 			change = false
 		end
