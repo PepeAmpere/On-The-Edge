@@ -29,7 +29,7 @@ local needInit 	= true
 local myTeamID	= Spring.GetMyTeamID()					-- from this we know team from the beginning
 local myUnitID	= 0
 
-local upgradePoints = 5
+local upgradePoints = 0
 local powers		= nil
 
 function ButtonClicked(chiliButton, x, y, button, mods)
