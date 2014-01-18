@@ -275,12 +275,13 @@ for heroPlusItemsCode,_ in pairs(listOfneeded) do
 		-- imcrease healh/energy/speed/repair/charge
 		-- !! TODO: make and connect with ote rules multipliers
 		local testMultiplier = 1.04
+		local velocityMultiplier = 0.05
 		local expMultiplier = 1.1
 		newDef.unitName						= newDefName
 		newDef.maxDamage 					= math.floor(newBaseDef.maxDamage * testMultiplier^newLevel)
 		newDef.customParams.energyStorage 	= math.floor(newBaseDef.customParams.energyStorage * testMultiplier^newLevel)
-		newDef.maxVelocity 					= newBaseDef.maxVelocity * testMultiplier^newLevel
-		newDef.energyMake 					= newBaseDef.energyMake * testMultiplier^newLevel
+		newDef.maxVelocity 					= newBaseDef.maxVelocity + velocityMultiplier*newLevel
+		newDef.energyMake 					= newBaseDef.energyMake + testMultiplier^newLevel
 		newDef.autoHeal 					= newBaseDef.autoHeal * testMultiplier^newLevel
 		
 		newDef.customParams.spawnTime 		= newBaseDef.customParams.spawnTime + 2*newLevel

@@ -1,6 +1,7 @@
 ------------------------------------------------------------------------------
 -- OTE ITEMS
 -- more about global settings on project site wiki https://github.com/OTE-AM/On-The-Edge/blob/master/wiki/design_detail.md
+-- !in this file use def values atributes without lowercasing
 ------------------------------------------------------------------------------
 
 -- bonus item types
@@ -61,7 +62,8 @@ oteItem = {
 		goodHeroes		= {},
 		badHeroes		= {},
 		upgrade 		= function(defTable) 
-			-- TODO: add LOS
+			local newLOS 			= defTable.maxVelocity + 100
+			defTable.sightDistance 	= newLOS
 			return defTable
 		end,
 		upgInterpret	= {0, 0, 0, 0, priceClass.cheap, 0, 0, 0, 0, 0},
@@ -76,7 +78,8 @@ oteItem = {
 		goodHeroes		= {},
 		badHeroes		= {"doc"},
 		upgrade 		= function(defTable) 
-			-- TODO: add LOS
+			local newLOS 			= defTable.maxVelocity + 400
+			defTable.sightDistance 	= newLOS
 			return defTable
 		end,
 		upgInterpret	= {0, 0, 0, 0, priceClass.ultimate, 0, 0, 0, 0, 0},
@@ -91,7 +94,10 @@ oteItem = {
 		goodHeroes		= {},
 		badHeroes		= {},
 		upgrade 		= function(defTable) 
-			-- TODO: add radar
+			local radarDistance 		= 200
+			defTable.radarDistance 		= radarDistance
+			defTable.onoffable 			= 1
+			defTable.activateWhenBuilt 	= 1				
 			return defTable
 		end,
 		upgInterpret	= {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -106,7 +112,8 @@ oteItem = {
 		goodHeroes		= {},
 		badHeroes		= {},
 		upgrade 		= function(defTable) 
-			-- TODO: decsrease time
+			local newSpawnTime 					= math.floor(defTable.customParams.spawnTime * 0.5)
+			defTable.customParams.spawnTime 	= newSpawnTime	
 			return defTable
 		end,
 		upgInterpret	= {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -231,7 +238,10 @@ oteItem = {
 		goodHeroes		= {},
 		badHeroes		= {},
 		upgrade 		= function(defTable) 
-			-- TODO: add radar
+			local radarDistance 		= 900
+			defTable.radarDistance 		= radarDistance		
+			defTable.onoffable 			= 1
+			defTable.activateWhenBuilt 	= 1	
 			return defTable
 		end,
 		upgInterpret	= {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -246,7 +256,8 @@ oteItem = {
 		goodHeroes		= {},
 		badHeroes		= {},
 		upgrade 		= function(defTable) 
-			-- TODO: add estor
+			local newEnergyStorage					= defTable.customParams.energyStorage + 100
+			defTable.customParams.energyStorage 	= newEnergyStorage	
 			return defTable
 		end,
 		upgInterpret	= {0, 0, 0, 0, 0, 0, 0, priceClass.cheap, 0, 0},
@@ -261,7 +272,8 @@ oteItem = {
 		goodHeroes		= {},
 		badHeroes		= {"bug"},
 		upgrade 		= function(defTable) 
-			-- TODO: add estor
+			local newEnergyStorage					= defTable.customParams.energyStorage + 250
+			defTable.customParams.energyStorage 	= newEnergyStorage	
 			return defTable
 		end,
 		upgInterpret	= {0, 0, 0, 0, 0, 0, 0, priceClass.expensive, 0, 0},
@@ -307,7 +319,9 @@ oteItem = {
 		goodHeroes		= {},
 		badHeroes		= {},
 		upgrade 		= function(defTable) 
-			-- TODO: add speed
+			local newSpeed 			= defTable.maxVelocity + panzerLightSpeedDecrease
+			defTable.maxVelocity 	= newSpeed
+			-- TODO: 
 			-- ? add bonus in steep terrian? not now, maybe later
 			return defTable
 		end,
@@ -323,6 +337,10 @@ oteItem = {
 		goodHeroes		= {},
 		badHeroes		= {},
 		upgrade 		= function(defTable) 
+			local newRadarDistanceJam 	= 50
+			defTable.radarDistanceJam 	= newRadarDistanceJam	
+			defTable.onoffable 			= 1
+			defTable.activateWhenBuilt 	= 1				
 			-- TODO: add jammer
 			-- decrease energy production a lot
 			return defTable

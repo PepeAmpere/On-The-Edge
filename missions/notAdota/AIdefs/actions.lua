@@ -51,7 +51,7 @@ newAction = {
 				local newDirection 	= (directionCounter % 4) + 1
 				
 				-- good ones
-				local newGood = Spring.CreateUnit(unitNames[k],goodOnesX + thisFormation[k][1],0,goodOnesZ + thisFormation[k][2],direction[newDirection],teamNames["BASE1"])
+				local newGood = Spring.CreateUnit(unitNames[k],goodOnesX + thisFormation[k][1],0,goodOnesZ + thisFormation[k][2],"n",teamNames["BASE1"])
 				
 				-- add good orders :)
 				for l=1,#thisMap do
@@ -59,7 +59,7 @@ newAction = {
 				end
 									
 				-- bad ones
-				local newBad = Spring.CreateUnit(unitNames[k],badOnesX + thisFormation[k][1],0,badOnesZ + thisFormation[k][2],direction[newDirection],teamNames["BASE2"])
+				local newBad = Spring.CreateUnit(unitNames[k],badOnesX + thisFormation[k][1],0,badOnesZ + thisFormation[k][2],"s",teamNames["BASE2"])
 				
 				-- add bad orders :)
 				for l=#thisMap,1,-1 do
@@ -75,7 +75,7 @@ newAction = {
 		local badPos 	= map["badBaseSpawn"]
 		
 		if (Spring.AreTeamsAllied(unitTeam,teamNames["BASE1"])) then
-			Spring.CreateUnit(unitDefID, goodPos[1][1], 0, goodPos[1][2],"s",unitTeam,false,false,unitID)
+			Spring.CreateUnit(unitDefID, goodPos[1][1], 0, goodPos[1][2],"n",unitTeam,false,false,unitID)
 		else
 			Spring.CreateUnit(unitDefID, badPos[1][1], 0, badPos[1][2],"s",unitTeam,false,false,unitID)
 		end
