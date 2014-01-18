@@ -99,12 +99,6 @@ function GenerateUpgradeButtons(points)
 	end
 end
 
-function LevelUpPossible()
-	upgradePoints = upgradePoints + 1
-	upgradeWindow:clearChildren()
-	GenerateUpgradeButtons(upgradePoints)
-end
-
 local function DelayedInitialization()
 	
 	if (not WG.Chili) then
@@ -255,6 +249,7 @@ local function AddExp(amount)
 	Spring.Echo(value)
 	if (value >= tonumber(nextLevelOn)) then
 		upgradePoints = upgradePoints + 1
+		GenerateUpgradeButtons(upgradePoints)
 		playerXP = value - nextLevelOn
 	else
 		playerXP = value
