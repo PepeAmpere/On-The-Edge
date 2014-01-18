@@ -1662,7 +1662,7 @@ function gadget:Initialize()
 	
 	for i=1,#teamList do
 		local id = teamList[i]
-		local _,_,_,isAI,side = Spring.GetTeamInfo(id)
+		local _,_,_,isAI,side,allyID = Spring.GetTeamInfo(id)
         
 		-- Spring.Echo("Team" .. teamList[i] .. " is kind of " .. side .. " isAI? " .. tostring(isAI))
 		---- adding AI
@@ -1696,12 +1696,17 @@ function gadget:Initialize()
 				local trueSide               = side
                 if (missionName ~= "none") then
 				    trueSide = missionInfo.AInames[numberOfMissionAIs]
+					-- hotfix for OTE
+					if (missionName == "notadota") then
+						if (allyID == 0) then
+							trueSide = missionInfo.AInames[1]
+						elseif (allyID == 1) then
+							trueSide = missionInfo.AInames[2]
+						elseif (allyID == 2) then
+							trueSide = missionInfo.AInames[3]
+						end
+					end
                 end
-				-- just hot addition for OTE --
-				-- if (missionName == "notAdota") then
-				    -- trueSide = aiInfo
-                -- end
-				-- end --
 				aiOptions[numberOfNoeAITeams] = {
 					["difficulty"] = "special",
 					["side"]       = trueSide, 

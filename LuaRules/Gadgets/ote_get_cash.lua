@@ -48,7 +48,7 @@ function gadget:UnitDestroyed(unitID, unitDefID, teamID, attackerID, attackerDef
 	
 	-- send it message about xp update	
 	-- only if target and attacker are not allied
-	if {attackerTeamID and not (Spring.AreTeamsAllied(teamID,attackerTeamID))) then
+	if (attackerTeamID and not (Spring.AreTeamsAllied(teamID,attackerTeamID))) then
 		-- if attacker hero, send just to him
 		-- Spring.Echo(ToBool(UnitDefs[attackerDefID].customParams.ishero),attackerDefID,UnitDefs[attackerDefID].name,UnitDefs[attackerDefID].customParams.ishero)
 		if (UnitDefs[attackerDefID].customParams.ishero) then								

@@ -13,10 +13,10 @@ local heroStats = {	-- speed, health, energy, armor, dmg, reload, range, los, sp
 }
 
 local heroesTSPnames = {
-	["ball"] 		= {"none1", "none2", "none3"},
-	["bug"] 		= {"none1", "none2", "none3"},
-	["bulk"] 		= {"none1", "none2", "none3"},
-	["cam"] 		= {"none1", "none2", "none3"},
+	["ball"] 		= {"drone", "bugs", "minefield"},
+	["bug"] 		= {"drone", "bugs", "minefield"},
+	["bulk"] 		= {"drone", "bugs", "minefield"},
+	["cam"] 		= {"drone", "bugs", "minefield"},
 	["doc"] 		= {"drone", "bugs", "minefield"},
 }
 
