@@ -16,7 +16,7 @@ local base = piece 'base'
 				
 -- waiting times
 local restoring = 1350
-local mgStep = 400
+local mgStep = 10
 
 -- rotations
 local plusQuarter 	= math.rad(90)

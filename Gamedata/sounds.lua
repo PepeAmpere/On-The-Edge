@@ -52,6 +52,18 @@ local Sounds = {
 			priority = 10,
 			maxconcurrent = 4,
 		},
+		bulk_mg = { 
+            file = "sounds/bulk_mg.ogg", 
+			rolloff=3, dopplerscale = 1, maxdist = 3000,
+			priority = 10,
+			maxconcurrent = 4,
+		},
+		bulk_mg_short = { 
+            file = "sounds/bulk_mg_short.ogg", 
+			rolloff=3, dopplerscale = 2, maxdist = 3000,
+			priority = 10,
+			maxconcurrent = 4,
+		},
 		
 		--- unsorted ---
 		bfglaser = { 
