@@ -33,6 +33,8 @@ local names			= {
 
 for i=1,#names do
 	local unitDefName 	= names[i]
+	local scriptName	= "template.lua"
+	if (unitDefName == "base_turbine") then scriptName = "base/turbine.lua" end
 	local unitDef = {
 	--Internal settings
 		BuildPic 		= "filename.bmp",
@@ -42,7 +44,7 @@ for i=1,#names do
 		Side 			= "REP",
 		TEDClass 		= "TANK",
 		UnitName 		= unitDefName,
-		script 			= "template.lua",   
+		script 			= scriptName,   
 
 		maxDamage		= 1000,
 		SightDistance 	= 500,

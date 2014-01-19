@@ -51,7 +51,7 @@ oteRule = {
 	energy 		= {150, 250, 300, 350, 450},											-- size of energy storage
 	armor		= {"none","heroLight","heroMedium","heroHeavy","heroInvulnerable"},							
 	
-	dmgBase		= {400, 600, 40, 800, 1000},
+	dmgBase		= {400, 600, 700, 800, 1000},
 	reload		= {7, 5, 4, 3, 1},
 	range		= {150, 450, 600, 750, 1050},
 	los			= {275, 425, 500, 575, 725},
