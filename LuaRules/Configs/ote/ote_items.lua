@@ -62,7 +62,7 @@ oteItem = {
 		goodHeroes		= {},
 		badHeroes		= {},
 		upgrade 		= function(defTable) 
-			local newLOS 			= defTable.maxVelocity + 100
+			local newLOS 			= defTable.sightDistance + 100
 			defTable.sightDistance 	= newLOS
 			return defTable
 		end,
@@ -78,7 +78,7 @@ oteItem = {
 		goodHeroes		= {},
 		badHeroes		= {"doc"},
 		upgrade 		= function(defTable) 
-			local newLOS 			= defTable.maxVelocity + 400
+			local newLOS 			= defTable.sightDistance + 400
 			defTable.sightDistance 	= newLOS
 			return defTable
 		end,

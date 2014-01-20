@@ -1,6 +1,10 @@
 OTE changelog
 -------------
 
+v1.03
+- fixed LOS items (Single scope + Googol glass)
+- fixed mechanics swap for bad middle/bottom barracks
+
 v1.02
 + game mechanic: if batracks killed, line stop produce units
 + game mechanic: if alliance loose its main bunker (with radar), game over for them
