@@ -14,7 +14,7 @@ local unitDef = {
 --Unit limitations and properties
     BuildTime 		= 1000,
     Description 	= "Basic warrior",
-    MaxDamage 		= 800,
+    MaxDamage 		= 10000,
     RadarDistance 	= 0,
     SightDistance 	= 400,
     SoundCategory 	= "TANK",
@@ -30,7 +30,7 @@ local unitDef = {
     FootprintX 		= 2,
     FootprintZ 		= 2,
     MaxSlope 		= 15,
-    MaxVelocity 	= 2.0,
+    MaxVelocity 	= 4.0,
     MaxWaterDepth 	= 20,
     MovementClass 	= "Default2x2",
     TurnRate		= 900,

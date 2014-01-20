@@ -14,12 +14,12 @@ local heroWeaponsIndex = {
 local heroWeaponsDefs = {	 --	ball, bug, bulk, cam, doc 
 	name 				= { "long_beam", "big_bite", "heavy_mg", "paralyzer", "auto_pistol" },
 	weapontype 			= { "BeamLaser", "Melee", "LaserCannon", "BeamLaser", "Cannon" },
-	accuracy 			= { 10, 10, 20, 100, 10 },
-	areaofeffect 		= { 100, 40, 2, 20, 15 },
+	accuracy 			= { 10, 10, 20, 1000, 10 },
+	areaofeffect 		= { 20, 40, 2, 20, 15 },
 	avoidfeature 		= { false, false, false, false, false },
-	avoidfriendly 		= { true, true, true, true, true },
+	avoidfriendly 		= { false, false, false, false, false },
 	canattackground 	= { true, true, true, true, true },
-	collidefriendly 	= { true, true, true, true, true },
+	collidefriendly 	= { false, false, false, false, false },
 	collisionsize 		= { 8, 8, 8, 8, 8 },
 	commandfire 		= { false, false, false, false, false },
 	craterboost 		= { 0, 0, 0, 0, 0 },
@@ -42,11 +42,11 @@ local heroWeaponsDefs = {	 --	ball, bug, bulk, cam, doc
 	turret 				= { true, true, true, true, true },
 	texture1 			= { "flame", "flame", "flame", "flame", "flame" },
 	weaponvelocity 		= { 800, 800, 1000, 800, 800 },
-	explosiongenerator 	= { "custom:TANKGUN_FX", "custom:TANKGUN_FX", "custom:TANKGUN_FX", "custom:TANKGUN_FX", "custom:TANKGUN_FX" },
+	explosiongenerator 	= { "custom:TANKGUN_FX", "custom:TANKGUN_FX", "", "custom:TANKGUN_FX", "custom:TANKGUN_FX" },
 
-	range 				= { 400, 150, 650, 400, 500 },
+	range 				= { 400, 250, 650, 400, 500 },
 	reloadtime 			= { 1.5, 1.5, 0.04, 1.5, 0.5 },
-	damage 				= { {default = 55}, {default = 55}, {default = 8}, {default = 55}, {default = 25} },
+	damage 				= { {default = 35}, {default = 220}, {default = 8}, {default = 55}, {default = 25} },
 }
 
 -- final

@@ -1,8 +1,17 @@
 local armorDefs = {
 	buglight = {
 		"bug1",
-		-- HERE ADD UNITS NAMES IN SAME CLASS
 	},
+	herolight = {
+		"doc",
+	},
+	heromedium = {
+		"cam", "bulk",
+	},
+	heroheavy = {
+		"bug", "ball",
+	},
+	-- TODO: do armro for generated heroes
 	-- HERE ADD OTHER ARMOR CLASSES
 }
 

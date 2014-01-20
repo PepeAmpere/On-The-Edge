@@ -35,4 +35,14 @@ missionInfo = {
 	specificMapNeeded	= false,
 	specMapName			= "notAdotaMap",
 	
+	-- END OF MANDATORY --
+	
+}
+
+
+missionKnowledge = {
+	goodBarracks	= {true, true, true},
+	badBarracks		= {true, true, true},
+	goodMain		= true,
+	badMain			= true,
 }

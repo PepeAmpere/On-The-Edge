@@ -45,16 +45,16 @@ oteRule = {
 	speed 		= {2.5, 3, 4, 5, 7},
 	
 	health 		= {400, 600, 700, 800, 1000},
-	autorepair	= {3.5, 2.5, 2, 1.5, 0.5},												-- hitpoints healed based on unit starting unit setup
-	reactorPlus = {0.5, 1.5, 2, 2.5, 3.5},												-- additional energy income based on unit starting unit setup
-	reactorMove = {1,2,2.5,3,4},														-- this energy income is used when unit moves (so when idle, its energy income)
+	autorepair	= {1.75, 1.25, 1, 0.75, 0.25},										-- hitpoints healed based on unit starting unit setup
+	reactorPlus = {0.25, 0.75, 1, 1.25, 1.75},										-- additional energy income based on unit starting unit setup
+	reactorMove = {2,4,5,6,8},														-- this energy income is used when unit moves (so when idle, its energy income)
 	energy 		= {150, 250, 300, 350, 450},											-- size of energy storage
 	armor		= {"none","heroLight","heroMedium","heroHeavy","heroInvulnerable"},							
 	
 	dmgBase		= {400, 600, 700, 800, 1000},
 	reload		= {7, 5, 4, 3, 1},
 	range		= {150, 450, 600, 750, 1050},
-	los			= {275, 425, 500, 575, 725},
+	los			= {475, 625, 700, 775, 925},
 	
 	heroSpawn	= {7, 5, 4, 3, 1},
 	

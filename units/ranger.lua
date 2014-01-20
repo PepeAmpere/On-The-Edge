@@ -16,7 +16,7 @@ local unitDef = {
     Description 	= "Ranged soldier",
     MaxDamage 		= 800,
     RadarDistance 	= 0,
-    SightDistance 	= 400,
+    SightDistance 	= 500,
     SoundCategory 	= "TANK",
     Upright 		= 0,
     
@@ -47,29 +47,29 @@ local unitDef = {
     
 --Hitbox
    collisionVolumeOffsets    =  "0 0 0",
-   collisionVolumeScales     =  "40 50 40",
+   collisionVolumeScales     =  "35 50 35",
    collisionVolumeTest       =  1,
-   collisionVolumeType       =  "box",
+   collisionVolumeType       =  "cylY",
     
 --Weapons and related
 	weapons = {
 		[1] = {
-			def                	= "orangeblob",
+			def                	= "rangermissile",
 			BadTargetCategory 	= "NOTAIR",
 			ExplodeAs 			= "TANKDEATH",
-			NoChaseCategory 	= "AIR",
+			NoChaseCategory 	= "",
 		},
 	},
 	weaponDefs = {
-		orangeblob = {
-			name = "Orange Plasma Cannon",
+		rangermissile = {
+			name = "Rangers Missile",
 			weapontype = "Cannon",
 			accuracy = 10,
-			areaofeffect = 100,
+			areaofeffect = 10,
 			avoidfeature = false,
-			avoidfriendly = true,
+			avoidfriendly = false,
 			canattackground = true,
-			collidefriendly = true,
+			collidefriendly = false,
 			collisionsize = 8,
 			commandfire = false,
 			craterboost = 0,
@@ -83,17 +83,26 @@ local unitDef = {
 			intensity = 1,
 			noselfdamage = true,
 			size = 4,
-			soundstart = "orangeblob_explo",
+			soundstart = "rocketlaunch2",
 			soundhit = "orangeblob_explo",
-			range = 600,
+			range = 450,
 			reloadtime = 1.5,
 			rgbcolor = "1.0 1.0 1.0",
 			turret = true,
 			texture1 = "flame",
 			weaponvelocity = 400,
 			explosiongenerator = "custom:TANKGUN_FX",
+			-- smokeTrail = 1,
+			-- tracks = 1,
+			-- startVelocity = 0,
+			-- acceleration = 0.5,
+			-- turnRate = 35000,
 			damage = {
-				default = 55,
+				default = 35,
+				herolight = 25,
+				heromedium = 20,
+				heroheavy = 15,
+				-- TODO: make it by generator
 			},
 		},
 	}

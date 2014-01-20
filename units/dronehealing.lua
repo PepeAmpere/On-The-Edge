@@ -54,7 +54,7 @@ for i=1,#names do
 		Reclaimable 	= 1,
 		CanFly			= 1,
 		
-		WorkerTime		= i*0.4, 
+		WorkerTime		= i*0.002, 
 	--Hitbox
 	--    collisionVolumeOffsets    =  "0 0 0",
 	--    collisionVolumeScales     =  "20 20 20",

@@ -56,6 +56,7 @@ local function CreateBaseDef(className, heroPlusItemsCode, finalName, itemList)
 		upright 		= 0,
 		buildCostEnergy = 0,
 		buildCostMetal 	= 0,
+		idleTime		= 0,	-- ?! may need fix later
 		
 		-- move
 		maxVelocity		= oteRule.speed[heroClass[className].statsClass[1]],
@@ -274,9 +275,9 @@ for heroPlusItemsCode,_ in pairs(listOfneeded) do
 		
 		-- imcrease healh/energy/speed/repair/charge
 		-- !! TODO: make and connect with ote rules multipliers
-		local testMultiplier = 1.04
+		local testMultiplier = 1.08
 		local velocityMultiplier = 0.05
-		local expMultiplier = 1.1
+		local expMultiplier = 1.3
 		newDef.unitName						= newDefName
 		newDef.maxDamage 					= math.floor(newBaseDef.maxDamage * testMultiplier^newLevel)
 		newDef.customParams.energyStorage 	= math.floor(newBaseDef.customParams.energyStorage * testMultiplier^newLevel)

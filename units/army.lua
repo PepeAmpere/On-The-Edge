@@ -18,7 +18,7 @@ for i=1,#names do
 		script 			= "mortar.lua",   
 
 		maxDamage		= 800,
-		SightDistance 	= 500,
+		SightDistance 	= 450,
 
 		Acceleration 	= 0.15,
 		BrakeRate 		= 0.1,
@@ -54,9 +54,9 @@ for i=1,#names do
 				accuracy = 10,
 				areaofeffect = 100,
 				avoidfeature = false,
-				avoidfriendly = true,
+				avoidfriendly = false,
 				canattackground = true,
-				collidefriendly = true,
+				collidefriendly = false,
 				collisionsize = 8,
 				commandfire = false,
 				craterboost = 0,
@@ -72,8 +72,8 @@ for i=1,#names do
 				size = 10,
 				soundstart = "mortar2",
 				soundhit = "mortarhit",
-				range = 700,
-				reloadtime = 1.5,
+				range = 600,
+				reloadtime = 3.0,
 				rgbcolor = "1.0 0.8 0.8",
 				turret = true,
 				texture1 = "flame",
@@ -81,6 +81,10 @@ for i=1,#names do
 				explosiongenerator = "custom:TANKGUN_FX",
 				damage = {
 					default = 100,
+					herolight = 80,
+					heromedium = 70,
+					heroheavy = 60,
+					-- TODO: make it by generator
 				},
 			},
 		}

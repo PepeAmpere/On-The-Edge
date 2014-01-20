@@ -1,3 +1,31 @@
 OTE changelog
+-------------
 
+v1.02
++ game mechanic: if batracks killed, line stop produce units
++ game mechanic: if alliance loose its main bunker (with radar), game over for them
+- decreased accuracy of Bulk main weapon 10x (100 -> 1000)
+- increased weapon dmg for Bug (200%, experimental)
+- decreased reload for Cam (50%, experimental)
+- all classes of heroes +200 LOS
+- Soldier and Ranger gets +100 LOS
+- all heroes weapons collider friendly no more
+- all rates of charge/repairr halved
+- no time needed for autorepair start (idle 0)
+- HP of Main tower increased (800 -> 6000) (later it gets building armor class, so will survive more again)
+- Small tower gets small radar sensor (250)
+- bug3 HP increased (+200) and speed increased (2x)
+- Soldier and Ranger guns completly changed (new values, new sounds, new effects)
+- Dust bug HP increased 10x
+- Bug Queen HP increased 40x
+- Repair drone reapair speed decreased 200x
+- changed next level experience calculation
+- increased HP per level bonus
+- fixed some hitspheres
+- more HP (4x) for all base structures
+
+v1.0 and v1.01 
+- first public game release
+
+-------------
 ready for you

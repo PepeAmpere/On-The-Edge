@@ -46,7 +46,7 @@ for i=1,#names do
 		UnitName 		= unitDefName,
 		script 			= scriptName,   
 
-		maxDamage		= 1000,
+		maxDamage		= 4000,
 		SightDistance 	= 500,
 	}
 	

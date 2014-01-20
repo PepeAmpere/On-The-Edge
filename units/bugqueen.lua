@@ -14,7 +14,7 @@ local unitDef = {
 --Unit limitations and properties
     BuildTime 		= 1000,
     Description 	= "Deadly montro",
-    MaxDamage 		= 800,
+    MaxDamage 		= 25000,
     RadarDistance 	= 0,
     SightDistance 	= 400,
     SoundCategory 	= "TANK",
@@ -93,7 +93,7 @@ local unitDef = {
 			weaponvelocity = 400,
 			explosiongenerator = "custom:TANKGUN_FX",
 			damage = {
-				default = 55,
+				default = 30,
 			},
 		},
 	}

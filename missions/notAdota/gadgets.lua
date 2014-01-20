@@ -30,7 +30,11 @@ function MissionUnitFromFactory(unitID, unitDefID, unitTeam, factID, factDefID, 
 end
 
 function MissionUnitDestroyed(unitID, unitDefID, unitTeam)
+
+	-- general
 	local thisUnit  = UnitDefs[unitDefID]
+	
+	-- HERO RESPAWN --
 	local isHero	= thisUnit.customParams.ishero
 	if (isHero) then
 		heroesTeamToUnitID[tostring(unitTeam)] 		= unitID

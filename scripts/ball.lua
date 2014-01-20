@@ -430,40 +430,40 @@ function script.BlockShot(num)
 	return (num == 1) or (num == 4)	-- don't allow weapon 1 or 4 to fire
 end
 
-function script.FireWeapon(num)
-	EmitSfx( weaponPieces[num].flare, muzzle_flash )
-end
+-- function script.FireWeapon(num)
+	-- EmitSfx( weaponPieces[num].flare, muzzle_flash )
+-- end
 
 function script.Killed(recentDamage, maxHealth)
-	-- local severity = recentDamage / maxHealth
-	-- if (severity <= .25) then
-		-- Explode( t_eye, SFX.EXPLODE )
-		-- Explode( b_eye, SFX.EXPLODE )
-		-- return 1 -- corpsetype
-	-- elseif (severity <= .5) then
-		-- Explode( t_eye, SFX.EXPLODE )
-		-- Explode( b_eye, SFX.EXPLODE )
-		-- return 1 -- corpsetype
-	-- else		
-		-- Explode( t_dome, SFX.EXPLODE )
-		-- Explode( t_eye, SFX.EXPLODE )
-		-- Explode( b_eye, SFX.EXPLODE )
+	local severity = recentDamage / maxHealth
+	if (severity <= .25) then
+		Explode( t_eye, SFX.EXPLODE )
+		Explode( b_eye, SFX.EXPLODE )
+		return 1 -- corpsetype
+	elseif (severity <= .5) then
+		Explode( t_eye, SFX.EXPLODE )
+		Explode( b_eye, SFX.EXPLODE )
+		return 1 -- corpsetype
+	else		
+		Explode( t_dome, SFX.EXPLODE )
+		Explode( t_eye, SFX.EXPLODE )
+		Explode( b_eye, SFX.EXPLODE )
 	
-		-- Explode( lf_thigh, SFX.EXPLODE )
-		-- Explode( lf_shin, SFX.EXPLODE )
-		-- Explode( lf_foot, SFX.EXPLODE )
+		Explode( lf_thigh, SFX.EXPLODE )
+		Explode( lf_shin, SFX.EXPLODE )
+		Explode( lf_foot, SFX.EXPLODE )
 		
-		-- Explode( rf_thigh, SFX.EXPLODE )
-		-- Explode( rf_shin, SFX.EXPLODE )
-		-- Explode( rf_foot, SFX.EXPLODE )
+		Explode( rf_thigh, SFX.EXPLODE )
+		Explode( rf_shin, SFX.EXPLODE )
+		Explode( rf_foot, SFX.EXPLODE )
 		
-		-- Explode( lb_thigh, SFX.EXPLODE )
-		-- Explode( lb_shin, SFX.EXPLODE )
-		-- Explode( lb_foot, SFX.EXPLODE )
+		Explode( lb_thigh, SFX.EXPLODE )
+		Explode( lb_shin, SFX.EXPLODE )
+		Explode( lb_foot, SFX.EXPLODE )
 		
-		-- Explode( rb_thigh, SFX.EXPLODE )
-		-- Explode( rb_shin, SFX.EXPLODE )
-		-- Explode( rb_foot, SFX.EXPLODE )
-		-- return 2 -- corpsetype
-	-- end
+		Explode( rb_thigh, SFX.EXPLODE )
+		Explode( rb_shin, SFX.EXPLODE )
+		Explode( rb_foot, SFX.EXPLODE )
+		return 2 -- corpsetype
+	end
 end

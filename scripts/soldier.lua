@@ -64,7 +64,7 @@ function script.AimWeapon1(heading, pitch)
 	
 	Turn(body, y_axis, heading, math.rad(180)) 			-- left-right
 	Turn(left_gun, x_axis, newPitch, math.rad(300)) 	-- up-down left arm
-	Turn(right_gun, x_axis, newPitch, math.rad(300)) -- up-down right arm
+	Turn(right_gun, x_axis, newPitch, math.rad(300)) 	-- up-down right arm
 	WaitForTurn(body, y_axis)
 	WaitForTurn(left_gun, x_axis)
 	WaitForTurn(right_gun, x_axis)

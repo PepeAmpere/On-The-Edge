@@ -1,4 +1,5 @@
 local base				= piece 'base'
+local tower				= piece 'tower'
 local gun				= piece 'gun'
 
 local moving 	= false
@@ -26,8 +27,8 @@ end
 
 local function RestoreAfterDelay()
 	Sleep(1000)
-	Turn(base, y_axis, math.rad(0), math.rad(90))
-	WaitForTurn(base, y_axis)
+	Turn(tower, y_axis, math.rad(0), math.rad(90))
+	WaitForTurn(tower, y_axis)
 end
 
 function script.StartMoving()
@@ -44,12 +45,9 @@ function script.AimWeapon1(heading, pitch)
 	Signal(SIG_Aim)
 	SetSignalMask(SIG_Aim)
 	
-	local newPitch = -pitch 
-	if (pitch <= 0) then
-		newPitch = newPitch * 1.5
-	end
-	
-	StartThread( RestoreAfterDelay )
+	Turn(tower, y_axis, math.rad(pitch), math.rad(90)) 	-- up-down left arm
+	WaitForTurn(tower, y_axis)
+	StartThread(RestoreAfterDelay)
 	return true
 end
 
@@ -58,11 +56,10 @@ function script.QueryWeapon()
 end
 
 function script.FireWeapon1()
-	gunSelect = not gunSelect
 end
 
 function script.AimFromWeapon1()
-	return base
+	return tower
 end
 
 function script.Killed(recentDamage, maxHealth)

@@ -14,9 +14,9 @@ local unitDef = {
 --Unit limitations and properties
     BuildTime 		= 1000,
     Description 	= "Defence tower with strong guided mortar weapon",
-    MaxDamage 		= 800,
+    MaxDamage 		= 6000,
     RadarDistance 	= 0,
-    SightDistance 	= 400,
+    SightDistance 	= 650,
     SoundCategory 	= "TANK",
     Upright 		= 0,
 	iconType		= "tower",
@@ -36,8 +36,8 @@ local unitDef = {
     Reclaimable 	= 0,
     
 --Hitbox
-   collisionVolumeOffsets    =  "0 0 0",
-   collisionVolumeScales     =  "150 300 150",
+   collisionVolumeOffsets    =  "20 0 -20",
+   collisionVolumeScales     =  "130 300 130",
    collisionVolumeTest       =  1,
    collisionVolumeType       =  "cylY",
     
@@ -55,7 +55,7 @@ local unitDef = {
 			name = "Mortar tower weapon",
 			weapontype = "Cannon",
 			accuracy = 10,
-			areaofeffect = 100,
+			areaofeffect = 200,
 			avoidfeature = false,
 			avoidfriendly = true,
 			canattackground = true,
@@ -76,14 +76,14 @@ local unitDef = {
 			soundstart = "grenade_launch",
 			soundhit = "mortarhit",
 			range = 750,
-			reloadtime = 1.5,
+			reloadtime = 3.5,
 			rgbcolor = "1.0 1.0 1.0",
 			turret = true,
 			texture1 = "flame",
 			weaponvelocity = 400,
 			explosiongenerator = "custom:TANKGUN_FX",
 			damage = {
-				default = 55,
+				default = 360,
 			},
 		},
 	}

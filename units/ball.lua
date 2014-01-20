@@ -61,17 +61,29 @@ local unitDef  =  {
 			ExplodeAs 			= "TANKDEATH",
 			NoChaseCategory 	= "AIR",
 		},
+		[2] = {
+			def                	= "rayofdeath",
+			mainDir            	= "1 0 0",
+			maxAngleDif        	= 222,
+			NoChaseCategory 	= "AIR",
+		},
+		[3] = {
+			def                	= "rayofdeath",
+			mainDir            	= "1 0 0",
+			maxAngleDif        	= 222,
+			NoChaseCategory 	= "AIR",
+		},
 	},
 	weaponDefs = {
-		orangeblob = {
-			name = "Orange Plasma Cannon",
-			weapontype = "Cannon",
+		rayofdeath = {
+			name = "RayOfDeath",
+			weapontype = "LaserCannon",
 			accuracy = 10,
 			areaofeffect = 100,
 			avoidfeature = false,
-			avoidfriendly = true,
+			avoidfriendly = false,
 			canattackground = true,
-			collidefriendly = true,
+			collidefriendly = false,
 			collisionsize = 8,
 			commandfire = false,
 			craterboost = 0,
@@ -92,6 +104,8 @@ local unitDef  =  {
 			rgbcolor = "1.0 1.0 1.0",
 			turret = true,
 			texture1 = "flame",
+			thickness = 3,
+			tolerance = 5000,
 			weaponvelocity = 800,
 			explosiongenerator = "custom:TANKGUN_FX",
 			damage = {

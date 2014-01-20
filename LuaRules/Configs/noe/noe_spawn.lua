@@ -139,6 +139,7 @@ function SingleSpawner(unit,posX,posZ,facing,team,specialName,featMark)
 				isAlive = true,
 			}
 			unitsUnderGreatEyeIDtoName[newID] = specialName
+			Spring.Echo("NOE - SingleSpawner: Great eye will care about " .. specialName .. "(" .. newID.. ")")
 	    end
 		return true
 	else

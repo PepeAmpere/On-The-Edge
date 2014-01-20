@@ -29,6 +29,7 @@ function script.Create()
 	Hide( flare2)
 	Move( base, y_axis, math.rad(-20), now)
 	Move( base, y_axis, math.rad(0), math.rad(40))
+	WaitForTurn(base, y_axis)
 	moving = false
     return 0
 end
