@@ -37,18 +37,26 @@ end
 function widget:GameFrame(n)
 	if (n == tracks[1].lenghtS*30) then
 		Spring.StopSoundStream()
-		Spring.PlaySoundStream(tracks[2].path, 0.2)
+		Spring.PlaySoundStream(tracks[2].path, 0.3)
 	end
 	if (n == tracks[1].lenghtS*30 + tracks[2].lenghtS*30) then
 		Spring.StopSoundStream()
-		Spring.PlaySoundStream(tracks[1].path, 0.2)
+		Spring.PlaySoundStream(tracks[1].path, 0.3)
 	end
 	if (n == tracks[1].lenghtS*30 + 2*tracks[2].lenghtS*30) then
 		Spring.StopSoundStream()
-		Spring.PlaySoundStream(tracks[1].path, 0.2)
+		Spring.PlaySoundStream(tracks[1].path, 0.3)
 	end
 	if (n == 2*tracks[1].lenghtS*30 + 2*tracks[2].lenghtS*30) then
 		Spring.StopSoundStream()
-		Spring.PlaySoundStream(tracks[1].path, 0.2)
+		Spring.PlaySoundStream(tracks[1].path, 0.3)
+	end
+	if (n == 2*tracks[1].lenghtS*30 + 3*tracks[2].lenghtS*30) then
+		Spring.StopSoundStream()
+		Spring.PlaySoundStream(tracks[1].path, 0.3)
+	end
+	if (n == 3*tracks[1].lenghtS*30 + 3*tracks[2].lenghtS*30) then
+		Spring.StopSoundStream()
+		Spring.PlaySoundStream(tracks[1].path, 0.3)
 	end
 end

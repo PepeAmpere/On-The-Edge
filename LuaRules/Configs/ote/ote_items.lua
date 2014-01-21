@@ -183,8 +183,9 @@ oteItem = {
 		goodHeroes		= {"bulk"},
 		badHeroes		= {},		
 		upgrade 		= function(defTable) 
+			defTable.impulsefactor  = 0.05
+			defTable.impulseboost 	= 0.002
 			-- TODO: do effect
-			-- add push
 			-- decrease energy prod.
 			return defTable
 		end,

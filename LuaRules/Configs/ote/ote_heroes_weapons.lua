@@ -46,7 +46,7 @@ local heroWeaponsDefs = {	 --	ball, bug, bulk, cam, doc
 
 	range 				= { 400, 250, 650, 400, 500 },
 	reloadtime 			= { 1.5, 1.5, 0.04, 1.5, 0.5 },
-	damage 				= { {default = 35}, {default = 220}, {default = 8}, {default = 55}, {default = 25} },
+	damage 				= { {default = 35}, {default = 220}, {default = 6}, {default = 55}, {default = 25} },
 }
 
 -- final

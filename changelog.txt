@@ -4,6 +4,10 @@ OTE changelog
 v1.03
 - fixed LOS items (Single scope + Googol glass)
 - fixed mechanics swap for bad middle/bottom barracks
+- lauder music in battles
+- item Graviton shells works now
+- better rotation animation for both versions of turbine
+- dramaticly increased mass of Mortar 
 
 v1.02
 + game mechanic: if batracks killed, line stop produce units

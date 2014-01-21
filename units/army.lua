@@ -39,6 +39,8 @@ for i=1,#names do
 		LeaveTracks 	= 0,
 		Reclaimable 	= 0,
 		
+		mass			= 2000,
+		
 		weapons = {
 			[1] = {
 				def                	= "orangeblob",
