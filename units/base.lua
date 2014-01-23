@@ -35,6 +35,7 @@ for i=1,#names do
 	local unitDefName 	= names[i]
 	local scriptName	= "template.lua"
 	if (unitDefName == "base_turbine" or unitDefName == "base_turbine45") then scriptName = "base/turbine.lua" end
+	if (unitDefName == "base_main" or unitDefName == "base_main45") then scriptName = "base/main_bunker.lua" end
 	local unitDef = {
 	--Internal settings
 		BuildPic 		= "filename.bmp",

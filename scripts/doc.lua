@@ -122,11 +122,14 @@ local function RestoreAfterDelay()
 	Spin( magazine, y_axis, 0  )
 end
 
-function script.QueryWeapon(num)
+function script.QueryWeapon1(num)
         return flare
 end
 
 function script.AimFromWeapon(num)
+        return chest
+end
+function script.QueryWeapon2(num)
         return chest
 end
 

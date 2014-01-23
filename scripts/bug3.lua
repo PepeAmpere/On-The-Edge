@@ -211,7 +211,15 @@ function script.FireWeapon1()
 end
 
 function script.AimFromWeapon1()
-	return base
+	return mouthspit
+end
+
+function script.QueryWeapon1(num)
+        return mouthspit
+end
+
+function script.QueryWeapon2(num)
+        return base
 end
 
 function script.Killed(recentDamage, maxHealth)

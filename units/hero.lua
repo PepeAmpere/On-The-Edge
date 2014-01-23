@@ -80,10 +80,10 @@ local function CreateBaseDef(className, heroPlusItemsCode, finalName, itemList)
 		capturable		= 0,
 		
 		-- TODO: add spheres for each bot in heroClass[className]
-	   -- collisionVolumeOffsets    =  "0 0 0",
-	   -- collisionVolumeScales     =  "70 100 70",
-	   -- collisionVolumeTest       =  1,
-	   -- collisionVolumeType       =  "cylY",
+	   collisionVolumeOffsets    =  "0 0 0",
+	   collisionVolumeScales     =  "70 100 70",
+	   collisionVolumeTest       =  1,
+	   collisionVolumeType       =  "cylY",
 		
 		weapons = {
 			[1] = {

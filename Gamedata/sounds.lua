@@ -70,6 +70,12 @@ local Sounds = {
 			priority = 10,
 			maxconcurrent = 4,
 		},
+		heavy_shot_4x = { 
+            file = "sounds/heavy_shot_4x.ogg", 
+			rolloff=3, dopplerscale = 2, maxdist = 3000,
+			priority = 10,
+			maxconcurrent = 4,
+		},
 		
 		--- unsorted ---
 		bfglaser = { 

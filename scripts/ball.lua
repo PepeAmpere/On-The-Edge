@@ -52,9 +52,10 @@ smokePiece = { t_dome, t_eye, l_turret, r_turret, lf_thigh, rf_thigh, lb_thigh, 
 
 local weaponPieces = {
 	[1] = {turret = b_eye, sleeve = b_eye, flare = b_eye},
-	[2] = {turret = l_turret, sleeve = l_pivot, flare = l_flare, normal = {1/math.sqrt(2), 1/math.sqrt(2), 0}, radial = {0,0,1}, right = {1/math.sqrt(2), -1/math.sqrt(2), 0} },
-	[3] = {turret = r_turret, sleeve = r_pivot, flare = r_flare, normal = {-1/math.sqrt(2), 1/math.sqrt(2), 0}, radial = {0,0,1}, right = {1/math.sqrt(2), 1/math.sqrt(2), 0}},
-	[4] = {turret = b_eye, sleeve = b_eye, flare = b_eye}
+	--[2] = {turret = l_turret, sleeve = l_pivot, flare = l_flare, normal = {1/math.sqrt(2), 1/math.sqrt(2), 0}, radial = {0,0,1}, right = {1/math.sqrt(2), -1/math.sqrt(2), 0} },
+	--[3] = {turret = r_turret, sleeve = r_pivot, flare = r_flare, normal = {-1/math.sqrt(2), 1/math.sqrt(2), 0}, radial = {0,0,1}, right = {1/math.sqrt(2), 1/math.sqrt(2), 0}},
+	--[4] = {turret = b_eye, sleeve = b_eye, flare = b_eye},
+	[2] = {turret = b_dome, sleeve = b_dome, flare = b_dome},
 }
 
 --constants

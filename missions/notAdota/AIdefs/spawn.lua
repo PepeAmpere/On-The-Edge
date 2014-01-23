@@ -57,7 +57,7 @@ newSpawnThis = {
     {name = "t-base_turbine45", posX = 1179, posZ = 7716, facing = "s", teamName = "BASE1", checkType = "none", gameTime = 0},
     {name = "t-towermain", posX = 2625, posZ = 6313, facing = "n", teamName = "BASE1", checkType = "none", gameTime = 0},
     {name = "t-base_barracks", posX = 778, posZ = 6780, facing = "n", teamName = "BASE1", checkType = "single", checkName = "goodBarracksTop", gameTime = 0},
-    {name = "t-towermain", posX = 970, posZ = 2607, facing = "s", teamName = "BASE1", checkType = "none", gameTime = 0},
+    {name = "t-towermain", posX = 970, posZ = 2607, facing = "n", teamName = "BASE1", checkType = "none", gameTime = 0},
     {name = "t-base_repair_pad45", posX = 1122, posZ = 7211, facing = "s", teamName = "BASE1", checkType = "none", gameTime = 0},
     {name = "t-towermain", posX = 996, posZ = 6759, facing = "w", teamName = "BASE1", checkType = "none", gameTime = 0},
     {name = "t-base_main45", posX = 620, posZ = 7400, facing = "s", teamName = "BASE1", checkType = "single", checkName = "goodMain", gameTime = 0},

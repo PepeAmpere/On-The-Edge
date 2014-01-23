@@ -289,7 +289,30 @@ oteItem = {
 		goodHeroes		= {},
 		badHeroes		= {"bulk", "bug"},
 		upgrade 		= function(defTable) 
-			-- TODO: add plasma shield
+			local thisUnitWeapons		= defTable.weapons
+			local shieldName			= "plasmaShield"
+			defTable.weapons[#thisUnitWeapons + 1] = {
+				def                	= shieldName,
+				NoChaseCategory 	= "AIR",
+			}
+			defTable.weaponDefs[shieldName] = {
+				name				= shieldName,
+				weapontype			= "Shield",
+				ShieldRepulser		= 1,
+				ExteriorShield		= 1,
+				VisibleShield		= 1,
+				ShieldForce			= 7,
+				ShieldRadius		= 90,
+				ShieldEnergyUse		= 1,
+				ShieldPower 		= 100,
+				ShieldStartingPower = 100,
+				ShieldPowerRegen 	= 2,
+				ShieldPowerRegenEnergy = 1,
+				ShieldInterceptType = 1,
+				ShieldGoodColor 	= "1.0 0.9 0.9",
+				ShieldBadColor 		= "1.0 1.0 1.0",
+				ShieldAlpha 		= 0.7,
+			}		
 			return defTable
 		end,
 		upgInterpret	= {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -305,7 +328,12 @@ oteItem = {
 		badHeroes		= {"bulk"},
 		upgrade 		= function(defTable) 
 			-- TODO: add shield
-			-- energy consumption!
+			defTable.cloakCost 			= 1
+			defTable.cloakCostMoving 	= 2
+			defTable.initCloaked 		= 1
+			defTable.minCloakDistance 	= 40
+			decloakOnFire 				= 1
+			cloakTimeout 				= 240
 			return defTable
 		end,
 		upgInterpret	= {0, 0, 0, 0, 0, 0, 0, 0, 0, -priceClass.expensive},

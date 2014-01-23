@@ -143,12 +143,16 @@ function script.StopMoving()
     StartThread( StopWalk )
 end    
        
-function script.QueryWeapon(num)
+function script.QueryWeapon1(num)
 	if gun then 
 		return lflare
 	else 
 		return rflare 
 	end
+end
+
+function script.QueryWeapon2(num)
+        return chest
 end
 
 function script.AimFromWeapon(num) return turret end

@@ -23,6 +23,7 @@ local wait		= 5
 local paramsU	= {}
 local x,y,z		= 0,0,0
 local teamIDU	= 0
+local health	= 0
 
 if ( gadgetHandler:IsSyncedCode()) then
 
@@ -75,6 +76,7 @@ function gadget:GameFrame(frameNumber)
 	if(changeU) then
 		if(wait == 3) then
 			x,y,z = Spring.GetUnitPosition(paramsU[1])
+			health	= Spring.GetUnitHealth(paramsU[1])
 			teamIDU = Spring.GetUnitTeam(paramsU[1])
 			Spring.DestroyUnit(paramsU[1])
 		end
@@ -87,6 +89,7 @@ function gadget:GameFrame(frameNumber)
 			-- Spring.Echo("PRORRRRRRRRROOOOBBBBBBBBBBBBBBBBBBBBBBBBBDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAG")
 			Spring.CreateUnit(paramsU[2], x, y, z, "south", teamIDU, false, false, paramsU[1])
 			Spring.SendLuaUIMsg("LEVELUP", "a")
+			Spring.SetUnitHealth(paramsU[1],health)
 			wait = 3
 			changeU = false
 		end

@@ -1,6 +1,14 @@
 OTE changelog
 -------------
 
+v1.04
+- item Plasma shield working
+- item Cloak emitor working
+- animation rotation of Main bunker radar
+- fixed spawn rotation of one tower
+- level uped hero gets same health as before leveling (so ultimate level up autoheal no more)
+- new weapon + sound for Doc
+
 v1.03
 - fixed LOS items (Single scope + Googol glass)
 - fixed mechanics swap for bad middle/bottom barracks
