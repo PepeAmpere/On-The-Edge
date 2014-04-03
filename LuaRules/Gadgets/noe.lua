@@ -40,11 +40,10 @@ local sqrt                             = math.sqrt
 local random                           = math.random
 local PI                               = math.pi
 
-local pseudoRandom                     = 1
+pseudoRandom                           = 1
 realGameTime		                   = {0,0,0}      -- hours, minutes, seconds
 
 local spAreTeamsAllied                 = Spring.AreTeamsAllied
-local spEcho                           = Spring.Echo
 local spGetModOptions                  = Spring.GetModOptions
 local spGetGroundHeight                = Spring.GetGroundHeight
 local spGetUnitPosition                = Spring.GetUnitPosition
@@ -57,33 +56,31 @@ local spSetTeamResource                = Spring.SetTeamResource
 local spAddTeamResource                = Spring.AddTeamResource
 
 ------ SETTINGS ----------
-local frameworkOFFwithoutAI			   = true		 -- depends on setting here or on modoptions in initialization
+frameworkOFFwithoutAI			       = true		 -- depends on setting here or on modoptions in initialization
 --- !? some of the values rewritten in init depending on size of map and lobby settings now !? ---
-local step                             = 60          -- how much frames for each step -- more then 14 needed now
-local timeStep                         = 1           -- recalculation of time if step is changed
-local mapSmallCycleLength              = 8           -- how long is small cycle   (speedup for counting map)
-local stepBeginMapping                 = 1           -- frame of start of mapping
-local stepEndMapping                   = stepBeginMapping + mapSmallCycleLength - 1    -- frame of end of mapping
-local stepSetGlobals                   = stepEndMapping + 1 -- frame of globals vars setting
-local stepExecute                      = stepSetGlobals + 1 -- frame of executes
-local executePartLenght                = 4           -- how many frames used for execution (used these: <stepExecute,(stepExecute+executePartLenght>)
-local minimalStep                      = stepExecute + executePartLenght  --- ending frame
-local mapMediumCycleLength             = 150         -- how long is medium cycle
+step                                   = 60          -- how much frames for each step -- more then 14 needed now
+timeStep                               = 1           -- recalculation of time if step is changed
+mapSmallCycleLength                    = 8           -- how long is small cycle   (speedup for counting map)
+stepBeginMapping                       = 1           -- frame of start of mapping
+stepEndMapping                         = stepBeginMapping + mapSmallCycleLength - 1    -- frame of end of mapping
+stepSetGlobals                         = stepEndMapping + 1 -- frame of globals vars setting
+stepExecute                            = stepSetGlobals + 1 -- frame of executes
+executePartLenght                      = 4           -- how many frames used for execution (used these: <stepExecute,(stepExecute+executePartLenght>)
+minimalStep                            = stepExecute + executePartLenght  --- ending frame
+mapMediumCycleLength                   = 150         -- how long is medium cycle
 --local mapTileUnitConstant              = 4           -- how many units in tile is full tile
-local mapHugeTile                      = 8           -- how big is Huge tile (for searching algoritm)
-local mapHugeTileEdge                  = 1           -- edgecut of search tile (for tile 8x8 edge 1 means 6x6 searching space) => !! max 1/2 mapHugeTile
-local edgeDistance                     = 200         -- how far point from map edge have to be choosen
--- local superUnitName                    = "repdrone"  --"repmum"    -- name of leader type unit
--- local unitOfGroupOne                   = "bug1"      -- unit for first team !temporary
+mapHugeTile                            = 8           -- how big is Huge tile (for searching algoritm)
+mapHugeTileEdge                        = 1           -- edgecut of search tile (for tile 8x8 edge 1 means 6x6 searching space) => !! max 1/2 mapHugeTile
+edgeDistance                           = 200         -- how far point from map edge have to be choosen
 
 -- mapping settings --
 mapDivision                            = 256         -- how big tiles i use for mapping
-local divConst                         = 1.9 --1.9   -- danger transmition division constant - main
-local divConst2                        = 2.6 --3     -- danger transmition division constant 2
-local divConst3                        = 3.2 --4     -- danger transmition division constant 3
-local unitDangerMultiplier             = 5           -- how much danger is one unit
-local fullSafe                         = 25          -- safeTileIndex for supersafe tile
-local splitMapping                     = false       -- mapping can be splitted for bigger maps
+divConst                               = 1.9 --1.9   -- danger transmition division constant - main
+divConst2                              = 2.6 --3     -- danger transmition division constant 2
+divConst3                              = 3.2 --4     -- danger transmition division constant 3
+unitDangerMultiplier                   = 5           -- how much danger is one unit
+fullSafe                               = 25          -- safeTileIndex for supersafe tile
+splitMapping                           = false       -- mapping can be splitted for bigger maps
 -- xAnts --
 antDecreaseValue                       = 0.9
 antDecreaseTimes                       = 1
@@ -93,20 +90,18 @@ antValue                               = 1
 --- global for testing
 _G.mapDivision                         = mapDivision
 
--- formations/move settings
-
 ----- END OF SETTINGS ----
 
 local splitter  
 local firstID
 
 ----- MAP ----------------
-local mapX                             = Game.mapSizeX
-local mapZ                             = Game.mapSizeZ
-local mapXdivs                         = floor(mapX / mapDivision)
-local mapZdivs                         = floor(mapZ / mapDivision)
-local mapCount                         = mapXdivs * mapZdivs
-local mapXdivsStep                     = floor(mapXdivs / mapSmallCycleLength)
+mapX                                   = Game.mapSizeX
+mapZ                                   = Game.mapSizeZ
+mapXdivs                               = floor(mapX / mapDivision)
+mapZdivs                               = floor(mapZ / mapDivision)
+mapCount                               = mapXdivs * mapZdivs
+mapXdivsStep                           = floor(mapXdivs / mapSmallCycleLength)
 halfX                                  = mapX/2
 halfZ                                  = mapZ/2
 mapDanger                              = {}  -- map special for each team
@@ -114,10 +109,10 @@ mapDefault                             = {}  -- tiles that are not part of map
 mapNeutral                             = {}  -- physical part of map
 mapMetal                               = {}  -- posX, posZ, amount, water Y/N,
 mapBuild                               = {}  -- posX, posZ,... 
-local iStartPoint                      = 0                -- only speedup
-local iEndPoint                        = mapXdivsStep-1   -- only speedup
-local mapSmallCycles                   = 0           -- number of small cycles
-local mapMediumCycles                  = 0           -- number of medium cycles
+iStartPoint                            = 0                -- only speedup
+iEndPoint                              = mapXdivsStep-1   -- only speedup
+mapSmallCycles                         = 0           -- number of small cycles
+mapMediumCycles                        = 0           -- number of medium cycles
 
 -- map globals for testing
 _G.mapXdivs                            = mapXdivs
@@ -142,8 +137,8 @@ mapTilesAroundIndex                    = {  --- index map for looking on neigbou
 	[8]  = -mapZdivs - 1,   -- upleft
 }
 
-local mapMaxHeight                     = 0
-_G.mapMaxHeight                        = mapMaxHeight
+mapMaxHeight                     		= 0
+_G.mapMaxHeight                        	= mapMaxHeight
 ----- END MAP ------------
 ----- CTRL VARIABLES -----
 ---- main tables and variables, globals
@@ -180,22 +175,15 @@ unitsUnderGreatEyeIDtoName				= {}	-- units that NOE keeps eye on becouse some t
 ---- for testing
 _G.teamInfo                            = teamInfo
 
-------
-local listOfTypesOfPathing = {
-    ["RunAway"]                        = "run",
-}
-
--- unit specific --
-
----- PLANS ----
----- SoloWarrior --- ONLY FOR REPLICATOR QUEEN  ... example:
-local zeroClassPlans           = {"RunAway"}                                                                 -- survival plans
-local firstClassPlans          = {"Heal", "GuardHive"}                                                       -- res plans
-local secondClassPlans         = {"GuardImportant", "BuildHive"}                                             -- start plans
-local thirdClassPlans          = {"GuardBase", "BasicEnergy", "BasicMetal"}                                  -- basic plans
-local fourthClassPlans         = {"BuildUnits", "BuildFactory", "MoreEnergy", "MoreMetal", "SmallAttack"}    -- standard plans
-local fifthClassPlans          = {"BuildBasicDef", "MediumAttack"}                                           -- advanced plans
---- end of plans
+---- BASE NOE STUFF INCLUDE
+-- include "LuaRules/Configs/noe/modules/base/noe_core.lua"
+include "LuaRules/Configs/noe/modules/base/noe_math.lua"
+include "LuaRules/Configs/noe/modules/base/noe_mapping.lua"
+include "LuaRules/Configs/noe/modules/base/noe_groups_controller.lua"
+include "LuaRules/Configs/noe/modules/base/noe_targets_controller.lua"
+include "LuaRules/Configs/noe/modules/base/noe_teams_controller.lua"
+include "LuaRules/Configs/noe/modules/base/noe_commands.lua"
+----
 
 local function AddTeam(teamNumber,teamID,side,difficulty)
 	--- now only for REPlicators, later if here depending "side"
@@ -215,12 +203,6 @@ local function AddTeam(teamNumber,teamID,side,difficulty)
 		["groupNameToID"]			   = {},		-- groupName -> groupID of given group
 		--- orders lists ---
 		["unitTypeCount"]              = {},
-		-- now these four structures are made automaticly
-		-- ["buildOrdersBot1"]            = {{},{},{},{},{},{},{}},
-		-- ["buildOrdersVeh1"]            = {{},{},{},{},{},{},{}},
-		-- ["buildOrdersAir1"]            = {{},{},{},{},{},{},{}},
-		-- ["buildOrdersShip"]            = {{},{},{},{},{},{},{}},
-		
 		["startInitNeeded"]            = true,     -- if its needed to be done
 		
 		--- map positions
@@ -232,11 +214,6 @@ local function AddTeam(teamNumber,teamID,side,difficulty)
 		["listOfMexes"]                = {},
 		["listOfMexesAttemptsCounter"] = {},
 		["minAttempts"]                = 0,
-        -- ["listOfConst"]                = {},
-        -- ["listOfDFens"]                = {},
-		-- ["listOfPower"]                = {},
-		-- ["listOfFactr"]                = {},
-		-- ["listOfTargets"]              = {},
 		---
 		["keyUnitIDs"]                 = {},       -- hashTable
 		---
@@ -246,23 +223,11 @@ local function AddTeam(teamNumber,teamID,side,difficulty)
 		["countOfStrategicTargets"]    = 0, -- used
 		["countOfStrategicTargetsUsed"]= 0, -- used
 		---
-		-- ["listOfImportantFriendly"]    = {},
-		-- ["listOfAttackers"]            = {},
-		-- ["listOfPlannedBuildings"]     = {},
 		["listOfSafePlaces"]           = {},
-		-- ["listOfDangers"]              = {},
 		--- vars for map lists
 		["listOfSafePlacesCount"]      = 0,
 		["defencePerimeter"]           = {},
 		--- ctrlvars
-		["historyAlert"]               = {"0", "0", "0", "0", "0", "0", "0", "0", "0", "0",}, --- last 10 alerts
-		["currentAlert"]               = 0, ---- number of important friendly units attacked in last iteration 
-		["historyCasus"]               = {"0", "0", "0", "0", "0", "0", "0", "0", "0", "0",}, --- last 10 casus
-		["currentCasus"]               = 0, ---- number of friendly units attacked in last iteration 
-		-- ["historyMetalStorages"]       = {"1", "1", "1", "1", "1", "1", "1", "1", "1", "1",}, --- last 10 storages
-		-- ["currentMetalStorages"]       = 0,
-		-- ["historyEnergyStorages"]      = {"1", "1", "1", "1", "1", "1", "1", "1", "1", "1",}, --- last 10 storages
-		-- ["currentEnergyStorages"]      = 0,
 		["metalLevel"]                 = 0,
 		["metalStorage"]               = 0,
 		["metalIncome"]                = 0,
@@ -293,11 +258,11 @@ local function AddTeam(teamNumber,teamID,side,difficulty)
 	}
 	sideIDcount = sideIDcount + 1
 	side = teamInfo[sideIDcount]
-	spEcho("AI" .. side.teamID .. " of kind: " .. side.kind .. ", Difficulty: " .. side.difficulty .. ", Personality: " .. side.personality )
+	Spring.Echo("AI" .. side.teamID .. " of kind: " .. side.kind .. ", Difficulty: " .. side.difficulty .. ", Personality: " .. side.personality )
 end
 
 local function AddDef(groupID,teamNumber,teamID,groupSpirit,groupName,groupDependance,groupLeaderName,factory,bufferFactories,groupDepPos,groupUnitName,groupSourceName,groupPreference,taskName)
-  --- spEcho("Hey, Im new group: ", groupID)
+  --- Spring.Echo("Hey, Im new group: ", groupID)
   groupInfo[groupID] =
     {
 		["groupED"]						= groupID,				-- noe groupID
@@ -390,898 +355,6 @@ local function AddDef(groupID,teamNumber,teamID,groupSpirit,groupName,groupDepen
 	-- end
   ------ groupInfoByID[unitID] = #groupInfo  --- bidirectional way to number of unit
 end
-  
-local function KillDef(unitID,teamID)
-    -- local killThisOne
-	-- local currentTeam = "t" .. teamID
-    -- for i=1,#groupInfo do
-        -- if (groupInfo[i].unitED == unitID) then
-	        -- killThisOne = i
-	    -- end
-    -- end
-    -- spEcho("Unit killed:", killThisOne)
-	-- local itsSpirit = groupInfo[killThisOne].spirit
-    -- table.remove(groupInfo, killThisOne)                -- clear table with AI variables
-	-- spEcho("It was:", itsSpirit) 
-    -- table.insert(teamInfo[reverseAITeamID[currentTeam]].listOfSpirits, itsSpirit) -- add back personality type back to listOfSpirits
-	-- groupCount = groupCount - 1
-end
-
-function GroupEdit(groupID,parameterName,value)
-	groupInfo[groupID][parameterName] = value
-	return true
-end
-
--- ! LETS MOVE all stuff in initialze part editing the group here
-initGroup = {
-	["factoriesGroupsIDs"] = function()
-		for i=1,groupCount do
-			local thisGroup  = groupInfo[i]
-			if (thisGroup.factories ~= nil) then
-				local thisFactories = thisGroup.factories
-				for j=1,#thisFactories do
-					local thisTeamfromGrouupsIDsList	= teamInfo[thisGroup.teamNumber].groupNameToID[thisFactories[j]]
-					groupInfo[i].factoriesGroupsIDs[j]	= teamInfo[thisGroup.teamNumber].listOfGroupsIDs[thisTeamfromGrouupsIDsList]
-				end
-			end
-		end
-	end,
-	["notSleeper"] = function(spiritName)
-		for i=1,groupCount do
-			local thisGroup  = groupInfo[i]
-			if (thisGroup.spirit == spiritName) then
-				groupInfo[i].notSleeper = true
-			end
-		end
-	end,	
-}
-
--- groupsEnds
------------ SOME MATH
-
-function OwnRandom(minimal,maximal)
-    pseudoRandom = pseudoRandom + 1
-    local result = 0
-	for i=1,(pseudoRandom % 7) + 2 do
-	    result = math.random(minimal,maximal)
-	end
-	return result
-end
-
-function GetRandomPlaceAround(placeX,placeZ,distanceMin,distanceMax)
-    local diff    = distanceMax - distanceMin
-    local randX   = OwnRandom(-diff,diff)
-	local randZ   = OwnRandom(-diff,diff)
-	--spEcho(placeX,placeZ,randX,randZ)
-	if (randX >= 0) then randX = randX + distanceMin else randX = randX - distanceMin end
-	if (randZ >= 0) then randZ = randZ + distanceMin else randZ = randZ - distanceMin end
-	randX = randX + placeX
-	randZ = randZ + placeZ
-	if ((randZ <= 0) or (randZ > mapZ) or (randX <= 0) or (randX > mapX)) then 
-		randX,randZ = GetRandomPlaceAround(placeX,placeZ,distanceMin,distanceMax)
-	end
-	return randX, randZ
-end
-
-function GetRandomPlaceOnTheMap()
-    -- ? can be added some parameters like: water, hill, or something
-	local randX = OwnRandom(1,mapX)
-	local randZ = OwnRandom(1,mapZ)
-	return randX, randZ
-end
-
-function ToBool(something)
-	if (something == 0 or something == "false" or something == "0" or something == false or something == nil) then
-		return false
-	else
-		return true
-	end
-end
-
-function TargetUsageChange(teamNumber,targetIndex,usage)
-    teamInfo[teamNumber].listOfStrategicTargets[targetIndex].isNotTarget = not(usage)
-	if (usage) then
-	    teamInfo[teamNumber].countOfStrategicTargetsUsed = teamInfo[teamNumber].countOfStrategicTargetsUsed + 1
-	else
-	    teamInfo[teamNumber].countOfStrategicTargetsUsed = teamInfo[teamNumber].countOfStrategicTargetsUsed - 1
-	end
-end
-
-local function Sleeping(groupID)
-	groupInfo[groupID].sleeping            = true
-	groupInfo[groupID].acceptingUnits      = true
-	groupInfo[groupID].buildStatus         = "idle"
-	groupInfo[groupID].operationalStatus   = "none"
-	
-	-- additional changes 
-	local thisTeam		= teamInfo[groupInfo[groupID].teamNumber]
-	-- ! silly fix with halfX, halfZ, maybe should be done better (next two lines)
-	local defaultPosX								= thisTeam.mapBase.posX or halfX
-	local defaultPosZ								= thisTeam.mapBase.posZ or halfZ
-	groupInfo[groupID].posX,groupInfo[groupID].posZ	= GetRandomPlaceAround(defaultPosX,defaultPosZ,300,1000)	
-	if (groupInfo[groupID].target.hasAny and (groupInfo[groupID].target.index ~= 0)) then
-		TargetUsageChange(groupInfo[groupID].teamNumber,groupInfo[groupID].target.index,false)
-		groupInfo[groupID].target.hasAny = false
-	end
-end 
-
-local function AddUnit(unitID,teamNumber,groupName,groupID)
-	if (groupID == 0) then spEcho ("Error: not existing group") return end
-	for i=1,groupInfo[groupID].membersListMax do
-		if (not(groupInfo[groupID].membersListAlive[i])) then
-			groupInfo[groupID].membersListAlive[i]	= true
-			groupInfo[groupID].membersList[i]		= unitID
-			reverseUnitsGroupID[unitID]				= groupInfo[groupID].groupED
-			reverseUnitsListID[unitID]				= i
-			groupInfo[groupID].membersListCounter	= groupInfo[groupID].membersListCounter + 1
-			groupInfo[groupID].receivedUnit			= true
-			if (groupInfo[groupID].membersListCounter == 1) then
-				groupInfo[groupID].sleeping    = false
-				groupInfo[groupID].status      = "idle"
-				groupInfo[groupID].buildStatus = "idle"
-				groupInfo[groupID].fightStatus = "idle"
-			end
-			if (groupInfo[groupID].membersListCounter == groupInfo[groupID].membersListMax) then
-			    groupInfo[groupID].acceptingUnits = false
-			end
-			break
-		end
-	end
-end
- 
-local function KillUnit(unitID,teamNumber,groupID)
-	local listID									= reverseUnitsListID[unitID]
-	groupInfo[groupID].membersListAlive[listID]		= false
-	groupInfo[groupID].membersListCounter			= groupInfo[groupID].membersListCounter - 1
-	if (groupInfo[groupID].membersListCounter == 0) then       -- deactivation of group
-	    Sleeping(groupID)
-	end
-end
-
-function ChangeUnitGroup(howMany,oldGroupID,newGroupID,unitID)
-    -- Possible use
-    --- 1) nil, nil, newGroupID, unitID
-	--- 2) howMany, oldGroupID, newGroupID, nil
-    local newCount = groupInfo[newGroupID].membersListCounter
-	local newMax   = groupInfo[newGroupID].membersListMax
-	if (oldGroupID == nil) then
-	    oldGroupID       = reverseUnitsGroupID[unitID]
-	    local oldCount   = groupInfo[oldGroupID].membersListCounter
-	    
-		if ((newCount == newMax) or (oldCount == 0)) then  ---- condintion if new group is full
-	        --spEcho("Unit cannot be moved, newgroup is full or old empty (unit: " .. unitID .. " from " .. oldGroupName .. " to " .. newGroupName .. ")")
-		    return false
-	    end
-		
-		for i=1,newMax do
-			if (not(groupInfo[newGroupID].membersListAlive[i])) then
-				groupInfo[newGroupID].membersListAlive[i]							= true
-				groupInfo[oldGroupID].membersListAlive[reverseUnitsListID[unitID]]	= false
-				groupInfo[newGroupID].membersList[i]								= unitID
-				groupInfo[oldGroupID].membersList[reverseUnitsListID[unitID]]		= nil			
-				reverseUnitsGroupID[unitID]											= groupInfo[newGroupID].groupED
-				reverseUnitsListID[unitID]											= i
-				groupInfo[newGroupID].membersListCounter							= groupInfo[newGroupID].membersListCounter + 1
-				groupInfo[oldGroupID].membersListCounter							= groupInfo[oldGroupID].membersListCounter - 1
-				groupInfo[newGroupID].receivedUnit									= true
-				if (groupInfo[oldGroupID].membersListCounter == 0) then --- if last unit moved from old group, deactivation of group
-					Sleeping(groupID)
-				end
-				if (groupInfo[newGroupID].sleeping) then 
-				    groupInfo[newGroupID].sleeping = false
-				end
-				break
-			end
-		end	
-	else    ---- so we are moving anonymous group of units
-	    local IDsList		= {}
-		local countMoved	= 0
-		local oldMax		= groupInfo[oldGroupID].membersListMax                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
-		
-		if (((groupInfo[oldGroupID].membersListCounter - howMany) < 0) or ((newCount + howMany) > newMax)) then  ---- condintion if new group is full
-	        --spEcho("Unit cannot be moved, newgroup has to many units or old has to few (from " .. groupInfo[oldGroupID].name .. " to " .. groupInfo[newGroupID].name .. " moveCount: " .. howMany .. ")")
-		    return false
-	    end
-		
-		for i=1,oldMax do
-		    if (groupInfo[oldGroupID].membersListAlive[i]) then
-				countMoved									= countMoved + 1
-				IDsList[countMoved]							= groupInfo[oldGroupID].membersList[i]
-				groupInfo[oldGroupID].membersListCounter	= groupInfo[oldGroupID].membersListCounter - 1
-				groupInfo[oldGroupID].membersListAlive[i]	= false
-				-- spEcho("member: " .. IDsList[countMoved])
-				if (countMoved == howMany) then
-				    break
-                end				
-			end
-		end
-		
-		countMoved           = 0
-		if (#IDsList ~= howMany) then spEcho("BUG") end
-		for i=1,newMax do
-			if (not(groupInfo[newGroupID].membersListAlive[i])) then
-			    countMoved									= countMoved + 1
-				groupInfo[newGroupID].membersListAlive[i]	= true
-				local thisID								= IDsList[countMoved]
-				groupInfo[newGroupID].membersList[i]		= thisID
-				reverseUnitsGroupID[thisID]					= groupInfo[newGroupID].groupED
-				reverseUnitsListID[thisID]					= i
-				groupInfo[newGroupID].membersListCounter	= groupInfo[newGroupID].membersListCounter + 1
-				groupInfo[newGroupID].receivedUnit			= true
-				if (groupInfo[oldGroupID].membersListCounter == 0) then --- if last unit moved from old group, deactivation of group
-					Sleeping(groupInfo[oldGroupID].groupED)
-				end
-				if (groupInfo[newGroupID].sleeping) then 
-				    groupInfo[newGroupID].sleeping = false
-				end
-			end
-			if (countMoved == howMany) then
-				if (groupInfo[newGroupID].membersListCounter > (groupInfo[newGroupID].membersListMax - groupInfo[newGroupID].transferCount)) then
-	                groupInfo[newGroupID].acceptingUnits = false
-	            end 
-				--spEcho("from " .. groupInfo[oldGroupID].name .. " to " .. groupInfo[newGroupID].name .. " moveCount: " .. howMany .. ")")
-				return true
-			end
-		end
-	end
-end
-
-local function TestBeforeAddUnit(unitID,name,teamNumber)
-    local thisTeam = teamInfo[teamNumber]
-	for i=1,thisTeam.numberOfGroups do
-		local thisGroupID   = thisTeam.listOfGroupsIDs[i]
-		local thisGroup     = groupInfo[thisGroupID]
-		local groupName     = thisGroup.name
-		local groupUnitName = thisGroup.unitName
-		-- !! this is old, preference should be "this unitDefId buffer first (to exclude not first buffer in groupDef list bug) and later try all other groups"
-		if ((name == groupUnitName) and (thisGroup.active) and (thisGroup.acceptingUnits) and (thisGroup.membersListCounter < thisGroup.membersListMax)) then  
-			--spEcho("Unit added: " .. unitID,teamNumber,groupName,groupUnitName)
-			
-			-- ADDITION THE UNIT - MAIN PURPOSE OF THIS FUNCTION --
-			AddUnit(unitID,teamNumber,groupName,thisGroupID)
-			
-			-- UPDATE COUNTERS OR IF NEEDED CREATE NEW --
-			if (teamInfo[teamNumber].unitTypeCount[name] == nil) then
-				teamInfo[teamNumber].unitTypeCount[name] = {
-					count		= 0,
-					percent		= 0,
-					limit		= 100,  -- ! temporary of course
-				}
-			else
-				teamInfo[teamNumber].unitTypeCount[name].count   	= teamInfo[teamNumber].unitTypeCount[name].count + 1
-				teamInfo[teamNumber].unitTypeCount[name].percent 	= teamInfo[teamNumber].unitTypeCount[name].count / teamInfo[teamNumber].unitTypeCount[name].limit
-			end
-			
-			-- UPDATE ORDERS FOR BUFFERS
-			groupInfo[thisGroupID].waitingOrders 			= groupInfo[thisGroupID].waitingOrders - 1
-			break
-		end
-	end 
-end
-
-function PrepareFirstUnit(groupID)
-    local thisGroup = groupInfo[groupID]
-	if (not(thisGroup.membersListAlive[1]) and (thisGroup.membersListCounter > 1)) then
-		ChangeUnitGroup(1,groupID,groupID)
-		return true
-	end
-	return false
-end
-
-local function AddValuableEnemy(unitID,teamNumber,teamID,valuableClass)
-    local listOfValuables                        = teamInfo[teamNumber].listOfStrategicTargets
-	local listOfAlive                            = teamInfo[teamNumber].listOfStrategicTargetsAlive
-	local listOfReversIDs                        = teamInfo[teamNumber].reverseValuableUnitID
-	local listPosition                           = #listOfValuables + 1
-	local posX,posY,posZ                         = spGetUnitPosition(unitID)
-	listOfValuables[listPosition]                = {
-			["unitID"]      = unitID,
-			["teamID"]      = teamID,
-			["class"]       = valuableClass,
-			["isNotTarget"] = true,
-			["attacker"]    = 0, 
-			["static"]      = isStaticTargetClass[valuableClass],
-            ["posX"]        = posX,
-            ["posY"]        = posY,		
-            ["posZ"]        = posZ,				
-		}
-	listOfAlive[listPosition]                    = true
-	listOfReversIDs[unitID]                      = listPosition
-	teamInfo[teamNumber].countOfStrategicTargets = teamInfo[teamNumber].countOfStrategicTargets + 1
-end
-
-local function KillValuableEnemy(unitID,teamNumber)
-    local listOfAlive                            = teamInfo[teamNumber].listOfStrategicTargetsAlive
-	local listOfReversIDs                        = teamInfo[teamNumber].reverseValuableUnitID
-	local thisTarget                             = teamInfo[teamNumber].listOfStrategicTargets[listOfReversIDs[unitID]]
-	if (thisTarget.attacker ~= 0) then
-	    teamInfo[teamNumber].countOfStrategicTargetsUsed = teamInfo[teamNumber].countOfStrategicTargetsUsed - 1
-		groupInfo[thisTarget.attacker].target.hasAny     = false 
-		groupInfo[thisTarget.attacker].fightStatus       = "idle" 
-	end
-    listOfAlive[listOfReversIDs[unitID]]         = false
-    listOfReversIDs[unitID]                      = nil
-	teamInfo[teamNumber].countOfStrategicTargets = teamInfo[teamNumber].countOfStrategicTargets - 1	
-end
-
-local function SetResources()
-	---- RESOURCES SETTING FOR ALL NOE GAMES -----
-	for i=1,#teamList do
-		local id = teamList[i]
-		local _,_,_,isAI,side 	= Spring.GetTeamInfo(id)
-		local aiInfo          	= Spring.GetTeamLuaAI(id)
-		local m,ms,e,es
-		local setThem 			= {true,true,true,true}
-		if ((isAI) and (aiInfo == "Mission AI") and (sideSettings[teamIDtoName[tostring(id)]].startMetal ~= nil)) then
-			m  = sideSettings[teamIDtoName[tostring(id)]].startMetal
-			ms = sideSettings[teamIDtoName[tostring(id)]].startMetalStorage
-			e  = sideSettings[teamIDtoName[tostring(id)]].startEnergy
-			es = sideSettings[teamIDtoName[tostring(id)]].startEnergyStorage
-		else
-			-- hotfix for OTE
-			if (heroClass and oteRule) then
-				-- TODO: get metal value and class from setup
-				local metalCurrent 	= 0
-				setThem[1]	= false
-				setThem[2]	= false
-				setThem[4]	= false
-				-- Spring.Echo(oteRule.energy[heroClass[class].statsClass[3]])
-				-- m  = metalCurrent
-				ms = 100000
-				-- e  = oteRule.energy[heroClass[class].statsClass[3]]
-				-- es = oteRule.energy[heroClass[class].statsClass[3]]
-			else
-				m  = floor((missionInfo.playersMetal or 1000)/missionPlayersCount)
-				ms = floor((missionInfo.playersMetal or 1000)/missionPlayersCount)
-				e  = floor((missionInfo.playersEnergy or 1000)/missionPlayersCount) 
-				es = floor((missionInfo.playersEnergy or 1000)/missionPlayersCount)
-			end
-		end
-		--Spring.Echo("res",id,m,e,ms,es)
-		if (setThem[1]) then spSetTeamResource(id, "m", m) end
-		if (setThem[2]) then spSetTeamResource(id, "e", e) end 
-		if (setThem[3]) then spSetTeamResource(id, "ms", ms) end 
-		if (setThem[4]) then spSetTeamResource(id, "es", es) end
-	end
-	---- END OF RESOURCES SETTING ----
-end
--------------------------
-------------------------- 
--- utility
-local function DefaultTileReset() --- making default tile for map border for mapping
-        local clev = 0.1
-    	mapDefault[1] = {
-		-- this part is needed for Mapping/safety
-	    ["safetyTransmission"] = {["xDown"]=clev,["xUp"]=clev,["zLeft"]=clev,["zRight"]=clev},
-		["safetySecondary"]    = {["xDown"]=clev,["xUp"]=clev,["zLeft"]=clev,["zRight"]=clev},
-		["safetyTertiary"]     = {["xDown"]=clev,["xUp"]=clev,["zLeft"]=clev,["zRight"]=clev},
-		-- this is of SetSafePositionn
-		["safetyIndex"]        = 0, 
-	} 
-end
-
-local function CreateDangerMap(teamNumber)
-    --mapMaxHeight = 0
-	mapDanger[teamNumber] = {}
-    thisTeam = teamInfo[teamNumber]	
-    for i=0,mapXdivs do
-        for j=0,mapZdivs do
-		    --spEcho("Hey adding", i, j)
-			local cornerX = i*mapDivision
-			local cornerZ = j*mapDivision
-			local height
-			    local h1 = spGetGroundHeight(cornerX+mapDivision/4,cornerZ+mapDivision/4)
-				local h2 = spGetGroundHeight(cornerX+(mapDivision/4)*3,cornerZ+mapDivision/4)
-				local h3 = spGetGroundHeight(cornerX+mapDivision/4,cornerZ+(mapDivision/4)*3)
-				local h4 = spGetGroundHeight(cornerX+(mapDivision/4)*3,cornerZ+(mapDivision/4)*3)
-			local height = (h1 + h2 + h3 + h4)/4	
-			
-			local dataIndex = i*mapZdivs+j+1
-	        ---- MAP OBJECT ----
-			mapDanger[teamNumber][dataIndex]  = {
-				["cornerX"]            = cornerX,  -- X axis
-				["cornerZ"]            = cornerZ,  -- Z axis
-				["centerX"]            = cornerX + mapDivision/2,
-				["centerZ"]            = cornerZ + mapDivision/2,
-				["holdPower"]          = 0,        -- how many units currently ocupy the tile
-				["holdPowerHistory"]   = {},       -- holdPower numbers in history
-				["holdPowerRank"]      = 0,        -- holdPower counter number through all iterations
-				["antIndex"]           = 0,      -- the same like powerRank, but it lowers down by time
-				["isHolded"]           = false,    -- holdPower > 0 or not
-				["isHoldedHistory"]    = {},       -- is Holded history
-				["zeroHoldPower"]      = 0,        -- how many iterations is holdPower = 0  
-				["safetyIndex"]        = 0,        -- index counted through evaluation of map based on zeroHoldPower and holdPower
-				["safetyTransmission"] = {["xDown"]=0,["xUp"]=0,["zLeft"]=0,["zRight"]=0}, -- direct way transmission
-				["safetySecondary"]    = {["xDown"]=0,["xUp"]=0,["zLeft"]=0,["zRight"]=0}, -- secondary trans
-				["safetyTertiary"]     = {["xDown"]=0,["xUp"]=0,["zLeft"]=0,["zRight"]=0}, -- tertiary trans
-				["lessSafeTileIndex"]  = 0,        -- index of tile where is the biggest danger
-				["tileNotCovered"]     = 0,        -- number of iterations that tile is not covered by radar (basic number for Incertainity)				
-			}
-			
-			mapNeutral[dataIndex] = {
-			    ["tileHeight"]         = height, 
-			}
-			
-			if (height > mapMaxHeight) then
-			    mapMaxHeight = height
-			end
-		end	
-	end
-	--- table for crossing unsafe iterations
-	DefaultTileReset() 
-	--- only for testing ---
-	_G.mapMaxHeight = mapMaxHeight
-	_G.mapNeutral = mapNeutral
-end
-
-local function Mapping(part,teamNumber,splitMapping)
-    local thisTeam = teamInfo[teamNumber]
-    --- this is only speedup part
-	if (part == stepBeginMapping) then  
-		thisTeam.mapMaxHoldedTileCycle      = 0
-		thisTeam.mapMaxAntIndexCycle        = 0
-		thisTeam.mapMaxZeroHoldTileCycle    = 0
-		thisTeam.mapMaxSafetyIndexTileCycle = 0
-		thisTeam.mapMinSafetyIndexTileCycle = fullSafe
-	end
-	--- end of speedup part
-	-- spEcho(iStartPoint,iEndPoint)
-	
-    for i = part+1,mapCount,mapSmallCycleLength do   ---- normaly from 0 to mapXdivs-1, now speeded
-	    local j           = (i % mapZdivs)+1
-		local thisIndex   = i
-		local dngr        = mapDanger[teamNumber][thisIndex] -- only speedup for acces to table
-		local startPointX = dngr.cornerX 
-		local startPointZ = dngr.cornerZ
-		local allUnits    = spGetUnitsInRectangle(startPointX,startPointZ,(startPointX + mapDivision),(startPointZ + mapDivision)) 
-		local power       = #allUnits
-		
-		for a = 1, #teamList do   -- how many units/tile
-			local allied = (spAreTeamsAllied(teamList[a],AITeamID[teamNumber]))
-			if (allied) then
-				local units = spGetUnitsInRectangle(startPointX,startPointZ,(startPointX + mapDivision),(startPointZ + mapDivision),teamList[a])  
-				power       = power - #units
-			end	
-		end			
-		
-		dngr.holdPower     = power                                           -- change up holdPower of tile
-		dngr.holdPowerRank = dngr.holdPowerRank + power                      -- grow up holdPowerRank of tile
-		---- safety part
-		local dngrUp   = mapDanger[teamNumber][thisIndex-1]  --or mapDefault[1]    -- only speedup for acces to table
-		local dngrDown = mapDanger[teamNumber][thisIndex+1] --or mapDefault[1]     -- only speedup for acces to table
-		if (j == 1) then                                                     -- fix against top/down safety transition
-			dngrUp = mapDefault[1]
-		end
-		if (j == mapZdivs) then 			
-			dngrDown = mapDefault[1]
-		end
-		local dngrLeft  = mapDanger[teamNumber][thisIndex-mapZdivs] --or mapDefault[1]    -- only speedup for acces to table
-		local dngrRight = mapDanger[teamNumber][thisIndex+mapZdivs] --or mapDefault[1]    -- only speedup for acces to table
-		if (i <= mapZdivs) then                                                            -- fix for left/right safety border
-			dngrLeft = mapDefault[1]
-		end
-		if (i >= mapCount - mapZdivs) then 			
-			dngrRight = mapDefault[1]
-		end
-		-- spEcho(teamNumber .. " " .. i*mapZdivs+j+1 .. " ")
-		local somePower = dngr.holdPower * unitDangerMultiplier
-		local up, down, right, left
-		down  = dngrUp.safetyTransmission.xDown + (dngrUp.safetySecondary.xDown + dngrUp.safetyTertiary.xDown)/2
-		up    = dngrDown.safetyTransmission.xUp + (dngrDown.safetySecondary.xUp + dngrDown.safetyTertiary.xUp)/2
-		right = dngrLeft.safetyTransmission.zRight + (dngrLeft.safetySecondary.zRight + dngrLeft.safetyTertiary.zRight)/2
-		left  = dngrRight.safetyTransmission.zLeft + (dngrRight.safetySecondary.zLeft + dngrRight.safetyTertiary.zLeft)/2
-		dngr.safetyIndex = fullSafe - down
-									- up
-									- right
-									- left
-									- somePower  		                             -- prepare safeindex for tile
-		dngr.safetyTransmission.xDown  = (dngrUp.safetyTransmission.xDown    + somePower) / divConst
-		dngr.safetyTransmission.xUp    = (dngrDown.safetyTransmission.xUp    + somePower) / divConst
-		dngr.safetyTransmission.zRight = (dngrLeft.safetyTransmission.zRight + somePower) / divConst
-		dngr.safetyTransmission.zLeft  = (dngrRight.safetyTransmission.zLeft + somePower) / divConst			
-		
-		dngrUp.safetyTertiary.zRight   = (dngrLeft.safetyTertiary.zRight     + somePower) / divConst2 + up / divConst3
-		dngrUp.safetyTertiary.zLeft    = (dngrRight.safetyTertiary.zLeft     + somePower) / divConst2 + up / divConst3
-		dngrDown.safetySecondary.zRight = (dngrLeft.safetySecondary.zRight   + somePower) / divConst2 + down / divConst3
-		dngrDown.safetySecondary.zLeft  = (dngrRight.safetySecondary.zLeft   + somePower) / divConst2 + down / divConst3
-		dngrLeft.safetyTertiary.xUp    = (dngrDown.safetySecondary.xUp       + somePower) / divConst2 + left / divConst3
-		dngrLeft.safetyTertiary.xDown  = (dngrUp.safetyTertiary.xDown        + somePower) / divConst2 + left / divConst3
-		dngrRight.safetySecondary.xUp  = (dngrDown.safetySecondary.xUp       + somePower) / divConst2 + right / divConst3
-		dngrRight.safetySecondary.xDown = (dngrUp.safetySecondary.xDown      + somePower) / divConst2 + right / divConst3
-
-		if (dngr.safetyIndex >= (fullSafe - 0.1)) then dngr.safetyIndex = fullSafe end
-		
-		---- ANTS ---
-		dngr.antIndex = (dngr.antIndex + (dngr.holdPower*antValue))
-        local decrease = antCounter % antDecreaseTimes
-		if (decrease == 0) then
-			dngr.antIndex = dngr.antIndex * antDecreaseValue
-		end
-		---- endANTS ---
-		--- end safety part
-		--------------- maxconditions
-		--- isHolded condition and notHolded
-		if (power >= 1) then  
-			dngr.isHolded = true                            -- tile is holded by some unit
-			--- maxHold condition
-			if (dngr.holdPower > thisTeam.mapMaxHoldedTile) then
-				thisTeam.mapMaxHoldedTile = dngr.holdPower
-			end
-			if (dngr.holdPower > thisTeam.mapMaxHoldedTileCycle) then 
-				thisTeam.mapMaxHoldedTileCycle = dngr.holdPower
-			end
-			--- end of maxHold condition
-		else                   
-			dngr.isHolded = false                           -- tile is not holded by unit
-			dngr.zeroHoldPower = dngr.zeroHoldPower + 1     -- tile is not holded for another turn
-			--- maxZeroHold condition
-			if (dngr.zeroHoldPower > thisTeam.mapMaxZeroHoldTile) then
-				thisTeam.mapMaxZeroHoldTile = dngr.zeroHoldPower
-			end
-			if (dngr.zeroHoldPower > thisTeam.mapMaxZeroHoldTileCycle) then 
-				thisTeam.mapMaxZeroHoldTileCycle = dngr.zeroHoldPower
-			end
-			--- end of maxZeroHold condition
-		end
-		--- maxSafetyIndex condition
-		if (dngr.safetyIndex > thisTeam.mapMaxSafetyIndexTileCycle) then 
-			thisTeam.mapMaxSafetyIndexTileCycle = dngr.safetyIndex
-		end
-		--- end of maxconditions
-		--- minSafetyIndex conditon
-		if (dngr.safetyIndex < thisTeam.mapMinSafetyIndexTileCycle) then 
-			thisTeam.mapMinSafetyIndexTileCycle      = dngr.safetyIndex
-			thisTeam.mapMinSafetyIndexTileIndexCycle = thisIndex
-		end
-		--- end of minSafetyIndex
-		--- mapMaxHoldPowerRank ---
-		if (dngr.holdPowerRank > thisTeam.mapMaxHoldPowerRank) then
-		    thisTeam.mapMaxHoldPowerRank      = dngr.holdPowerRank
-			thisTeam.mapMaxHoldPowerRankIndex = thisIndex
-		end
-		--- end of mapMaxHoldPowerRank
-		--- maxANT ---
-		if (dngr.antIndex > thisTeam.mapMaxAntIndexCycle) then
-		    thisTeam.mapMaxAntIndexCycle = dngr.antIndex
-		end
-		--- end of maxANT --
-		DefaultTileReset() 
-	end
-	-- when last mapping part, grow cycle counter and send it to graphic part
-	if (part == stepEndMapping) then
-	    --mapSmallCycles = mapSmallCycles + mapTileUnitConstant   -- color of tile depends on this line
-		--- decrease the mapMaxHoldedTile when the most occupied tile constant is not occupied
-		if (thisTeam.mapMaxHoldedTile > thisTeam.mapMaxHoldedTileCycle) then
-     		thisTeam.mapMaxHoldedTile = thisTeam.mapMaxHoldedTileCycle
-		end
-		--- the same with min/max index
-		thisTeam.mapMaxAntIndex             = thisTeam.mapMaxAntIndexCycle
-		thisTeam.mapMaxSafetyIndexTile      = thisTeam.mapMaxSafetyIndexTileCycle
-     	thisTeam.mapMinSafetyIndexTile      = thisTeam.mapMinSafetyIndexTileCycle
-		thisTeam.mapMinSafetyIndexTileIndex = thisTeam.mapMinSafetyIndexTileIndexCycle
-        ----- send to globals - for testing only
-	    _G.mapDa = mapDanger
-        _G.teamInfo = teamInfo
-		----- clearing values
-	end
-    antCounter    = antCounter + 1
-end
-
--- end of utility
--- begin functions
-
-function TimeCounter(n)
-    local frameTime = n/30
-	
-    local hours	    = floor(frameTime/3600)
-	if (hours > 0) then
-		frameTime = frameTime - hours*3600 
-	end
-	
-	local minutes  = floor(frameTime/60)
-	if (minutes > 0) then
-		frameTime = frameTime - minutes*60
-	end
-
-	local seconds  = floor(frameTime)
-	
-    local countedTime = {0,0,0}
-	countedTime[1] = hours
-	countedTime[2] = minutes
-	countedTime[3] = seconds
-    return countedTime
-end
-
-function GetIDofTile(posX,posZ,thisDivision,zdivs)
-    local ID = 0
-	ID = floor(posX/thisDivision)*zdivs + ceil(posZ/thisDivision)
-	if (ID == 0) then spEcho("The position is not on map.") end
-    return ID
-end
-
-function IsFarFromEdge(posX,posZ,dist)   --- controls if place is far (far = dist) from border of map
-    --- start of settings
-	local distance = dist or edgeDistance
-    --- end of settings
-	if  ((posX >= distance) and (posX <= (mapX - distance)) and (posZ >= distance) and posZ <= (mapZ-distance)) then
-	    return true
-	else
-	    return false
-	end
-end
-
-function FindOneBest(searchMode,lenghtOfBox,startX,startZ,team)
-    local defaultTile = mapDefault[1]
-	local chosenTile
-	-- spEcho(startX .. " " .. startZ)	
-	if (searchMode == "safePlaces") then
-	    local safety = 0
-		for k = 0 + mapHugeTileEdge, lenghtOfBox - 1 - mapHugeTileEdge do
-			for l = 0 + mapHugeTileEdge, lenghtOfBox - 1 - mapHugeTileEdge do
-			    local tileNumber = startX*(mapZdivs*lenghtOfBox)+k*mapZdivs+startZ*lenghtOfBox+l+1
-				-- spEcho(tileNumber)
-				local tile = mapDanger[team][tileNumber] or defaultTile
-				if (tile.safetyIndex > safety) then
-				    chosenTile = tileNumber
-					safety = tile.safetyIndex
-				end
-				-- spEcho(tile.safetyIndex)
-				--- here is bug, NOTcomming more then mapXdivs
-				if (tileNumber % mapZdivs == 0) then  -- bugfix
-				    break
-				end
-			end
-		end
-		return chosenTile
-    end	
-end
-
-function SearchFirstBestTiles(searchMode,lenghtOfBox,numberOfResults,team)
-    if (searchMode == "safePlaces") then
-	    local defaultTile = mapDefault[1]
-	    local bestOf = {}  -- unsorted list of best results
-		local added = 0    -- how many places i have added		
-		local side = teamInfo[team]  -- speedup acces
-		local placesList = side.listOfSafePlaces  -- speedup acces
-	    local iterX = floor((mapXdivs-1)/lenghtOfBox)
-		local iterZ = floor((mapZdivs-1)/lenghtOfBox)
-		
-		for i = 0, iterX do
-	        for j = 0, iterZ do
-			    local localBest = FindOneBest(searchMode,lenghtOfBox,i,j,team)
-				-- spEcho("-" .. localBest)
-				bestOf[added+1] = localBest
-                added = added + 1
-			end
-		end
-		for round = 1, numberOfResults do
-		    local safetyMax = 0
-			local tileNummo = 1
-			local choosenA = 1
-		    for a = 0, added do
-			    local talkedTile = mapDanger[team][bestOf[a]] or defaultTile
-		        if (talkedTile.safetyIndex > safetyMax) then
-				    tileNummo = bestOf[a]
-					safetyMax = talkedTile.safetyIndex
-					choosenA = a
-				end	
-			end
-			placesList[round] = tileNummo
-			bestOf[choosenA] = 0
-			-- spEcho("best" .. round .. ": " .. tileNummo)
-		end
-		side.listOfSafePlacesCount = #placesList
-		--- only for testing
-    	_G.teamInfo  = teamInfo
-	end
-end
-
-function GetDistance2D(firstX,firstZ,secondX,secondZ)  -- returns 2D distance of two places
-    local result = sqrt((firstX-secondX)*(firstX-secondX) + (firstZ-secondZ)*(firstZ-secondZ))
-	return result
-end
-
-function GetDistance2DSQ(firstX,firstZ,secondX,secondZ)  -- returns 2D distance of two places^2
-    return (firstX-secondX)*(firstX-secondX) + (firstZ-secondZ)*(firstZ-secondZ)
-end
-
-function GetDistance3D(firstX,firstY,firstZ,secondX,secondZ,secondZ)  -- returns 3D distance of two places
-    local result = sqrt((firstX-secondX)*(firstX-secondX) + (firstY-secondY)*(firstY-secondY) + (firstZ-secondZ)*(firstZ-secondZ))
-	return result
-end
-
-function GetDistance3DSQ(firstX,firstY,firstZ,secondX,secondY,secondZ)  -- returns 3D distance of two places^2
-	return (firstX-secondX)*(firstX-secondX) + (firstY-secondY)*(firstY-secondY) + (firstZ-secondZ)*(firstZ-secondZ)
-end
-
-function GetAngle(newTargetX,newTargetZ)
-    local dist = GetDistance2D(0,0,newTargetX,newTargetZ)
-	--if (dist == 0) then spEcho("no distance") end
-	local alpha = asin(newTargetX/dist)  --- different representation of X and Z on sreen and in my mind (formation defs).. so not asin(-something)
-	local beta  = acos(newTargetZ/dist)
-	-- i tried the version with aTan, but it doesnt help much in speed
-	local result
-	if (alpha > 0) then 
-		result = 2*PI - beta 
-	else
-		result = beta
-	end
-	-- spEcho(deg(result),deg(alpha),deg(beta))
-	return result
-end
-
-function GetRotation(thisX,thisZ,targetX,targetZ,rotations)
-    if (targetX == nil) then targetX = 1 targetZ = 1 end --- this for avoiding error when leader unit is killed in middle of procedure
-    local newTargetX    = targetX - thisX
-	local newTargetZ    = -targetZ + thisZ       --- different representation of X and Z on sreen and in my mind (formation defs)
-	local movingAngle   = 2*PI/rotations
-	local startingAngle = 0 - movingAngle/2
-	local angle         = startingAngle + GetAngle(newTargetX,newTargetZ)
-	local rot           = floor(angle/movingAngle)
-	-- spEcho(deg(angle),rot,(rot%rotations) + 1,thisX,thisZ,targetX,targetZ,newTargetX,newTargetZ)
-	return ((rot + rotations/2 + 1) % rotations) + 1 --- 1 for index 0
-end
-
-function GetHillyCoeficient(mainX,mainZ)
-    local tileID        = GetIDofTile(mainX,mainZ,mapDivision,mapZdivs)
-	local maxIndex      = mapXdivs * mapZdivs
-	if ((tileID < 1) or (tileID > maxIndex)) then tileID = ceil(maxIndex/2) end   -- if tile is out of the map
-	local currentHeight = mapNeutral[tileID].tileHeight
-	local coeficient    = 0
-	for i=1,8 do
-	    local currentIndex = tileID + mapTilesAroundIndex[i]
-		local diff = 0
-		if ((currentIndex > 0) and (currentIndex <= maxIndex)) then
-		    diff = abs(currentHeight - mapNeutral[currentIndex].tileHeight)
-		end
-		coeficient = coeficient + diff
-    end	
-	return coeficient/8
-end
-
-function GetPositionForAttack(currentPosX,currentPosZ,targetPosX,targetPosZ,distanceFromTarget)
-    local xChange = currentPosX - targetPosX
-	local zChange = -currentPosZ + targetPosZ
-    local angle   = GetAngle(xChange,zChange) + PI/2
-	local resultX = targetPosX + cos(angle)*distanceFromTarget -- this need to be completed, not rdy
-	local resultZ = targetPosZ + sin(angle)*distanceFromTarget
-	local resultY = spGetGroundHeight(resultX,resultZ)
-    return abs(resultX),resultY,abs(resultZ)
-end
-
-function GetPositionOfGroup(groupID,membersLimit)
-    local thisGroup    = groupInfo[groupID]
-    local listAlive    = thisGroup.membersListAlive
-	local membersList  = thisGroup.membersList
-	local done         = false
-	local limit        = membersLimit or thisGroup.membersListMax
-	local counter      = 0 
-	local unitPosX,unitPosY,unitPosZ
-    for i=1,limit do   
-		if (listAlive[i]) then 
-			unitPosX,unitPosY,unitPosZ = spGetUnitPosition(membersList[i])
-			groupInfo[groupID].posX    = unitPosX
-	        groupInfo[groupID].posZ    = unitPosZ
-			done                       = true
-			counter                    = counter + 1
-			break
-     	end
-	end
-	if (done) then
-	    return unitPosX,unitPosY,unitPosZ
-	else
-	    -- spEcho("NOE debug: This group " .. thisGroup.name .. " has no unit (" .. counter .. "), why it is not sleeping?")
-		-- !! here should be added some start position or operational position
-		Sleeping(groupID)
-	    return teamInfo[thisGroup.teamNumber].mapBase.posX,_,teamInfo[thisGroup.teamNumber].mapBase.posZ
-	end
-end
-
--- commands
-function BigMove(groupID,moveX,moveY,moveZ,pathType,formation,waiting,targetX,targetZ)
-	--- pathType --- !! change the numbers into strings !!
-	-- 0 -- default
-	-- 1 -- formation only at the end
-	
-    --- param preparations ---
-	local thisGroup         = groupInfo[groupID]
-	local thisFormationDef  = formationDef[formation]
-	local membersLimit      = thisGroup.membersListMax
-	local whatIsCalledHilly = thisFormationDef.hilly
-	local isFirst           = true
-	local flatLand          = true
-    local rotation
-    local thisFormationPos
-
-	local secondaryMoveX, secondaryMoveY, secondaryMoveZ
-	--- use parameter setting default formation setting
-	if (waiting == nil) then  
-	    waiting             = thisFormationDef.constrained
-	end
-	--- getting position of group
-    local unitPosX,unitPosY,unitPosZ = GetPositionOfGroup(groupID,membersLimit)
-
-	--- has this unit rotable formation? ---
-	if (thisFormationDef.rotable) then
-	
-		-- use leaders rotation
-	    if (thisGroup.dependant) then
-			rotation	= groupInfo[thisGroup.itsLeaderID].rotation
-		-- or choose own
-		else
-			local distance = GetDistance2D(unitPosX,unitPosZ,moveX,moveZ)
-			if (targetX == nil) then
-				if (distance > thisFormationDef.rotationCheckDistance) then 
-					targetX            = moveX - (unitPosX - moveX)
-					targetZ            = moveZ - (unitPosZ - moveZ)
-					rotation           = GetRotation(moveX,moveZ,targetX,targetZ,thisFormationDef.rotations) 
-					thisGroup.rotation = rotation
-				else   --- keep old rotation
-					rotation = thisGroup.rotation
-				end
-			else  --- so if target is specified
-				rotation = GetRotation(moveX,moveZ,targetX,targetZ,thisFormationDef.rotations) 
-				thisGroup.rotation = rotation
-			end	
-		end
-		thisFormationPos = formationsRotated[formation][rotation]
-		--spEcho(rotation)
-	else
-	    thisFormationPos = formations[formation]
-	end 
-	--- end of param preparations ---
-	
-	for i=1, membersLimit do
-	    --spEcho(i,formation,thisGroup.groupED)
-	    unitID = thisGroup.membersList[i]
-		-- local scaleX = thisFormationDef.scales[1]  -- scaling in definition now 
-		-- local scaleZ = thisFormationDef.scales[2]
-		local formationX = thisFormationPos[i][1]  ---- * scaleX
-		local formationZ = thisFormationPos[i][2]  ---- * scaleZ          --- scaling added in definition now
-		if (thisGroup.membersListAlive[i]) then
-		    --spEcho(i,thisGroup.membersListAlive[i])
-			if (isFirst) then -- commanding leader of unit
-			
-			    --- behaviour of waiting for other units, when first run fast... (dependable on formation)
-				if (waiting and thisFormationDef.constrained) then 
-					if (thisGroup.constrainLevel >= 1 and thisGroup.moveModeChanged) then    --- second unit of group is far a lot and is alive, then
-					    spGiveOrderToUnit(unitID, CMD.STOP, {}, {})
-						thisGroup.constrainLevel = thisGroup.constrainLevel - 1
-					else
-						spGiveOrderToUnit(unitID, CMD.MOVE, {moveX + formationX, moveY, moveZ + formationZ}, {})
-					end
-				else
-				    spGiveOrderToUnit(unitID, CMD.MOVE, {moveX + formationX, moveY, moveZ + formationZ}, {})
-				end
-				isFirst = false
-
-				--- setting behaviour of reamining units depening on height situation around commanding unit
-				local coef = GetHillyCoeficient(unitPosX,unitPosZ)
-				if (coef >= whatIsCalledHilly) then
-					flatLand = false
-				else
-				    flatLand = true
-				end
-			else  -- commanding remaining units
-			    if (flatLand and (pathType ~= 1)) then -- this means units can use better, relative formation, becouse terrian around is not hilly
-					spGiveOrderToUnit(unitID, CMD.MOVE, {unitPosX + formationX, unitPosY, unitPosZ + formationZ}, {})
-					thisGroup.moveModeChanged = true
-				else
-				    spGiveOrderToUnit(unitID, CMD.MOVE, {moveX + formationX, moveY, moveZ + formationZ}, {})
-					if (thisFormationDef.constrained) then
-						if (thisGroup.constrainLevel <= thisFormationDef.constrainLevel) then
-							thisGroup.constrainLevel = thisGroup.constrainLevel + 1
-						end
-					end
-					thisGroup.moveModeChanged = false
-				end
-			end
-		end -- end of unit alive
-	end
-end
--- end of commands
-
-------CTRL VARIABLES FUNCTIONS ----------------
 
 local function SetSafePlaces(team)
     -- = if number of safe places in listOfSafePlaces is 1 or less, it fill it up
@@ -1290,69 +363,12 @@ local function SetSafePlaces(team)
 	--end
 end
 
-local function SetThreat()
--- currentHP/maxHP
--- 
-end
-
-local function SetResEnergy(teamNumber)
-    local thisTeam = teamInfo[teamNumber]	     
-	local levelEnergy,storageEnergy,_,incomeEnergy,expenseEnergy = spGetTeamResources(thisTeam.teamID,"energy")       
-	thisTeam.energyLevel   = levelEnergy
-	thisTeam.energyStorage = storageEnergy
-	thisTeam.energyIncome  = incomeEnergy
-	thisTeam.energyExpense = expenseEnergy
-end
-
-local function SetResMetal(teamNumber)
-    local thisTeam = teamInfo[teamNumber]
-    local levelMetal,storageMetal,_,incomeMetal,expenseMetal = spGetTeamResources(thisTeam.teamID,"metal") 
-	thisTeam.metalLevel    = levelMetal
-	thisTeam.metalStorage  = storageMetal
-	thisTeam.metalIncome   = incomeMetal
-	thisTeam.metalExpense  = expenseMetal	
-end
-
--- get info functions
--- neutral
-local function GiveRandomPlaceInTile(someX,someZ,addRandom,border)
-    if (addRandom) then
-		someX = someX + math.random(border,mapDivision-border)
-		someZ = someZ + math.random(border,mapDivision-border)
-	else
-	    someX = someX + mapDivision/2
-		someZ = someZ + mapDivision/2
-	end
-	local place = {["x"]=someX,["z"]=someZ,}
-	return place
-end
-
--- specific
-
-local function GetOneSafePlace(team,addRandom,border)
-    local tileNummo = teamInfo[team].listOfSafePlaces[1]
-	-- spEcho(tileNummo)
-	-- old code below
-	--if (#listOfSafePlaces > 1) then   -- if last position, dont delete it
-	    --table.remove(listOfSafePlaces, #listOfSafePlaces)
-	--end
-	
-	--- here can be added function for that - GiveRandomPlaceInTile
-	local someX = mapDanger[team][tileNummo].cornerX
-	local someZ = mapDanger[team][tileNummo].cornerZ
-	-- spEcho(someX) spEcho(someZ)
-	local place = GiveRandomPlaceInTile(someX,someZ,addRandom,border)
-    return place
-end
-
--- end of get info functions
--- end ai functions
 --------------------------------------------------------------------------------------
 -- begin MASTERMIND
 
 ---- set ctrl variables for next iteration
 local function GlobalVarSet()
-    --spEcho("Setting global ctrl vars")
+    --Spring.Echo("Setting global ctrl vars")
 	for i=1,numberOfNoeAITeams do
 	    local thisTeamID = teamInfo[i].teamID
 		---- check count
@@ -1366,13 +382,10 @@ local function GlobalVarSet()
         SetResMetal(i);
 	end
     --SetSafePlaces(team)  --- set off becouse speed issues on superbig maps
----- SetThreat();
----- SetAlert();
----- SetCasusBelli();
 end
 
 local function CtrlVarSet(army,team)
-    spEcho("Setting ctrl vars for army", army)
+    Spring.Echo("Setting ctrl vars for army", army)
 end
 
 ---- -- end of setting ctrl variables
@@ -1387,13 +400,14 @@ local function RunSpirits(part,partcount,mode)
 		local active			= groupInfo[i].active
 		local teamNumber		= groupInfo[i].teamNumber
 		if ((notSleeping or notSleeper) and active) then
-		    --spEcho(i,"begins")
+		    --Spring.Echo(i,"begins")
 		    spiritDef[groupSpiritName](i,teamNumber,mode)
-			--spEcho(i,"ends")
+			--Spring.Echo(i,"ends")
 		end
 	end
 end
 
+-- noe events - gameevents (something else then spring subevents and spring events)
 local function EventHandler(eventStep)
     for i=1,#events do	
 		local unpack = unpack
@@ -1436,9 +450,6 @@ local function EventHandler(eventStep)
 	end
 end
 
----- -- end of prepare/execute plan or change plan
----- 
--- end MASTERMIND
 -----------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------
 -- subevents
@@ -1446,7 +457,7 @@ local function NewUnitComming(unitID, unitDefID, unitTeam, builderID)
 	local name 			= UnitDefs[unitDefID].name
 	local currentTeam 	= "t" .. unitTeam
 	local teamNumber 	= reverseAITeamID[currentTeam] or 0
-	--spEcho(teamNumber)
+	--Spring.Echo(teamNumber)
 	
 	if ((teamNumber ~= 0)) then   -- = if (its NOE AI)
 	
@@ -1490,7 +501,6 @@ local function UnitLost(unitID, unitDefID, unitTeam)
 		    teamInfo[teamNumber].unitTypeCount[name].count   	= teamInfo[teamNumber].unitTypeCount[name].count - 1
 		    teamInfo[teamNumber].unitTypeCount[name].percent 	= teamInfo[teamNumber].unitTypeCount[name].count / teamInfo[teamNumber].unitTypeCount[name].limit
 		end
-		--KillDef(unitID,unitTeam) -- function for adding spirit back into list is in KillDef()
 	end
 	
 	local valuable = valuableUnits[fromIDToNameTable[unitDefID]].valuable
@@ -1928,9 +938,9 @@ function gadget:Initialize()
 						-- else
 							-- idsGroundList[#idsGroundList + 1] = fromNameToIDTable[thisClassList[k]]
 						-- end
-						-- spEcho(thisClassList[k],fromNameToIDTable[thisClassList[k]])
+						-- Spring.Echo(thisClassList[k],fromNameToIDTable[thisClassList[k]])
 					-- end
-					-- spEcho("--")
+					-- Spring.Echo("--")
 				-- end
 			-- end
 		end
@@ -2129,7 +1139,7 @@ function gadget:Initialize()
 		FormationsDebug(false) --- write all formations positions (in noe_formations.lua)
 		
 		---- METAL MAP ---
-		--- LuaRules/Configs/noe/noe_mex_finder.lua ---
+		--- LuaRules/Configs/noe/modules/tools/noe_mex_finder.lua ---
 		----
 		PreparemapMetal()    --- count where all metal spots are
 		----
